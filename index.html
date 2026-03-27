@@ -36,7 +36,7 @@
     .scene{position:fixed;inset:0;z-index:0;background:var(--bg-base);}
     .scene::after{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;}
     /* Shell */
-    .shell{position:relative;z-index:1;padding:28px 32px 40px;max-width:1440px;margin:0 auto;}
+    .shell{position:relative;z-index:1;padding:28px 32px 40px;}
     /* Topbar */
     .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;}
     .brand{display:flex;align-items:center;gap:10px;}
@@ -269,6 +269,7 @@
     /* Responsive */
     @media(max-width:1100px){.grid{grid-template-columns:1fr 1fr;}.span2{grid-column:span 2;}.span3{grid-column:span 2;}}
     @media(max-width:680px){.grid{grid-template-columns:1fr;}.span2,.span3,.rspan2{grid-column:span 1;grid-row:span 1;}.shell{padding:16px 14px 32px;}.subject-grid{grid-template-columns:1fr;}.topbar-pill{display:none;}}
+    @media(min-width:681px) and (max-width:1100px){.shell{padding:20px 18px 32px;}.topbar-pill{display:none;}.streak-pill span,.exam-pill span{display:none;}.exam-pill,.streak-pill{padding:8px 10px;}}
     /* ── GRIDSTACK WIDGET SYSTEM ── */
     .grid-stack{background:none!important;padding:0!important;}
     /* overflow:visible permite que o box-shadow do card escape sem corte quadrado */
@@ -1730,6 +1731,15 @@ function resetLayout(){
   gsGrid.load(DEFAULT_LAYOUT, true);
   AppDB._set('sf_layout', gsGrid.save(false));
 }
+
+// Exit edit mode when clicking outside any block
+document.addEventListener('pointerdown', (e) => {
+  if (!gsEditMode) return;
+  if (e.target.closest('.grid-stack-item')) return;
+  if (e.target.closest('#btn-edit-layout')) return;
+  if (e.target.closest('#btn-reset-layout')) return;
+  toggleEditMode();
+});
 
 // --- AUTO MIGRATE TO CFSD PMMG 2025 ---
 (function(){
