@@ -2,8 +2,16 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>StudyFlow — PMMG</title>
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#09090b" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="StudyFlow" />
+  <link rel="apple-touch-icon" href="icons/icon-192.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -31,6 +39,8 @@
       --ease:cubic-bezier(0.4,0,0.2,1);
     }
     html,body{height:100%;}
+    /* Safe area for PWA (notch / home bar) */
+    .shell{padding-left:max(32px, env(safe-area-inset-left));padding-right:max(32px, env(safe-area-inset-right));padding-bottom:max(40px, env(safe-area-inset-bottom));}
     body{font-family:'Inter',system-ui,sans-serif;background:var(--bg-base);color:var(--t1);min-height:100vh;-webkit-font-smoothing:antialiased;}
     /* Background */
     .scene{position:fixed;inset:0;z-index:0;background:var(--bg-base);}
@@ -1768,6 +1778,10 @@ initGrid();
 renderAll();
 // Re-draw chart after layout settles
 setTimeout(()=>renderWeeklyAnalysis(),200);
+// Register Service Worker
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/sw.js').catch(()=>{});
+}
 </script>
 </body>
 </html>
