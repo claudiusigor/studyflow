@@ -1,10 +1,17 @@
-const CACHE = 'studyflow-v2';
+const CACHE = 'studyflow-v3';
 const PRECACHE = [
   './',
   './index.html',
   './manifest.json',
-  './icons/icon-192.svg',
-  './icons/icon-512.svg',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/pmmg-logo.png',
+  './icons/nohumor.png',
+  './icons/1.png',
+  './icons/2.png',
+  './icons/3.png',
+  './icons/4.png',
+  './icons/5.png',
 ];
 
 self.addEventListener('install', e => {

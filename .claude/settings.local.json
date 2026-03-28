@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "WebSearch",
-      "WebFetch(domain:www.behance.net)"
+      "WebFetch(domain:www.behance.net)",
+      "Bash(node -e \"require\\(''''sharp''''\\); console.log\\(''''ok''''\\)\")"
     ]
   }
 }
