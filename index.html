@@ -1050,7 +1050,7 @@ function renderSchedule(){
       <div class="sched-dot" style="background:var(${ev.subj.colorVar});box-shadow:0 0 6px var(${ev.subj.colorVar})"></div>
       <div class="sched-date"><div class="mo">${MONTH_ABBR[ev.date.getMonth()]}</div><div class="dy">${ev.date.getDate()}</div></div>
       <div class="sched-info">
-        <div class="sched-subject">${ev.subj.icon} ${ev.subj.name}${ev.label?` — ${ev.label}`:''}${isToday?'<span class="today-chip">Hoje</span>':''}</div>
+        <div class="sched-subject">${ev.subj.icon} ${esc(ev.subj.name)}${ev.label?` — ${esc(ev.label)}`:''}${isToday?'<span class="today-chip">Hoje</span>':''}</div>
         <div class="sched-time"><i data-lucide="clock" style="width:11px;height:11px"></i>${ev.startTime} – ${minToTime(timeToMin(ev.startTime)+ev.durationMinutes)} · ${ev.durationMinutes}min</div>
       </div>
       <button class="sched-delete nav-btn" data-id="${ev.id}" title="Remover"><i data-lucide="x"></i></button>
@@ -1114,7 +1114,7 @@ function renderNote(){
   cl.innerHTML=(note.checklist||[]).map(it=>`
     <div class="check-row${it.done?' done':''}" data-id="${it.id}">
       <div class="check-box"><i data-lucide="check"></i></div>
-      <span class="check-label">${it.label}</span>
+      <span class="check-label">${esc(it.label)}</span>
     </div>`).join('');
   lucide.createIcons({nodes:cl.querySelectorAll('[data-lucide]')});
   cl.querySelectorAll('.check-row').forEach(row=>row.addEventListener('click',()=>toggleChecklistItem(row.dataset.id)));
@@ -1146,7 +1146,7 @@ function renderPomo(){
   const chip=document.getElementById('pomo-subject-chip');
   if(Pomo.activeSubjectId&&Pomo.isRunning){
     const subj=AppDB.getSubjects().find(s=>s.id===Pomo.activeSubjectId);
-    if(subj){chip.innerHTML=`${subj.icon} ${subj.name}`;chip.classList.add('visible');}
+    if(subj){chip.innerHTML=`${subj.icon} ${esc(subj.name)}`;chip.classList.add('visible');}
   } else { chip.classList.remove('visible'); }
   const btnTxt=document.getElementById('pomoBtnTxt');
   const btnIco=document.getElementById('pomoIcon');
@@ -1265,13 +1265,13 @@ function renderSubjectGrid(){
     const tasksHtml=subjTasks.slice(0,4).map(t=>`
       <div class="subj-task-row${t.done?' done':''}" data-tid="${t.id}">
         <i data-lucide="${t.done?'check-circle-2':'circle'}" style="color:${t.done?'var(--emerald-l)':'var(--t3)'}"></i>
-        <span class="subj-task-label">${t.title}</span>
+        <span class="subj-task-label">${esc(t.title)}</span>
       </div>`).join('');
     return `<div class="subj-card">
       <div class="subj-top">
         <div class="subj-left">
           <div class="subj-icon" style="background:${subj.bg}">${subj.icon}</div>
-          <div><div class="subj-name">${subj.name}</div><div class="subj-time">${fmtMin(actualMin)} este mês</div></div>
+          <div><div class="subj-name">${esc(subj.name)}</div><div class="subj-time">${fmtMin(actualMin)} este mês</div></div>
         </div>
         <span class="subj-pct" style="color:var(${subj.colorVar})">${pct.toFixed(2)}%</span>
       </div>
