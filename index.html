@@ -1302,7 +1302,7 @@ function renderGoals(){
     const sp=Math.min(100,(actualMin/targetMin)*100);
     return `<div class="goal-row">
       <div class="goal-meta">
-        <span class="goal-name-txt"><i data-lucide="${s.lucide||'book'}" style="color:var(${s.colorVar})"></i>${s.name}</span>
+        <span class="goal-name-txt"><i data-lucide="${s.lucide||'book'}" style="color:var(${s.colorVar})"></i>${esc(s.name)}</span>
         <span class="goal-pct-txt" style="color:var(${s.colorVar})">${sp.toFixed(2)}%</span>
       </div>
       <div class="goal-bar"><div class="goal-fill" style="width:${sp}%;background:${s.grad};box-shadow:0 0 6px ${s.glow}"></div></div>
@@ -1448,7 +1448,7 @@ function openPomoModal(){
   list.innerHTML=subjects.length?subjects.map(s=>`
     <div class="subj-select-row${s.id===_selectedPomoSubj?' selected':''}" data-sid="${s.id}">
       <span style="font-size:1.1rem">${s.icon}</span>
-      <span style="color:var(${s.colorVar})">${s.name}</span>
+      <span style="color:var(${s.colorVar})">${esc(s.name)}</span>
     </div>`).join(''):`<div class="empty-state">Nenhuma matéria. Adicione em ⚙️ Matérias.</div>`;
   list.querySelectorAll('.subj-select-row').forEach(r=>r.addEventListener('click',()=>{
     _selectedPomoSubj=r.dataset.sid;
@@ -1466,7 +1466,7 @@ function openPomoModal(){
 function openScheduleModal(){
   const subjects=AppDB.getSubjects();
   const sel=document.getElementById('sched-form-subject');
-  sel.innerHTML=subjects.map(s=>`<option value="${s.id}">${s.icon} ${s.name}</option>`).join('');
+  sel.innerHTML=subjects.map(s=>`<option value="${s.id}">${s.icon} ${esc(s.name)}</option>`).join('');
   document.getElementById('sched-form-label').value='';
   Modal.open('modal-schedule');
 }
@@ -1474,7 +1474,7 @@ function openScheduleModal(){
 function openAddTaskModal(preSubjectId){
   const subjects=AppDB.getSubjects();
   const sel=document.getElementById('task-form-subject');
-  sel.innerHTML=subjects.map(s=>`<option value="${s.id}"${s.id===preSubjectId?' selected':''}>${s.icon} ${s.name}</option>`).join('');
+  sel.innerHTML=subjects.map(s=>`<option value="${s.id}"${s.id===preSubjectId?' selected':''}>${s.icon} ${esc(s.name)}</option>`).join('');
   document.getElementById('task-form-title').value='';
   Modal.open('modal-add-task');
 }
@@ -1486,7 +1486,7 @@ function openNoteModal(){
   cl.innerHTML=(note.checklist||[]).map(it=>`
     <div class="note-cl-item" data-id="${it.id}">
       <input type="checkbox" ${it.done?'checked':''} onchange="this.closest('.note-cl-item').dataset.done=this.checked">
-      <span class="cl-label">${it.label}</span>
+      <span class="cl-label">${esc(it.label)}</span>
       <button class="note-cl-del" onclick="this.closest('.note-cl-item').remove()"><i data-lucide="x"></i></button>
     </div>`).join('');
   lucide.createIcons({nodes:cl.querySelectorAll('[data-lucide]')});
@@ -1511,7 +1511,7 @@ function refreshSubjectsList(){
   const list=document.getElementById('subjects-list-in-modal');
   list.innerHTML=subjects.length?subjects.map(s=>`
     <div class="subj-modal-row">
-      <div class="subj-modal-row-info"><span style="font-size:1.1rem">${s.icon}</span><span style="font-weight:600">${s.name}</span><span style="font-size:0.75rem;color:var(--t2)">${s.monthlyTargetHours}h/mês</span></div>
+      <div class="subj-modal-row-info"><span style="font-size:1.1rem">${s.icon}</span><span style="font-weight:600">${esc(s.name)}</span><span style="font-size:0.75rem;color:var(--t2)">${s.monthlyTargetHours}h/mês</span></div>
       <div class="subj-modal-actions">
         <button class="nav-btn" data-edit="${s.id}" title="Editar"><i data-lucide="pen-line"></i></button>
         <button class="nav-btn" data-del="${s.id}" title="Excluir" style="color:var(--rose-l)"><i data-lucide="trash-2"></i></button>
@@ -1631,7 +1631,7 @@ function initEventBindings(){
     const nid=uid();
     const div=document.createElement('div');
     div.className='note-cl-item'; div.dataset.id=nid;
-    div.innerHTML=`<input type="checkbox"><span class="cl-label">${val}</span><button class="note-cl-del" onclick="this.closest('.note-cl-item').remove()"><i data-lucide="x"></i></button>`;
+    div.innerHTML=`<input type="checkbox"><span class="cl-label">${esc(val)}</span><button class="note-cl-del" onclick="this.closest('.note-cl-item').remove()"><i data-lucide="x"></i></button>`;
     cl.appendChild(div); lucide.createIcons({nodes:[div]}); inp.value='';
   });
   document.getElementById('note-form-new-item').addEventListener('keydown',e=>{ if(e.key==='Enter')document.getElementById('btn-note-add-item').click(); });
