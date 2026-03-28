@@ -3,7 +3,8 @@
     "allow": [
       "WebSearch",
       "WebFetch(domain:www.behance.net)",
-      "Bash(node -e \"require\\(''''sharp''''\\); console.log\\(''''ok''''\\)\")"
+      "Bash(node -e \"require\\(''''sharp''''\\); console.log\\(''''ok''''\\)\")",
+      "Bash(sed \"s/''''$//\")"
     ]
   }
 }

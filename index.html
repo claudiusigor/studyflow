@@ -11,7 +11,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="StudyFlow" />
-  <link rel="apple-touch-icon" href="icons/icon-192.svg" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -812,7 +813,7 @@ function fmtMin(m){ const h=Math.floor(m/60),mn=m%60; if(!h)return `${mn}m`; if(
 function fmtSec(s){ return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`; }
 function timeToMin(t){ const[h,m]=t.split(':').map(Number); return h*60+m; }
 function minToTime(m){ return `${String(Math.floor(m/60)%24).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`; }
-function iso(offsetDays=0,h=9,m=0){ const d=new Date(); d.setDate(d.getDate()+offsetDays); d.setHours(h,m,0,0); return d.toISOString(); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function relDate(str){ if(!str)return ''; const d=new Date(str),t=new Date(),dk=dateKey(d),tk=dateKey(t); if(dk===tk)return `Hoje, ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`; const y=new Date(t); y.setDate(t.getDate()-1); if(dk===dateKey(y))return `Ontem, ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`; return `${d.getDate()} ${MONTH_ABBR[d.getMonth()].toLowerCase()}, ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`; }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1456,8 +1457,8 @@ function openPomoModal(){
   }));
   const durBtns=document.querySelectorAll('#pomo-dur-btns button');
   durBtns.forEach(b=>{
-    b.classList.toggle('primary',parseInt(b.dataset.min)===_selectedPomoDur);
-    b.onclick=()=>{_selectedPomoDur=parseInt(b.dataset.min);durBtns.forEach(x=>x.classList.remove('primary'));b.classList.add('primary');};
+    b.classList.toggle('primary',parseInt(b.dataset.min,10)===_selectedPomoDur);
+    b.onclick=()=>{_selectedPomoDur=parseInt(b.dataset.min,10);durBtns.forEach(x=>x.classList.remove('primary'));b.classList.add('primary');};
   });
   Modal.open('modal-pomo-subject');
 }
@@ -1589,9 +1590,9 @@ function initEventBindings(){
   document.getElementById('btn-schedule-add').addEventListener('click',()=>openScheduleModal());
   document.getElementById('btn-sched-save').addEventListener('click',()=>{
     const subjectId=document.getElementById('sched-form-subject').value;
-    const dayOfWeek=parseInt(document.getElementById('sched-form-day').value);
+    const dayOfWeek=parseInt(document.getElementById('sched-form-day').value,10);
     const startTime=document.getElementById('sched-form-time').value;
-    const durationMinutes=parseInt(document.getElementById('sched-form-dur').value)||90;
+    const durationMinutes=parseInt(document.getElementById('sched-form-dur').value,10)||90;
     const label=document.getElementById('sched-form-label').value.trim();
     if(!subjectId)return;
     addScheduleEvent({subjectId,dayOfWeek,startTime,durationMinutes,label});
@@ -1654,7 +1655,7 @@ function initEventBindings(){
   document.getElementById('btn-subj-form-save').addEventListener('click',()=>{
     const name=document.getElementById('subj-form-name').value.trim();
     const icon=document.getElementById('subj-form-icon').value.trim()||'📚';
-    const target=parseInt(document.getElementById('subj-form-target').value)||10;
+    const target=parseInt(document.getElementById('subj-form-target').value,10)||10;
     const editId=document.getElementById('subj-form-edit-id').value;
     const theme=COLOR_THEMES.find(t=>t.key===_subjFormSelectedColor)||COLOR_THEMES[0];
     if(!name)return;
@@ -1884,7 +1885,7 @@ renderAll();
 setTimeout(()=>renderWeeklyAnalysis(),200);
 // Register Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  navigator.serviceWorker.register('./sw.js').catch(e=>console.warn('[PWA] SW:',e));
 }
 </script>
 </body>
