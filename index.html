@@ -774,7 +774,7 @@
   </header>
 
   <div class="app-main" id="appMain" tabindex="-1">
-  <main class="workspace-screen grid-stack grid-fallback" id="mainGrid" tabindex="-1" aria-label="Painel de estudos COLISEU">
+  <main class="workspace-screen grid-stack" id="mainGrid" tabindex="-1" aria-label="Painel de estudos COLISEU">
 
     <!-- Hero àNext Focus -->
     <div class="grid-stack-item" id="hero" gs-id="hero" gs-x="0" gs-y="0" gs-w="8" gs-h="5" gs-min-w="4" gs-min-h="4">
@@ -1299,7 +1299,8 @@ function safeCall(fn, context='runtime'){
   try { return fn(); }
   catch (err) {
     console.error(`[StudyFlow] Falha em ${context}:`, err);
-    if(typeof toast === 'function') toast('Algo falhou, mas o app segue ativo.');
+    const silent = typeof context === 'string' && (context.startsWith('startup:') || context === 'event:resize');
+    if(!silent && typeof toast === 'function') toast('Algo falhou, mas o app segue ativo.');
     return null;
   }
 }
@@ -3189,6 +3190,9 @@ function initGrid(){
   const applyResponsiveGridMode=()=>{
     const mobile=window.matchMedia('(max-width: 680px)').matches;
     gsGrid.setStatic(mobile || !gsEditMode);
+    if(mobile && !gsEditMode){
+      document.body.classList.remove('edit-mode');
+    }
   };
   applyResponsiveGridMode();
   window.matchMedia('(max-width: 680px)').addEventListener?.('change',applyResponsiveGridMode);
@@ -3214,10 +3218,21 @@ function toggleEditMode(){
     toast('Layout livre indisponível: GridStack não carregou.');
     return;
   }
-  gsEditMode = !gsEditMode;
   const btn = document.getElementById('btn-edit-layout');
+  if(!btn){
+    toast('Botão de layout não encontrado.');
+    return;
+  }
+  gsEditMode = !gsEditMode;
   const lbl = btn.querySelector('span');
   const ico = btn.querySelector('[data-lucide]');
+  if(!lbl || !ico){
+    gsEditMode = false;
+    document.body.classList.remove('edit-mode');
+    gsGrid.setStatic(true);
+    toast('Falha ao alternar modo de layout.');
+    return;
+  }
   if(gsEditMode){
     gsGrid.setStatic(false);
     document.body.classList.add('edit-mode');
@@ -3278,7 +3293,7 @@ safeCall(()=>setActiveView(getActiveView(), {track:false}), 'startup:setActiveVi
 setTimeout(()=>safeCall(()=>renderWeeklyAnalysis(), 'startup:renderWeeklyAnalysis'),200);
 // Register Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js?v=7',{updateViaCache:'none'}).catch(e=>console.warn('[PWA] SW:',e));
+  navigator.serviceWorker.register('./sw.js?v=8',{updateViaCache:'none'}).catch(e=>console.warn('[PWA] SW:',e));
 }
 </script>
 </body>
