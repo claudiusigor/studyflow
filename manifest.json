@@ -1,6 +1,6 @@
 {
-  "name": "StudyFlow — PMMG",
-  "short_name": "StudyFlow",
+  "name": "COLISEU - PMMG",
+  "short_name": "COLISEU",
   "description": "Dashboard de estudos para o concurso PMMG",
   "start_url": "./index.html",
   "scope": "./",
@@ -23,6 +23,22 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Abrir Pomodoro",
+      "short_name": "Pomodoro",
+      "description": "Abrir o painel para iniciar uma sessao de foco",
+      "url": "./index.html#pomodoro",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Registrar humor",
+      "short_name": "Humor",
+      "description": "Abrir o painel para registrar o humor do dia",
+      "url": "./index.html#mood",
+      "icons": [{ "src": "icons/nohumor.png", "sizes": "160x160" }]
     }
   ],
   "screenshots": [],
