@@ -385,7 +385,9 @@
       animation:pulse-border 2s ease-in-out infinite;
     }
 /* SECTION */
-    .grid-stack{background:none!important;padding:0!important;}
+    .grid-stack{background:none!important;padding:0!important;border:0!important;outline:none!important;box-shadow:none!important;}
+    #mainGrid{border:0!important;outline:none!important;box-shadow:none!important;}
+    #mainGrid:focus,#mainGrid:focus-visible{outline:none!important;box-shadow:none!important;}
     /* overflow:hidden clipa a scrollbar dentro do border-radius; sombra fica no wrapper */
     .grid-stack>.grid-stack-item>.grid-stack-item-content{inset:6px;overflow:hidden;border-radius:var(--r6);box-shadow:var(--shadow-card);transition:box-shadow 200ms var(--ease);}
     .grid-stack>.grid-stack-item>.grid-stack-item-content:hover{box-shadow:var(--shadow-card-hov);}
@@ -2414,10 +2416,12 @@ function setActiveView(viewId, options={}){
   updateWorkspaceHeading(nextView);
   setSidebarActive(document.querySelector(`[data-view="${nextView}"]`));
   safeCall(()=>renderWorkspace(nextView),`view:${nextView}:render`);
-  if(nextView === 'dashboard'){
-    document.getElementById('mainGrid')?.focus({preventScroll:true});
-  } else {
-    document.getElementById('workspaceView')?.focus({preventScroll:true});
+  if(options.focus !== false){
+    if(nextView === 'dashboard'){
+      document.getElementById('mainGrid')?.focus({preventScroll:true});
+    } else {
+      document.getElementById('workspaceView')?.focus({preventScroll:true});
+    }
   }
   if(options.track !== false && current !== nextView){
     Analytics.track(EVENT_NAMES.viewChange,{context:nextView});
@@ -3288,7 +3292,7 @@ safeCall(()=>lucide.createIcons(), 'startup:lucide.createIcons');
 safeCall(()=>initEventBindings(), 'startup:initEventBindings');
 safeCall(()=>renderAll(), 'startup:renderAll');
 safeCall(()=>initGrid(), 'startup:initGrid');
-safeCall(()=>setActiveView(getActiveView(), {track:false}), 'startup:setActiveView');
+safeCall(()=>setActiveView(getActiveView(), {track:false,focus:false}), 'startup:setActiveView');
 // Re-draw chart after layout settles
 setTimeout(()=>safeCall(()=>renderWeeklyAnalysis(), 'startup:renderWeeklyAnalysis'),200);
 // Register Service Worker
