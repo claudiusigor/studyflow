@@ -620,9 +620,9 @@
     .side-link.highlight:hover{background:#ff5a1f;color:#fff;}
     .side-spacer{flex:1;}
     .side-brand-copy{min-width:0;flex:1;}
-    .sidebar-toggle{margin-left:auto;width:38px;height:38px;border:1px solid var(--glass-border);border-radius:13px;background:#fff8ef;color:var(--t2);display:grid;place-items:center;cursor:pointer;transition:background 160ms var(--ease),color 160ms var(--ease),transform 160ms var(--ease);}
-    .sidebar-toggle:hover{background:#241a14;color:#fff;transform:translateY(-1px);}
-    .sidebar-toggle svg{width:17px;height:17px;}
+    .sidebar-toggle{margin-left:auto;width:34px;height:34px;border:1px solid var(--glass-border);border-radius:12px;background:rgba(255,248,239,.74);color:#6d5c50;display:grid;place-items:center;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.78);transition:background 160ms var(--ease),color 160ms var(--ease),border-color 160ms var(--ease),transform 160ms var(--ease);}
+    .sidebar-toggle:hover{background:#fff1e2;color:#241a14;border-color:#e4d0bd;transform:translateY(-1px);}
+    .sidebar-toggle-mark{font-size:1.25rem;line-height:1;font-weight:600;font-family:Georgia,'Times New Roman',serif;letter-spacing:-.12em;transform:translateX(-1px);}
     .side-upgrade{margin-top:16px;border:0;border-radius:16px;padding:13px 14px;background:linear-gradient(135deg,#ff5a1f,#ff7a1f);color:#fff;font-weight:900;box-shadow:0 18px 35px rgba(255,90,31,.25);cursor:pointer;}
     body.sidebar-collapsed .shell{grid-template-columns:86px minmax(0,1fr);}
     body.sidebar-collapsed .app-sidebar{align-items:center;padding:18px 12px;}
@@ -633,7 +633,8 @@
     body.sidebar-collapsed .side-nav{width:100%;align-items:center;gap:10px;}
     body.sidebar-collapsed .side-link{justify-content:center;width:46px;min-height:46px;padding:0;border-radius:16px;}
     body.sidebar-collapsed .side-link:hover,body.sidebar-collapsed .side-link.active{transform:translateY(-1px);}
-    body.sidebar-collapsed .sidebar-toggle{position:static;margin:0;width:44px;height:44px;border-radius:16px;background:#241a14;color:#fff;box-shadow:0 12px 28px rgba(36,26,20,.18);}
+    body.sidebar-collapsed .sidebar-toggle{position:static;margin:0;width:42px;height:42px;border-radius:15px;background:#fff8ef;color:#241a14;box-shadow:inset 0 1px 0 rgba(255,255,255,.78),0 10px 24px rgba(36,26,20,.12);}
+    body.sidebar-collapsed .sidebar-toggle-mark{transform:translateX(0);}
     .theme-switch-row{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:46px;border:0;background:transparent;color:var(--t2);border-radius:14px;padding:8px 10px;font:inherit;font-size:.82rem;font-weight:750;cursor:pointer;transition:background 160ms var(--ease),color 160ms var(--ease);}
     .theme-switch-row:hover{background:#fff1e2;color:var(--t1);}
     .theme-switch-copy{display:flex;align-items:center;gap:10px;min-width:0;}
@@ -1114,7 +1115,7 @@
     <div class="side-brand">
       <div class="side-logo"><img src="icons/pmmg-logo.png" alt="" draggable="false"></div>
       <div class="side-brand-copy"><div class="side-title">COLISEU</div><div class="side-subtitle">Área de estudos PMMG</div></div>
-      <button class="sidebar-toggle" type="button" id="sidebar-toggle" aria-label="Recolher menu lateral" aria-expanded="true" title="Recolher menu"><i data-lucide="panel-left-close"></i></button>
+      <button class="sidebar-toggle" type="button" id="sidebar-toggle" aria-label="Recolher menu lateral" aria-expanded="true" title="Recolher menu"><span class="sidebar-toggle-mark" aria-hidden="true">‹</span></button>
     </div>
     <div class="side-section">Principal</div>
     <nav class="side-nav" aria-label="Seções do painel">
@@ -1159,7 +1160,7 @@
       </div>
     </div>
     <nav class="topbar-right" aria-label="Ações rápidas">
-      <button class="topbar-pill" type="button" aria-label="Período mensal"><i data-lucide="calendar-range"></i><span>Mensal</span></button>
+      <button class="topbar-pill" id="topbar-period-pill" type="button" title="Abrir agenda mensal" aria-label="Abrir agenda mensal"><i data-lucide="calendar-range"></i><span>Mensal</span></button>
       <button class="topbar-pill" id="topbar-date-pill" type="button" title="Ver calendário de humor" aria-label="Ver calendário de humor"><i data-lucide="calendar"></i><span id="dateDisplay">--</span></button>
       <div class="streak-pill" aria-live="polite"><i data-lucide="flame"></i><span id="streak-count">0 dias</span></div>
       <button class="topbar-icon-btn" id="btn-notifications" type="button" title="Ver notificações" aria-label="Ver notificações"><i data-lucide="bell"></i></button>
@@ -4093,8 +4094,7 @@ function setSidebarCollapsed(collapsed){
   btn.setAttribute('aria-expanded', String(!collapsed));
   btn.setAttribute('aria-label', collapsed ?'Expandir menu lateral' : 'Recolher menu lateral');
   btn.setAttribute('title', collapsed ?'Expandir menu' : 'Recolher menu');
-  btn.innerHTML='<i data-lucide="'+(collapsed ?'panel-left-open' : 'panel-left-close')+'"></i>';
-  lucide.createIcons({nodes:[btn]});
+  btn.innerHTML='<span class="sidebar-toggle-mark" aria-hidden="true">'+(collapsed ?'›' : '‹')+'</span>';
 }
 function initSidebarInteractions(){
   setSidebarCollapsed(!!AppDB._get('sf_sidebar_collapsed', false));
@@ -4375,6 +4375,10 @@ function initEventBindings(){
   initSidebarInteractions();
   initThemeMode();
   on('btn-notifications','click',()=>toast('Sem notificações no momento.'));
+  on('topbar-period-pill','click',()=>{
+    WorkspaceState.agendaMonthOffset = 0;
+    setActiveView('agenda');
+  });
   on('side-edit-layout','click',()=>{document.getElementById('btn-edit-layout').click();setSidebarActive(document.querySelector(`[data-view="${getActiveView()}"]`));});
   on('side-focus-now','click',()=>{ document.getElementById('btn-next-session-start').click(); });
   on('side-pmmg-reset','click',()=>{openPMMGEdital();setSidebarActive(document.querySelector(`[data-view="${getActiveView()}"]`));});
@@ -4747,7 +4751,7 @@ safeCall(()=>setActiveView(getActiveView(), {track:false,focus:false}), 'startup
 setTimeout(()=>safeCall(()=>renderWeeklyAnalysis(), 'startup:renderWeeklyAnalysis'),200);
 // Register Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js?v=14',{updateViaCache:'none'}).catch(e=>console.warn('[PWA] SW:',e));
+  navigator.serviceWorker.register('./sw.js?v=16',{updateViaCache:'none'}).catch(e=>console.warn('[PWA] SW:',e));
 }
 </script>
 </body>
