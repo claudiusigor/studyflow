@@ -1,4 +1,4 @@
-const CACHE = 'studyflow-v25';
+const CACHE = 'studyflow-v26';
 const PRECACHE = [
   './',
   './index.html',
@@ -61,6 +61,12 @@ self.addEventListener('fetch', event => {
 
   if (isSameOrigin || isApprovedExternal) {
     event.respondWith(staleWhileRevalidate(event.request));
+  }
+});
+
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
   }
 });
 

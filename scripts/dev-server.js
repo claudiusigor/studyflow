@@ -55,7 +55,7 @@ const server = http.createServer((req, res) => {
       'Content-Type': contentType(filePath),
     };
 
-    if (path.basename(filePath) === 'sw.js') {
+    if (path.basename(filePath) === 'sw.js' || path.extname(filePath).toLowerCase() === '.html') {
       headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
     }
 

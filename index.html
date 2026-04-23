@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -294,7 +294,8 @@
     .subj-card:hover{background:var(--glass-hov);}
     .subj-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--s3);}
     .subj-left{display:flex;align-items:center;gap:8px;}
-    .subj-icon{width:32px;height:32px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;font-size:0.9rem;}
+    .subj-icon{width:32px;height:32px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;font-size:0.9rem;color:var(--t1);}
+    .subj-icon svg{width:16px;height:16px;}
     .subj-name{font-size:0.85rem;font-weight:700;}
     .subj-time{font-size:0.72rem;color:var(--t2);font-weight:500;}
     .subj-pct{font-size:0.78rem;font-weight:700;}
@@ -614,8 +615,8 @@
     .shell{display:grid;grid-template-columns:252px minmax(0,1fr);grid-template-rows:auto 1fr;gap:18px;min-height:100vh;padding:14px 16px 32px;}
     .app-sidebar{grid-column:1;grid-row:1 / span 2;position:sticky;top:14px;height:calc(100vh - 28px);display:flex;flex-direction:column;background:rgba(255,253,249,.86);border:1px solid rgba(234,223,210,.9);border-radius:28px;padding:18px 14px;box-shadow:0 24px 80px rgba(68,45,28,.1);backdrop-filter:blur(18px);z-index:4;}
     .side-brand{display:flex;align-items:center;gap:10px;padding:2px 6px 18px;border-bottom:1px solid var(--glass-border);}
-    .side-logo{width:34px;height:34px;border-radius:12px;background:linear-gradient(135deg,#ff5a1f,#ff9d42);display:grid;place-items:center;color:white;box-shadow:0 10px 22px rgba(255,90,31,.28);}
-    .side-logo img{width:28px;height:28px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.18));}
+    .side-logo{width:68px;height:68px;border-radius:0;background:transparent;display:grid;place-items:center;color:white;box-shadow:none;}
+    .side-logo img{width:68px;height:68px;object-fit:contain;filter:drop-shadow(0 2px 5px rgba(0,0,0,.12));}
     .side-title{font-weight:900;letter-spacing:-.04em;font-size:1.02rem;line-height:1;}
     .side-subtitle{font-size:.68rem;color:var(--t2);margin-top:2px;}
     .side-section{font-size:.64rem;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);font-weight:800;margin:18px 8px 8px;}
@@ -635,8 +636,8 @@
     body.sidebar-collapsed .shell{grid-template-columns:86px minmax(0,1fr);}
     body.sidebar-collapsed .app-sidebar{align-items:center;padding:18px 12px;}
     body.sidebar-collapsed .side-brand{width:100%;flex-direction:column;justify-content:center;gap:12px;padding:0 0 18px;margin-bottom:14px;border-bottom:1px solid var(--glass-border);}
-    body.sidebar-collapsed .side-logo{width:42px;height:42px;border-radius:16px;}
-    body.sidebar-collapsed .side-logo img{width:31px;height:31px;}
+    body.sidebar-collapsed .side-logo{width:84px;height:84px;border-radius:0;}
+    body.sidebar-collapsed .side-logo img{width:84px;height:84px;}
     body.sidebar-collapsed .side-brand-copy,body.sidebar-collapsed .side-section,body.sidebar-collapsed .side-link span,body.sidebar-collapsed .side-upgrade{display:none;}
     body.sidebar-collapsed .side-nav{width:100%;align-items:center;gap:10px;}
     body.sidebar-collapsed .side-link{justify-content:center;width:46px;min-height:46px;padding:0;border-radius:16px;}
@@ -763,7 +764,7 @@
     .workspace-hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.9fr);gap:18px;align-items:stretch;}
     .workspace-header-card{position:relative;padding:30px 32px;border-radius:28px;overflow:hidden;background:radial-gradient(circle at 74% 22%,rgba(255,188,99,.68) 0 9%,transparent 28%),radial-gradient(circle at 79% 50%,rgba(255,90,31,.54) 0 12%,transparent 38%),linear-gradient(135deg,#231007 0%,#4b1c10 46%,#e45a1f 100%);border:1px solid rgba(255,143,75,.18);color:#fff;box-shadow:0 24px 70px rgba(116,48,18,.14);isolation:isolate;}
     .workspace-header-card::before{content:'';position:absolute;inset:-26%;background:repeating-linear-gradient(104deg,rgba(255,255,255,.12) 0 2px,transparent 2px 9px);opacity:.32;transform:rotate(-7deg);z-index:-2;}
-    .workspace-header-card::after{content:'';position:absolute;right:7%;top:22%;width:220px;height:108px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.03));box-shadow:inset 0 1px 0 rgba(255,255,255,.26),0 18px 46px rgba(255,90,31,.14);z-index:-1;}
+    .workspace-header-card::after{content:none;}
     .workspace-kicker{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.76);margin-bottom:14px;}
     .workspace-kicker svg{width:15px;height:15px;}
     .workspace-title-xl{font-family:Georgia,'Times New Roman',serif;font-size:clamp(2rem,3.2vw,3.4rem);line-height:1;letter-spacing:-.06em;color:#fff;max-width:min(720px,100%);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;overflow-wrap:anywhere;text-wrap:balance;}
@@ -840,7 +841,7 @@
     .grid-stack.grid-fallback>.grid-stack-item{position:relative!important;left:auto!important;top:auto!important;transform:none!important;width:auto!important;height:auto!important;min-height:220px!important;}
     .grid-stack.grid-fallback>.grid-stack-item>.grid-stack-item-content{position:relative!important;inset:auto!important;width:100%!important;height:100%!important;min-height:inherit!important;}
     .grid-stack.grid-fallback #hero{grid-column:span 12;min-height:320px!important;}
-    .grid-stack.grid-fallback #schedule,.grid-stack.grid-fallback #today,.grid-stack.grid-fallback #tasks,.grid-stack.grid-fallback #pomodoro,.grid-stack.grid-fallback #note,.grid-stack.grid-fallback #analysis,.grid-stack.grid-fallback #goals{grid-column:span 4;}
+    .grid-stack.grid-fallback #schedule,.grid-stack.grid-fallback #today,.grid-stack.grid-fallback #tasks,.grid-stack.grid-fallback #note,.grid-stack.grid-fallback #analysis,.grid-stack.grid-fallback #goals{grid-column:span 4;}
     .grid-stack.grid-fallback #subjects{grid-column:span 8;}
     @media(max-width:980px){.grid-stack.grid-fallback{grid-template-columns:1fr}.grid-stack.grid-fallback>.grid-stack-item{grid-column:1!important;}}
     .grid-stack>.grid-stack-item>.grid-stack-item-content{inset:8px;border-radius:26px;box-shadow:var(--shadow-card);transition:transform 220ms var(--ease),box-shadow 220ms var(--ease),opacity 220ms var(--ease),filter 220ms var(--ease);}
@@ -865,7 +866,7 @@
     .seg-focus{background:linear-gradient(90deg,#2563eb,#60a5fa);box-shadow:none;}.seg-rest{background:linear-gradient(90deg,#168a5b,#58c98b);box-shadow:none;}
     .next-session{position:relative;height:100%;min-height:240px;display:flex;flex-direction:column;justify-content:center;margin:0;padding:30px;border:0;border-radius:26px;overflow:hidden;background:radial-gradient(circle at 72% 12%,rgba(255,177,79,.9) 0 9%,transparent 29%),radial-gradient(circle at 78% 40%,rgba(255,90,31,.72) 0 12%,transparent 36%),linear-gradient(135deg,#1d0f0a 0%,#402018 45%,#d55320 100%);color:#fff;isolation:isolate;box-shadow:0 22px 70px rgba(116,48,18,.18);}
     .next-session::before{content:'';position:absolute;inset:-30%;background:repeating-linear-gradient(105deg,rgba(255,255,255,.16) 0 2px,transparent 2px 8px);opacity:.35;transform:rotate(-8deg);z-index:-1;}
-    .next-session::after{content:'';position:absolute;right:8%;top:18%;width:250px;height:130px;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.08);backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 rgba(255,255,255,.25);z-index:-1;}
+    .next-session::after{content:none;}
     .next-session-kicker{color:rgba(255,255,255,.72);font-size:.72rem;}
     .next-session-title{max-width:520px;font-family:Georgia,'Times New Roman',serif;font-size:clamp(2rem,4vw,3.4rem);line-height:.96;letter-spacing:0;color:#fff;text-wrap:balance;}
     .next-session-detail{margin-top:8px;font-size:1rem;font-weight:850;color:rgba(255,248,238,.92);}
@@ -953,43 +954,36 @@
     .field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible,#note-form-new-insight:focus-visible{outline:2px solid #241a14!important;outline-offset:3px;box-shadow:0 0 0 5px rgba(255,90,31,.18)!important;}
     body.theme-dark .field input:focus-visible,body.theme-dark .field select:focus-visible,body.theme-dark .field textarea:focus-visible,body.theme-dark #note-form-new-insight:focus-visible{outline-color:#ff9554!important;box-shadow:0 0 0 5px rgba(255,149,84,.18)!important;}
 
-    .next-session{min-height:270px;padding:34px 36px;display:grid;grid-template-columns:minmax(0,1fr) minmax(286px,360px);align-items:center;gap:24px;background:radial-gradient(circle at 82% 38%,rgba(255,250,241,.84) 0 12%,rgba(255,207,169,.42) 28%,transparent 52%),radial-gradient(circle at 55% 15%,rgba(255,198,94,.38) 0 8%,transparent 31%),linear-gradient(135deg,#ff7b3b 0%,#ff8b51 44%,#fff7ef 100%);box-shadow:0 24px 70px rgba(116,48,18,.16);}
-    .next-session::after{right:-7%;top:-18%;width:420px;height:420px;border:0;background:radial-gradient(circle,rgba(255,255,255,.48),rgba(255,255,255,.06) 52%,transparent 70%);box-shadow:none;backdrop-filter:none;pointer-events:none;}
-    .next-session-copy{min-width:0;position:relative;z-index:1;}
+    .next-session{min-height:270px;padding:34px 36px;display:grid;grid-template-columns:minmax(0,1fr) minmax(330px,390px);align-items:stretch;gap:24px;background:radial-gradient(circle at 72% 12%,rgba(255,177,79,.9) 0 9%,transparent 29%),radial-gradient(circle at 78% 40%,rgba(255,90,31,.72) 0 12%,transparent 36%),linear-gradient(135deg,#1d0f0a 0%,#402018 45%,#d55320 100%);box-shadow:0 24px 70px rgba(116,48,18,.16);}
+    .next-session::after{content:none;}
+    .next-session-copy{min-width:0;position:relative;z-index:1;display:flex;flex-direction:column;height:100%;padding:6px 0;}
     .next-session-title{font-size:clamp(1.95rem,3.05vw,3rem);line-height:1.02;max-width:min(610px,100%);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;overflow-wrap:anywhere;text-wrap:balance;}
     .next-session-detail{letter-spacing:-.01em;max-width:min(780px,100%);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere;line-height:1.35;}
     .next-session-meta span{min-width:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere;}
     .next-session-chip{display:inline-flex;align-items:center;gap:6px;width:fit-content;max-width:min(100%,540px);margin-top:14px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.84);font-size:.75rem;font-weight:850;line-height:1.25;white-space:normal;}
-    .next-session-actions{max-width:420px;}
+    .next-session-actions{max-width:440px;display:grid;grid-template-columns:minmax(180px,1fr) minmax(170px,1fr);gap:12px;align-items:center;margin-top:auto;}
+    .next-session-actions .btn-glass{min-height:48px;padding:0 18px;border-radius:14px;}
     .next-session-actions #btn-next-session-start{background:#fffdf9;color:#241a14;border-color:rgba(255,255,255,.72);box-shadow:none;}
     .next-session-actions #btn-next-session-start:hover{background:#fff4e8;color:#241a14;box-shadow:none;}
-    .hero-pomodoro{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-width:0;color:#2b211b;}
-    .hero-pomodoro-ring{position:relative;width:190px;aspect-ratio:1;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 50% 54%,rgba(255,253,249,.78),rgba(255,245,236,.44) 58%,rgba(255,255,255,0) 60%);}
-    .hero-pomodoro-ring svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);filter:drop-shadow(0 14px 26px rgba(91,44,25,.08));}
-    .hero-pomodoro-track,.hero-pomodoro-progress{fill:none;stroke-width:8;stroke-linecap:round;}
-    .hero-pomodoro-track{stroke:rgba(255,255,255,.9);}
-    .hero-pomodoro-progress{stroke:#ff5a1f;stroke-dasharray:465;stroke-dashoffset:465;transition:stroke-dashoffset 1s linear;}
-    .hero-pomodoro-center{position:relative;width:120px;aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:rgba(255,253,249,.72);backdrop-filter:blur(10px);box-shadow:inset 0 1px 0 rgba(255,255,255,.72);}
-    .hero-pomodoro-label{font-size:.6rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:rgba(76,58,48,.58);}
-    .hero-pomodoro-center strong{margin-top:10px;font-size:2rem;line-height:.9;font-weight:900;letter-spacing:0;color:#2b211b;}
-    .hero-pomodoro-unit{margin-top:5px;font-size:.68rem;font-weight:850;color:rgba(76,58,48,.76);}
-    .hero-pomodoro-subject{max-width:112px;margin-top:10px;padding:5px 8px;border-radius:8px;background:rgba(255,253,249,.86);border:1px solid rgba(234,223,210,.82);font-size:.62rem;font-weight:850;color:#6b5547;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .hero-pomodoro-phase{font-size:.68rem;font-weight:900;letter-spacing:.09em;text-transform:uppercase;color:rgba(76,58,48,.58);}
-    .hero-pomodoro-actions{display:grid;grid-template-columns:54px minmax(104px,1fr) minmax(98px,1fr);gap:10px;width:min(100%,330px);}
-    .hero-pomodoro-btn{min-height:42px;border:1px solid rgba(234,223,210,.86);border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-size:.78rem;font-weight:900;cursor:pointer;transition:transform 150ms var(--ease),background 150ms var(--ease),border-color 150ms var(--ease),opacity 150ms var(--ease);}
+    .hero-pomodoro{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0;height:100%;padding:6px 0;color:#fff7ef;text-align:center;}
+    .hero-pomodoro-ring{position:relative;width:min(100%,270px);display:flex;flex-direction:column;align-items:center;gap:11px;margin-top:auto;}
+    .hero-pomodoro-ring svg{display:none;}
+    .hero-pomodoro-center{position:relative;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+    .hero-pomodoro-center::after{content:'';order:4;width:min(100%,230px);height:3px;margin-top:13px;border-radius:999px;background:linear-gradient(90deg,rgba(255,255,255,.12),rgba(255,255,255,.82) var(--hero-pomo-progress,0%),rgba(255,255,255,.2) var(--hero-pomo-progress,0%),rgba(255,255,255,.1));box-shadow:0 0 18px rgba(255,255,255,.18);}
+    .hero-pomodoro-label{font-size:.66rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,244,234,.78);}
+    .hero-pomodoro-center strong{margin-top:12px;font-size:clamp(2.6rem,5vw,4.25rem);line-height:.86;font-weight:900;letter-spacing:0;color:#fff7ef;text-shadow:0 16px 34px rgba(64,20,9,.18);}
+    .hero-pomodoro-unit{margin-top:6px;font-size:.76rem;font-weight:900;color:rgba(255,244,234,.82);}
+    .hero-pomodoro-subject{max-width:min(100%,230px);margin-top:18px;padding:0;border:0;background:transparent;font-size:.78rem;font-weight:900;color:#fff4ea;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .hero-pomodoro-phase{font-size:.7rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,244,234,.72);}
+    .hero-pomodoro-actions{display:grid;grid-template-columns:54px minmax(118px,1fr) minmax(118px,1fr);gap:12px;width:100%;max-width:390px;align-items:center;margin-top:auto;}
+    .hero-pomodoro-btn{min-height:48px;border:1px solid rgba(234,223,210,.86);border-radius:14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-size:.78rem;font-weight:900;cursor:pointer;transition:transform 150ms var(--ease),background 150ms var(--ease),border-color 150ms var(--ease),opacity 150ms var(--ease);}
     .hero-pomodoro-btn:active{transform:scale(.98);}
     .hero-pomodoro-btn svg{width:15px;height:15px;}
     .hero-pomodoro-btn.ghost{background:#fffdf9;color:#6b5547;}
     .hero-pomodoro-btn.primary{background:#ff5a1f;border-color:#ff5a1f;color:#fff;}
     .hero-pomodoro-btn.done{background:#eaf8f0;border-color:#ccebd9;color:#168a5b;}
     .hero-pomodoro-btn:disabled{opacity:.48;cursor:not-allowed;}
-    body.theme-dark .next-session{background:radial-gradient(circle at 82% 38%,rgba(255,223,199,.2) 0 12%,rgba(255,130,70,.22) 28%,transparent 52%),radial-gradient(circle at 55% 15%,rgba(255,198,94,.16) 0 8%,transparent 31%),linear-gradient(135deg,#2b120b 0%,#6a2816 54%,#ff6a2c 100%);}
-    body.theme-dark .hero-pomodoro{color:#fff4ea;}
-    body.theme-dark .hero-pomodoro-center{background:rgba(32,20,14,.48);box-shadow:inset 0 1px 0 rgba(255,255,255,.18);}
-    body.theme-dark .hero-pomodoro-center strong{color:#fff7ef;}
-    body.theme-dark .hero-pomodoro-label,body.theme-dark .hero-pomodoro-unit,body.theme-dark .hero-pomodoro-phase{color:rgba(255,244,234,.72);}
-    body.theme-dark .hero-pomodoro-subject{background:rgba(36,26,20,.78);border-color:rgba(255,255,255,.14);color:#ffe4d1;}
-    body.theme-dark .hero-pomodoro-track{stroke:rgba(255,255,255,.78);}
+    body.theme-dark .next-session{background:radial-gradient(circle at 72% 12%,rgba(255,177,79,.5) 0 9%,transparent 29%),radial-gradient(circle at 78% 40%,rgba(255,90,31,.52) 0 12%,transparent 36%),linear-gradient(135deg,#170d09 0%,#331a13 45%,#a84119 100%);}
 
     .grid-stack>.grid-stack-item>.grid-stack-item-content{border-radius:28px;animation:card-rise-soft .22s var(--ease) both;}
     .card{border-radius:28px;padding:24px;border-color:#eadfd2;}
@@ -1038,15 +1032,15 @@
     }
     @media(max-width:680px){
       .next-session{min-height:0;padding:26px;grid-template-columns:1fr;}
-      .next-session::after{opacity:.42;width:260px;height:260px;right:-90px;top:12px;}
+      .next-session::after{content:none;}
       .next-session-title{font-size:clamp(1.95rem,10vw,2.2rem);max-width:100%;}
       .next-session-detail{max-width:100%;}
-      .next-session-actions{flex-direction:column;max-width:none;}
+      .next-session-actions{grid-template-columns:1fr;max-width:none;}
       .hero-pomodoro{margin-top:4px;}
-      .hero-pomodoro-ring{width:196px;}
-      .hero-pomodoro-center{width:126px;}
+      .hero-pomodoro-ring{width:100%;}
+      .hero-pomodoro-center{width:100%;}
       .hero-pomodoro-center strong{font-size:1.95rem;}
-      .hero-pomodoro-actions{grid-template-columns:50px 1fr 1fr;}
+      .hero-pomodoro-actions{grid-template-columns:50px 1fr 1fr;gap:8px;}
       .schedule-week-strip{gap:5px;}
       .schedule-day-pill{min-height:46px;padding:7px 3px;}
     }
@@ -1072,10 +1066,7 @@
     .subjects-hero-card .btn-glass.secondary,.subjects-hero-card .btn-glass:not(.primary):not(.tertiary):not(.ghost){background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.24);color:#fff;}
     .subjects-hero-card .btn-glass.secondary:hover,.subjects-hero-card .btn-glass:not(.primary):not(.tertiary):not(.ghost):hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3);color:#fff;}
     .subjects-hero-visual{position:relative;display:flex;align-items:center;justify-content:center;min-width:0;}
-    .subjects-hero-capsule{position:relative;width:100%;max-width:258px;height:118px;border-radius:999px;background:linear-gradient(135deg,rgba(255,186,112,.92),rgba(255,116,44,.96));border:1px solid rgba(255,245,235,.48);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 0 0 10px rgba(255,122,38,.08),0 20px 50px rgba(255,90,31,.26);}
-    .subjects-hero-capsule::before,.subjects-hero-capsule::after{content:'';position:absolute;border-radius:50%;background:rgba(255,214,165,.88);filter:blur(.2px);opacity:.92;}
-    .subjects-hero-capsule::before{width:10px;height:10px;right:22px;top:28px;box-shadow:0 0 18px rgba(255,214,165,.45);}
-    .subjects-hero-capsule::after{width:7px;height:7px;right:36px;bottom:24px;box-shadow:0 0 12px rgba(255,214,165,.35);}
+    .subjects-hero-capsule{display:none;}
     .subjects-hero-note{position:absolute;right:22px;bottom:18px;display:inline-flex;align-items:center;justify-content:center;padding:9px 14px;border-radius:999px;background:rgba(78,34,19,.34);border:1px solid rgba(255,255,255,.1);font-size:.74rem;font-weight:800;color:rgba(255,243,235,.9);backdrop-filter:blur(12px);}
     .subjects-overview-block{background:rgba(255,253,249,.82);border:1px solid rgba(234,223,210,.86);border-radius:30px;padding:28px;box-shadow:0 18px 55px rgba(68,45,28,.06);}
     .subject-overview-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:22px;}
@@ -1261,7 +1252,7 @@
 
 
     <!-- 1  -  Schedule -->
-    <div class="grid-stack-item" id="schedule" gs-id="schedule" gs-x="0" gs-y="5" gs-w="4" gs-h="7" gs-min-w="2" gs-min-h="4">
+    <div class="grid-stack-item" id="schedule" gs-id="schedule" gs-x="4" gs-y="6" gs-w="4" gs-h="7" gs-min-w="2" gs-min-h="4">
       <div class="grid-stack-item-content">
         <div class="card">
           <div class="drag-handle"></div>
@@ -1283,7 +1274,7 @@
     </div>
 
     <!-- 2  -  Today's Hours -->
-    <div class="grid-stack-item" id="today" gs-id="today" gs-x="8" gs-y="0" gs-w="4" gs-h="5" gs-min-w="2" gs-min-h="4">
+    <div class="grid-stack-item" id="today" gs-id="today" gs-x="0" gs-y="6" gs-w="4" gs-h="5" gs-min-w="2" gs-min-h="4">
       <div class="grid-stack-item-content">
         <div class="card">
           <div class="drag-handle"></div>
@@ -1312,7 +1303,7 @@
     </div>
 
     <!-- 3  -  Tasks -->
-    <div class="grid-stack-item" id="tasks" gs-id="tasks" gs-x="8" gs-y="5" gs-w="4" gs-h="13" gs-min-w="2" gs-min-h="6">
+    <div class="grid-stack-item" id="tasks" gs-id="tasks" gs-x="8" gs-y="6" gs-w="4" gs-h="13" gs-min-w="2" gs-min-h="6">
       <div class="grid-stack-item-content">
         <div class="card card-dark">
           <div class="drag-handle"></div>
@@ -1342,43 +1333,8 @@
       </div>
     </div>
 
-    <!-- 4  -  Pomodoro -->
-    <div class="grid-stack-item" id="pomodoro" gs-id="pomodoro" gs-x="4" gs-y="5" gs-w="4" gs-h="6" gs-min-w="2" gs-min-h="5">
-      <div class="grid-stack-item-content">
-        <div class="card card-indigo">
-          <div class="drag-handle"></div>
-          <div class="card-hd">
-            <div class="card-hd-left">
-              <div class="icon-badge ib-violet"><i data-lucide="circle-dot"></i></div>
-              <span class="card-label">Pomodoro</span>
-            </div>
-            <div class="card-hd-right">
-              <button class="menu-btn widget-menu-btn" type="button" title="Redimensionar" aria-label="Redimensionar cartao"><i data-lucide="more-horizontal"></i></button>
-            </div>
-          </div>
-          <div class="pomo-wrap">
-            <div class="pomo-ring-wrap">
-              <svg width="100" height="100" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="7"/>
-                <circle cx="50" cy="50" r="42" fill="none" stroke="url(#pg)" stroke-width="7" stroke-linecap="round" stroke-dasharray="263.89" id="pomoCircle" stroke-dashoffset="263.89" style="transition: stroke-dashoffset 1s linear, filter 1s linear, stroke 0.3s"/>
-                <defs><linearGradient id="pg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ff8754"/><stop offset="100%" stop-color="#ff5a1f"/></linearGradient></defs>
-              </svg>
-              <span class="pomo-time" id="pomoDisplay">25:00</span>
-            </div>
-            <div id="pomo-subject-chip"></div>
-            <span class="pomo-phase" id="pomoPhase">Sessão de Foco</span>
-            <div class="pomo-btns">
-              <button class="btn-glass" id="btn-pomo-reset" style="flex:0.6" title="Resetar"><i data-lucide="rotate-ccw"></i></button>
-              <button class="btn-glass primary" id="btn-pomo-main" style="flex:1"><i data-lucide="play" id="pomoIcon"></i><span id="pomoBtnTxt">Iniciar</span></button>
-              <button class="btn-glass" id="btn-pomo-finish" style="display:none; flex:1; background:var(--emerald-s); color:var(--emerald-l); border-color:rgba(16,185,129,0.3);" title="Finalizar antecipadamente"><i data-lucide="check-check"></i><span style="font-size:0.75rem">Pronto</span></button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- 5  -  Note -->
-    <div class="grid-stack-item" id="note" gs-id="note" gs-x="0" gs-y="12" gs-w="4" gs-h="7" gs-min-w="2" gs-min-h="4">
+    <div class="grid-stack-item" id="note" gs-id="note" gs-x="4" gs-y="13" gs-w="4" gs-h="7" gs-min-w="2" gs-min-h="4">
       <div class="grid-stack-item-content">
         <div class="card session-note-card">
           <div class="drag-handle"></div>
@@ -1442,7 +1398,7 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
     </div>
 
     <!-- 6  -  Weekly Analysis -->
-    <div class="grid-stack-item" id="analysis" gs-id="analysis" gs-x="4" gs-y="11" gs-w="4" gs-h="6" gs-min-w="2" gs-min-h="4">
+    <div class="grid-stack-item" id="analysis" gs-id="analysis" gs-x="0" gs-y="11" gs-w="4" gs-h="6" gs-min-w="2" gs-min-h="4">
       <div class="grid-stack-item-content">
         <div class="card">
           <div class="drag-handle"></div>
@@ -1472,7 +1428,7 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
     </div>
 
     <!-- 7  -  Subjects (w=8) -->
-    <div class="grid-stack-item" id="subjects" gs-id="subjects" gs-x="0" gs-y="19" gs-w="8" gs-h="10" gs-min-w="3" gs-min-h="5">
+    <div class="grid-stack-item" id="subjects" gs-id="subjects" gs-x="0" gs-y="20" gs-w="8" gs-h="10" gs-min-w="3" gs-min-h="5">
       <div class="grid-stack-item-content">
         <div class="card">
           <div class="drag-handle"></div>
@@ -1492,7 +1448,7 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
     </div>
 
     <!-- 8  -  Monthly Goals -->
-    <div class="grid-stack-item" id="goals" gs-id="goals" gs-x="8" gs-y="18" gs-w="4" gs-h="11" gs-min-w="2" gs-min-h="5">
+    <div class="grid-stack-item" id="goals" gs-id="goals" gs-x="8" gs-y="19" gs-w="4" gs-h="11" gs-min-w="2" gs-min-h="5">
       <div class="grid-stack-item-content">
         <div class="card">
           <div class="drag-handle"></div>
@@ -1552,6 +1508,7 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
   <div class="modal-card" tabindex="-1">
     <div class="modal-title" id="modal-schedule-title">Nova aula / evento</div>
     <div class="field"><label for="sched-form-subject">Matéria</label><select id="sched-form-subject"></select></div>
+    <div class="field"><label for="sched-form-topic">Conteúdo</label><select id="sched-form-topic"></select></div>
     <div class="two-col">
       <div class="field"><label for="sched-form-date">Data</label><input type="date" id="sched-form-date"></div>
       <div class="field"><label for="sched-form-repeat">Repetição</label>
@@ -1578,6 +1535,7 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
   <div class="modal-card" tabindex="-1">
     <div class="modal-title" id="modal-add-task-title">Nova tarefa</div>
     <div class="field"><label for="task-form-subject">Matéria</label><select id="task-form-subject"></select></div>
+    <div class="field"><label for="task-form-topic">Conteúdo vinculado</label><select id="task-form-topic"></select></div>
     <div class="field"><label for="task-form-title">Título da tarefa</label><input type="text" id="task-form-title" placeholder="Ex: Resolver exercícios cap. 4"></div>
     <div class="modal-footer">
       <button class="btn-glass secondary" style="flex:none;padding:9px 20px;" onclick="Modal.close('modal-add-task')">Cancelar</button>
@@ -1636,7 +1594,7 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
       <div style="font-size:0.82rem;font-weight:700;color:var(--t2);margin-bottom:var(--s4)" id="subj-form-subtitle">Nova Matéria</div>
       <div class="two-col">
         <div class="field"><label for="subj-form-name">Nome</label><input type="text" id="subj-form-name" placeholder="Ex: Química"></div>
-        <div class="field"><label for="subj-form-icon">Ícone (emoji)</label><input type="text" id="subj-form-icon" placeholder="⚖️" maxlength="2" style="font-size:1.2rem;text-align:center"></div>
+        <div class="field"><label for="subj-form-icon">Ícone (emoji)</label><input type="text" id="subj-form-icon" placeholder="?" maxlength="2" style="font-size:1.2rem;text-align:center"></div>
       </div>
       <div class="field">
         <label id="subj-color-label">Cor do tema</label>
@@ -1666,7 +1624,7 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
   <div class="modal-card" style="max-width:420px;padding:24px;" tabindex="-1">
     <div class="modal-title" style="text-align:center;margin-bottom:20px;" id="modal-mood-title">Como você está hoje</div>
     <div class="mood-picker-row" id="mood-picker-row">
-      <button class="mood-emoji-btn" type="button" data-mood="icons/1.png" aria-label="Registrar humor: Ótimo"><img src="icons/1.png" alt="Ótimo" draggable="false"></button>
+      <button class="mood-emoji-btn" type="button" data-mood="icons/1.png" aria-label="Registrar humor: ?timo"><img src="icons/1.png" alt="?timo" draggable="false"></button>
       <button class="mood-emoji-btn" type="button" data-mood="icons/2.png" aria-label="Registrar humor: Bem"><img src="icons/2.png" alt="Bem" draggable="false"></button>
       <button class="mood-emoji-btn" type="button" data-mood="icons/3.png" aria-label="Registrar humor: Focado"><img src="icons/3.png" alt="Focado" draggable="false"></button>
       <button class="mood-emoji-btn" type="button" data-mood="icons/4.png" aria-label="Registrar humor: Cansado"><img src="icons/4.png" alt="Cansado" draggable="false"></button>
@@ -1714,8 +1672,8 @@ const COLOR_THEMES = [
   {key:'violet', colorVar:'--violet-l', bg:'rgba(139,92,246,0.18)', grad:'linear-gradient(90deg,#8b5cf6,#a78bfa)', glow:'rgba(139,92,246,0.5)', swatch:'#8b5cf6', lucide:'globe'},
 ];
 
-const DEFAULT_POMO = {phase:'focus',sessionCount:0,focusDurationMinutes:25,breakDurationMinutes:5,longBreakDurationMinutes:15,longBreakAfter:4,activeSubjectId:null,activeTopicId:null,activeSessionId:null,startedAt:null,leftSec:null,totalSec:null,isRunning:false,lastTickAt:null};
-const STORAGE_VERSION = 7;
+const DEFAULT_POMO = {phase:'focus',sessionCount:0,focusDurationMinutes:25,breakDurationMinutes:10,longBreakDurationMinutes:15,longBreakAfter:4,activeSubjectId:null,activeTopicId:null,activeSessionId:null,startedAt:null,leftSec:null,totalSec:null,isRunning:false,lastTickAt:null};
+const STORAGE_VERSION = 8;
 const VIEW_IDS = ['dashboard','agenda','tasks','pomodoro','subjects','mood'];
 const PMMG_EDITAL_URL = 'https://pmminas.com/wp-content/uploads/2024/05/EDITAL-VERTICALIZADO-CFSD-PMMG-2025-@pmminas-METODO-OBA-OTAVIO-SOUZA.pdf';
 const TOPIC_STATUS_ORDER = ['not_started','studying','review','done'];
@@ -1816,6 +1774,16 @@ function getScheduleEventDate(eventItem){
   if(eventItem?.date && parseLocalDate(eventItem.date)) return eventItem.date;
   return scheduleDateForWeekday(eventItem?.dayOfWeek ?? new Date().getDay());
 }
+function getScheduleEventRange(eventItem, referenceDate=null){
+  const date = parseLocalDate(referenceDate || getScheduleEventDate(eventItem));
+  if(!date) return null;
+  const startMin = timeToMin(eventItem.startTime || '08:00');
+  const start = new Date(date);
+  start.setHours(Math.floor(startMin/60), startMin%60, 0, 0);
+  const end = new Date(start);
+  end.setMinutes(end.getMinutes() + Math.max(15, parseInt(eventItem.durationMinutes, 10) || 90));
+  return {start,end};
+}
 function scheduleEventOccursOnDate(eventItem, dateObj){
   const candidateKey = dateKey(dateObj);
   const recurrence = eventItem?.recurrence === 'weekly' ?'weekly' : 'once';
@@ -1835,8 +1803,9 @@ function getScheduleNextOccurrence(eventItem, reference=new Date()){
   if((eventItem?.recurrence || 'once') !== 'weekly'){
     const date = parseLocalDate(getScheduleEventDate(eventItem));
     if(!date) return null;
-    date.setHours(Math.floor(startMin/60), startMin%60, 0, 0);
-    return date >= reference ?date : null;
+    const range = getScheduleEventRange(eventItem, dateKey(date));
+    if(!range) return null;
+    return range.end >= reference ?range.start : null;
   }
   const anchor = parseLocalDate(getScheduleEventDate(eventItem));
   const next = new Date(reference);
@@ -1844,6 +1813,8 @@ function getScheduleNextOccurrence(eventItem, reference=new Date()){
   const targetDow = Math.min(6, Math.max(0, parseInt(eventItem.dayOfWeek,10) || 0));
   let offset = (targetDow - next.getDay() + 7) % 7;
   const currentMin = next.getHours()*60 + next.getMinutes();
+  const currentRange = getScheduleEventRange(eventItem, dateKey(reference));
+  if(offset === 0 && currentRange && reference >= currentRange.start && reference <= currentRange.end) return currentRange.start;
   if(offset === 0 && startMin < currentMin) offset = 7;
   next.setDate(next.getDate() + offset);
   next.setHours(Math.floor(startMin/60), startMin%60, 0, 0);
@@ -1853,6 +1824,11 @@ function getScheduleNextOccurrence(eventItem, reference=new Date()){
     return adjusted;
   }
   return next;
+}
+function isScheduleEventActiveNow(eventItem, reference=new Date()){
+  if(!scheduleEventOccursOnDate(eventItem, reference)) return false;
+  const range = getScheduleEventRange(eventItem, dateKey(reference));
+  return !!range && reference >= range.start && reference <= range.end;
 }
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function relDate(str){ if(!str)return ''; const d=new Date(str),t=new Date(),dk=dateKey(d),tk=dateKey(t); if(dk===tk)return `Hoje, ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`; const y=new Date(t); y.setDate(t.getDate()-1); if(dk===dateKey(y))return `Ontem, ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`; return `${d.getDate()} ${MONTH_ABBR[d.getMonth()].toLowerCase()}, ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`; }
@@ -1938,7 +1914,7 @@ function sanitizeSubject(input){
   const base = {
     id: sanitizeText(safe.id, uid()),
     name: sanitizeText(safe.name, 'Matéria'),
-    icon: hasVisibleEmoji(safe.icon) ?safe.icon : '📘',
+    icon: sanitizeText(safe.icon, 'Aa'),
     colorVar: sanitizeText(safe.colorVar || safe.color, '--indigo-l'),
     bg: sanitizeText(safe.bg, 'rgba(0,87,255,0.15)'),
     grad: sanitizeText(safe.grad, 'linear-gradient(90deg,#0057FF,#3B82F6)'),
@@ -1996,19 +1972,43 @@ function syncSubjectsToOfficialEdital(subjects){
     });
   });
 }
+function subjectHasTopic(subjects, subjectId, topicId){
+  if(!subjectId || !topicId) return false;
+  const subject = subjects.find(item=>item.id===subjectId);
+  return !!subject?.topics?.some(topic=>topic.id===topicId);
+}
+function cleanLinkedTopic(subjects, subjectId, topicId){
+  return subjectHasTopic(subjects, subjectId, topicId) ?topicId : null;
+}
 function syncStorageToOfficialEdital(){
   const official = syncSubjectsToOfficialEdital(AppDB.getSubjects());
   const validSubjIds = new Set(official.map(subject => subject.id));
   AppDB.saveSubjects(official);
-  AppDB.saveTasks(AppDB.getTasks().filter(task => validSubjIds.has(task.subjectId)));
-  AppDB.saveSchedule(AppDB.getSchedule().filter(event => validSubjIds.has(event.subjectId)));
-  AppDB.saveSessions(AppDB.getSessions().filter(session => !session.subjectId || validSubjIds.has(session.subjectId)));
+  AppDB.saveTasks(AppDB.getTasks()
+    .filter(task => validSubjIds.has(task.subjectId))
+    .map(task => ({...task, topicId: cleanLinkedTopic(official, task.subjectId, task.topicId)})));
+  AppDB.saveSchedule(AppDB.getSchedule()
+    .filter(event => validSubjIds.has(event.subjectId))
+    .map(event => ({...event, topicId: cleanLinkedTopic(official, event.subjectId, event.topicId)})));
+  AppDB.saveSessions(AppDB.getSessions()
+    .filter(session => !session.subjectId || validSubjIds.has(session.subjectId))
+    .map(session => ({...session, topicId: cleanLinkedTopic(official, session.subjectId, session.topicId)})));
+  AppDB.saveSessionNotes(AppDB.getSessionNotes()
+    .filter(note => !note.subjectId || validSubjIds.has(note.subjectId))
+    .map(note => ({...note, topicId: cleanLinkedTopic(official, note.subjectId, note.topicId)})));
+  const pomoState = AppDB.getPomoState();
+  if(pomoState?.activeSubjectId && !validSubjIds.has(pomoState.activeSubjectId)){
+    AppDB.savePomoState({...DEFAULT_POMO, focusDurationMinutes:pomoState.focusDurationMinutes || DEFAULT_POMO.focusDurationMinutes, breakDurationMinutes:pomoState.breakDurationMinutes || DEFAULT_POMO.breakDurationMinutes, longBreakDurationMinutes:pomoState.longBreakDurationMinutes || DEFAULT_POMO.longBreakDurationMinutes, longBreakAfter:pomoState.longBreakAfter || DEFAULT_POMO.longBreakAfter});
+  } else if(pomoState?.activeTopicId && !subjectHasTopic(official, pomoState.activeSubjectId, pomoState.activeTopicId)){
+    AppDB.savePomoState({...pomoState, activeTopicId:null});
+  }
 }
 function sanitizeTask(input){
   const safe = input && typeof input === 'object' ?input : {};
   return {
     id: sanitizeText(safe.id, uid()),
     subjectId: sanitizeText(safe.subjectId, ''),
+    topicId: safe.topicId ?sanitizeText(safe.topicId, null) : null,
     title: sanitizeText(safe.title, 'Tarefa'),
     done: !!safe.done,
     createdAt: sanitizeText(safe.createdAt, new Date().toISOString()),
@@ -2020,18 +2020,31 @@ function sanitizeScheduleEvent(input){
   const recurrence = safe.recurrence === 'weekly' ?'weekly' : 'once';
   const rawDow = Math.min(6, Math.max(0, parseInt(safe.dayOfWeek, 10) || 0));
   const date = safe.date && parseLocalDate(safe.date)
-    ? dateKey(parseLocalDate(safe.date))
+    ?dateKey(parseLocalDate(safe.date))
     : scheduleDateForWeekday(rawDow);
   const dateObj = parseLocalDate(date);
   return {
     id: sanitizeText(safe.id, uid()),
     subjectId: sanitizeText(safe.subjectId, ''),
+    topicId: safe.topicId ?sanitizeText(safe.topicId, null) : null,
     date,
     recurrence,
     dayOfWeek: dateObj ?dateObj.getDay() : rawDow,
     startTime: /^\d{2}:\d{2}$/.test(String(safe.startTime || '')) ?safe.startTime : '08:00',
     durationMinutes: Math.max(15, parseInt(safe.durationMinutes, 10) || 90),
     label: sanitizeText(safe.label || '', ''),
+  };
+}
+function sanitizeStudySession(input){
+  const safe = input && typeof input === 'object' ?input : {};
+  return {
+    id: sanitizeText(safe.id, uid()),
+    subjectId: safe.subjectId ?sanitizeText(safe.subjectId, null) : null,
+    topicId: safe.topicId ?sanitizeText(safe.topicId, null) : null,
+    startedAt: sanitizeText(safe.startedAt, new Date().toISOString()),
+    endedAt: safe.endedAt ?sanitizeText(safe.endedAt, null) : null,
+    durationMinutes: Math.max(0, parseInt(safe.durationMinutes, 10) || 0),
+    type: safe.type === 'break' ?'break' : 'focus',
   };
 }
 function sanitizeSessionInsight(input){
@@ -2085,16 +2098,27 @@ const NoteUIState = {
 function getInsightIconName(icon){
   return ({star:'star',target:'target',lightbulb:'lightbulb',custom:'sparkles'})[icon] || 'star';
 }
-function getSessionAnnotationDefaults(){
+function getSubjectTopicPair(subjectId=null, topicId=null, fallbackTarget=null){
+  const subjects = AppDB.getSubjects();
+  const subject = subjects.find(item=>item.id===subjectId)
+    || (fallbackTarget?.subject?.id ?subjects.find(item=>item.id===fallbackTarget.subject.id) : null)
+    || subjects[0]
+    || null;
+  const topic = (topicId && subject?.topics?.find(item=>item.id===topicId))
+    || (fallbackTarget?.topic?.id && subject?.topics?.find(item=>item.id===fallbackTarget.topic.id))
+    || subject?.topics?.find(item=>topicDueTime(item) <= Date.now())
+    || subject?.topics?.find(item=>item.status==='review')
+    || subject?.topics?.find(item=>item.status==='studying')
+    || subject?.topics?.find(item=>item.status==='not_started')
+    || subject?.topics?.[0]
+    || null;
+  return {subject, topic};
+}
+function getSessionAnnotationDefaults(ctx=null){
   const target = getNextStudyTarget();
   const now = new Date();
-  const baseDate = Pomo.startedAt ?new Date(Pomo.startedAt) : now;
-  const activeSubject = AppDB.getSubjects().find(subject=>subject.id===Pomo.activeSubjectId) || target?.subject || AppDB.getSubjects()[0] || null;
-  const activeTopic = (Pomo.activeTopicId && activeSubject?.topics?.find(topic=>topic.id===Pomo.activeTopicId))
-    || activeSubject?.topics?.find(topic=>topic.status==='studying')
-    || activeSubject?.topics?.find(topic=>topic.status==='review')
-    || activeSubject?.topics?.[0]
-    || null;
+  const baseDate = ctx?.startedAt ?new Date(ctx.startedAt) : (Pomo.startedAt ?new Date(Pomo.startedAt) : now);
+  const {subject: activeSubject, topic: activeTopic} = getSubjectTopicPair(ctx?.subjectId || Pomo.activeSubjectId, ctx?.topicId || Pomo.activeTopicId, target);
   const start = baseDate.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
   const endDate = new Date(baseDate.getTime() + ((Pomo.focusMin || 50) * 60000));
   const end = endDate.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
@@ -2105,31 +2129,27 @@ function getSessionAnnotationDefaults(){
   };
 }
 function getSessionAnnotationContext(){
-  const subjects = AppDB.getSubjects();
-  const target = getHeroPomodoroTarget ? getHeroPomodoroTarget() : getNextStudyTarget();
-  const activeSubject = subjects.find(subject=>subject.id===Pomo.activeSubjectId) || target?.subject || subjects[0] || null;
-  const activeTopic = (Pomo.activeTopicId && activeSubject?.topics?.find(topic=>topic.id===Pomo.activeTopicId))
-    || target?.topic
-    || activeSubject?.topics?.find(topic=>topic.status==='studying')
-    || activeSubject?.topics?.find(topic=>topic.status==='review')
-    || activeSubject?.topics?.[0]
-    || null;
   const activeSessionId = Pomo.activeSessionId || null;
   const latestSession = AppDB.getSessions()
     .filter(session=>session.type==='focus' && session.id)
     .sort((a,b)=>new Date(b.startedAt)-new Date(a.startedAt))[0] || null;
-  const sessionId = activeSessionId || latestSession?.id || `draft-${todayKey()}-${activeSubject?.id || 'sem-materia'}-${activeTopic?.id || 'sem-conteudo'}`;
+  const baseSession = activeSessionId
+    ?{id: activeSessionId, subjectId: Pomo.activeSubjectId, topicId: Pomo.activeTopicId, startedAt: Pomo.startedAt, endedAt: null}
+    : latestSession;
+  const target = baseSession ?null : (getHeroPomodoroTarget ?getHeroPomodoroTarget() : getNextStudyTarget());
+  const {subject: activeSubject, topic: activeTopic} = getSubjectTopicPair(baseSession?.subjectId, baseSession?.topicId, target);
+  const sessionId = baseSession?.id || `draft-${todayKey()}`;
   return {
     sessionId,
-    subjectId: activeSubject?.id || latestSession?.subjectId || null,
-    topicId: activeTopic?.id || latestSession?.topicId || null,
-    startedAt: Pomo.startedAt || latestSession?.startedAt || new Date().toISOString(),
-    endedAt: latestSession?.id === sessionId ? latestSession.endedAt || null : null,
+    subjectId: activeSubject?.id || baseSession?.subjectId || null,
+    topicId: activeTopic?.id || baseSession?.topicId || null,
+    startedAt: baseSession?.startedAt || new Date().toISOString(),
+    endedAt: baseSession?.endedAt || null,
   };
 }
 function getCurrentSessionAnnotation(){
   const ctx = getSessionAnnotationContext();
-  const fallback = getSessionAnnotationDefaults();
+  const fallback = getSessionAnnotationDefaults(ctx);
   const existing = AppDB.getSessionNotes().find(note=>note.sessionId===ctx.sessionId || note.id===ctx.sessionId);
   return sanitizeNote({
     ...ctx,
@@ -2147,7 +2167,7 @@ function getCurrentSessionAnnotation(){
 }
 function saveCurrentSessionAnnotation(note){
   const ctx = getSessionAnnotationContext();
-  const fallback = getSessionAnnotationDefaults();
+  const fallback = getSessionAnnotationDefaults(ctx);
   const next = sanitizeNote({
     ...note,
     id: ctx.sessionId,
@@ -2283,7 +2303,7 @@ const AppDB = {
   },
   getSessions() {
     const raw = this._get('sf_sessions',[]);
-    return Array.isArray(raw) ?raw.filter(s=>s && typeof s==='object') : [];
+    return Array.isArray(raw) ?raw.filter(s=>s && typeof s==='object').map(sanitizeStudySession) : [];
   },
   getSchedule() {
     const raw = this._get('sf_schedule',[]);
@@ -2305,7 +2325,7 @@ const AppDB = {
   getDataVersion(){ return parseInt(this._get('sf_data_version',0),10) || 0; },
   saveDataVersion(v){ this._set('sf_data_version', v); },
   saveSubjects(v){ this._set('sf_subjects',(Array.isArray(v)?v:[]).map(sanitizeSubject)); },
-  saveSessions(v){ this._set('sf_sessions',v); },
+  saveSessions(v){ this._set('sf_sessions',(Array.isArray(v)?v:[]).map(sanitizeStudySession)); },
   saveSchedule(v){ this._set('sf_schedule',(Array.isArray(v)?v:[]).map(sanitizeScheduleEvent)); },
   saveTasks(v)   { this._set('sf_tasks',(Array.isArray(v)?v:[]).map(sanitizeTask)); },
   saveNote(v)    { this._set('sf_note',sanitizeNote(v)); },
@@ -2412,7 +2432,7 @@ function migrateSubjectsEncoding(){
       if(fixedIcon !== out.icon){ out.icon = fixedIcon; changed = true; }
       if((looksBrokenText(out.icon) || !hasVisibleEmoji(out.icon)) && fallback){ out.icon = fallback.icon; changed = true; }
     }
-    if(typeof out.icon !== 'string' || !hasVisibleEmoji(out.icon)){ out.icon = fallback.icon || 'Aa'; changed = true; }
+    if(typeof out.icon !== 'string' || !out.icon.trim()){ out.icon = fallback.icon || 'Aa'; changed = true; }
     return out;
   });
   if(changed) AppDB.saveSubjects(next);
@@ -2501,7 +2521,7 @@ function importAppData(file){
 }
 
 function seedIfEmpty(){
-  if(localStorage.getItem('sf_seeded_empty_v2')) return;
+  if(localStorage.getItem('sf_seeded_empty_v2') && AppDB.getSubjects().length) return;
   const subjects=getPMMGSubjects();
   AppDB.saveSubjects(subjects);
   AppDB.saveSchedule([]);
@@ -2515,9 +2535,9 @@ function seedIfEmpty(){
   localStorage.setItem('sf_seeded_empty_v2','1');
 }
 function forcePMMGReset() {
-  if (localStorage.getItem('sf_reset_pmmg_done_v5')) return;
+  if (localStorage.getItem('sf_reset_pmmg_done_v6')) return;
   syncStorageToOfficialEdital();
-  localStorage.setItem('sf_reset_pmmg_done_v5', '1');
+  localStorage.setItem('sf_reset_pmmg_done_v6', '1');
 }
 
 /* MODAL */
@@ -2582,12 +2602,12 @@ function setDashboardSessionFeedback(minutes){
 function updateDashboardState(){
   const isPost = !!(DashboardFeedback && DashboardFeedback.until > Date.now());
   if(DashboardFeedback && !isPost) DashboardFeedback = null;
-  const hasProgress = Pomo.leftSec < Pomo.totalSec;
+  const hasProgress = hasPomoRemaining();
   const isFocus = !!Pomo.isRunning;
   document.body.classList.toggle('dashboard-focus', isFocus);
   document.body.classList.toggle('dashboard-idle', !isFocus && !hasProgress);
   document.body.classList.toggle('dashboard-post-session', !!isPost);
-  document.getElementById('pomodoro').classList.toggle('is-active', isFocus);
+  document.getElementById('pomodoro')?.classList.toggle('is-active', isFocus);
 
   const feedback = document.getElementById('dashboard-feedback');
   if(feedback){
@@ -2605,7 +2625,7 @@ function updateDashboardState(){
 const Pomo = {
   timer:null, leftSec:0, totalSec:0, isRunning:false, startedAt:null, activeSessionId:null,
   phase:'focus', sessionCount:0, activeSubjectId:null, activeTopicId:null,
-  focusMin:25, breakMin:5, longBreakMin:15, longBreakAfter:4,
+  focusMin:25, breakMin:10, longBreakMin:15, longBreakAfter:4,
 
   init(){
     const s=AppDB.getPomoState();
@@ -2615,7 +2635,7 @@ const Pomo = {
     this.activeSubjectId=s.activeSubjectId || (subjects[0]?.id || null);
     this.activeTopicId=s.activeTopicId || null;
     this.activeSessionId=s.activeSessionId || null;
-    this.focusMin=s.focusDurationMinutes||25; this.breakMin=s.breakDurationMinutes||5;
+    this.focusMin=s.focusDurationMinutes||25; this.breakMin=s.breakDurationMinutes||10;
     this.longBreakMin=s.longBreakDurationMinutes||15; this.longBreakAfter=s.longBreakAfter||4;
     const fallbackTotal=this._phaseDur()*60;
     this.totalSec=Number.isFinite(Number(s.totalSec)) && Number(s.totalSec)>0 ?Number(s.totalSec) : fallbackTotal;
@@ -2639,6 +2659,22 @@ const Pomo = {
   _persist(){
     AppDB.savePomoState({phase:this.phase,sessionCount:this.sessionCount,focusDurationMinutes:this.focusMin,breakDurationMinutes:this.breakMin,longBreakDurationMinutes:this.longBreakMin,longBreakAfter:this.longBreakAfter,activeSubjectId:this.activeSubjectId,activeTopicId:this.activeTopicId,activeSessionId:this.activeSessionId,startedAt:this.startedAt,leftSec:this.leftSec,totalSec:this.totalSec,isRunning:this.isRunning,lastTickAt:new Date().toISOString()});
   },
+  _startPhase(phase, durationMin){
+    clearInterval(this.timer);
+    this.phase=phase;
+    const minutes=Math.max(1, parseInt(durationMin,10) || this._phaseDur());
+    if(phase==='break') this.breakMin=minutes;
+    if(phase==='longBreak') this.longBreakMin=minutes;
+    this.totalSec=minutes*60;
+    this.leftSec=this.totalSec;
+    this.startedAt=new Date().toISOString();
+    this.activeSessionId=uid();
+    this.isRunning=true;
+    this._persist();
+    this.timer=setInterval(()=>this._tick(),1000);
+    renderPomo(); renderNextSession(); renderNote();
+    if(getActiveView()==='pomodoro') refreshWorkspaceView();
+  },
   start(subjId,durMin,topicId=null){
     clearInterval(this.timer);
     if(subjId) this.activeSubjectId=subjId;
@@ -2657,7 +2693,15 @@ const Pomo = {
     renderNote();
     if(getActiveView()==='pomodoro') refreshWorkspaceView();
   },
-  pause(){ clearInterval(this.timer); this.isRunning=false; this._persist(); renderPomo(); renderNextSession(); renderNote(); if(getActiveView()==='pomodoro') refreshWorkspaceView(); },
+  pause(){
+    if(this.isRunning && this.phase==='focus'){
+      this._complete(true);
+      this._startPhase('break', 10);
+      toast('Descanso iniciado: 10 minutos para recuperar o foco.');
+      return;
+    }
+    clearInterval(this.timer); this.isRunning=false; this._persist(); renderPomo(); renderNextSession(); renderNote(); if(getActiveView()==='pomodoro') refreshWorkspaceView();
+  },
   resume(){
     if(this.isRunning)return;
     this.isRunning=true;
@@ -2696,27 +2740,38 @@ const Pomo = {
     clearInterval(this.timer); this.isRunning=false;
     if(this.startedAt){
       const sessions=AppDB.getSessions();
-      const elapsedMin = Math.round((this.totalSec - this.leftSec) / 60);
-      dur = elapsedMin > 0 ?elapsedMin : 1;
+      const elapsedMin = Math.max(0, Math.round((this.totalSec - this.leftSec) / 60));
+      dur = elapsedMin > 0 ?elapsedMin : (early ?0 : 1);
       const completedSessionId = this.activeSessionId || uid();
       const completedAt = new Date().toISOString();
-      sessions.push({id:completedSessionId,subjectId:this.activeSubjectId,topicId:this.activeTopicId,startedAt:this.startedAt,endedAt:completedAt,durationMinutes:dur,type:this.phase==='focus'?'focus':'break'});
-      if(this.phase==='focus'){
+      if(dur > 0) sessions.push({id:completedSessionId,subjectId:this.activeSubjectId,topicId:this.activeTopicId,startedAt:this.startedAt,endedAt:completedAt,durationMinutes:dur,type:this.phase==='focus'?'focus':'break'});
+      if(this.phase==='focus' && dur > 0){
         const note = getCurrentSessionAnnotation();
         saveCurrentSessionAnnotation({...note, id:completedSessionId, sessionId:completedSessionId, endedAt:completedAt, updatedAt:new Date().toISOString()});
+        const subjects = AppDB.getSubjects();
+        const subject = subjects.find(item=>item.id===this.activeSubjectId);
+        const topic = subject?.topics?.find(item=>item.id===this.activeTopicId);
+        if(topic){
+          topic.lastStudiedAt = completedAt;
+          topic.completedAt = null;
+          if(topic.status !== 'done') topic.status = early ?'studying' : 'review';
+          const due = new Date(completedAt);
+          due.setDate(due.getDate() + (early ?3 : 7));
+          topic.reviewDue = due.toISOString();
+          AppDB.saveSubjects(subjects);
+        }
       }
-      if(this.phase==='focus') Analytics.track(EVENT_NAMES.focusComplete,{context:'pomodoro',subject_id:this.activeSubjectId});
+      if(this.phase==='focus' && dur > 0) Analytics.track(EVENT_NAMES.focusComplete,{context:'pomodoro',subject_id:this.activeSubjectId});
       AppDB.saveSessions(sessions);
     }
-    if(completedPhase === 'focus') setDashboardSessionFeedback(dur || this.focusMin);
-    if(this.phase==='focus'){ this.sessionCount++; this.phase=this.sessionCount%this.longBreakAfter===0?'longBreak':'break'; }
+    if(completedPhase === 'focus' && dur > 0) setDashboardSessionFeedback(dur);
+    if(this.phase==='focus'){ if(dur > 0) this.sessionCount++; this.phase=this.sessionCount%this.longBreakAfter===0?'longBreak':'break'; }
     else { this.phase='focus'; }
     this.totalSec=this._phaseDur()*60; this.leftSec=this.totalSec; this.startedAt=null; this.activeSessionId=null;
     this._persist();
     renderPomo(); renderTodayHours(); renderStreak(); renderWeeklyAnalysis(); renderSubjectGrid(); renderGoals(); renderTasks(); renderNote();
     renderNextSession();
     if(getActiveView()==='pomodoro') refreshWorkspaceView();
-    this.resume();
   },
 };
 
@@ -2855,11 +2910,14 @@ function buildStudyRecommendation(payload){
     ...payload,
   };
 }
+function hasPomoRemaining(){
+  return Number(Pomo.leftSec) > 0 && Number(Pomo.leftSec) < Number(Pomo.totalSec);
+}
 function getRecommendedStudyAction(){
   const subjects=AppDB.getSubjects();
   if(!subjects.length)return null;
   const activeSubject=subjects.find(subject=>subject.id===Pomo.activeSubjectId);
-  if(activeSubject && (Pomo.isRunning || Pomo.leftSec < Pomo.totalSec)){
+  if(activeSubject && (Pomo.isRunning || hasPomoRemaining())){
     const topic=pickSubjectTopic(activeSubject,Pomo.activeTopicId);
     return buildStudyRecommendation({
       type:'active',
@@ -2874,20 +2932,21 @@ function getRecommendedStudyAction(){
   const schedule=AppDB.getSchedule();
   const tasks=AppDB.getTasks();
   const now=new Date();
-  const scheduled=schedule.map(ev=>{
+  const scheduledItems=schedule.map(ev=>{
     const when=getScheduleNextOccurrence(ev, now);
     return {...ev,when,subj:subjects.find(s=>s.id===ev.subjectId)};
-  }).filter(ev=>ev.subj && ev.when).sort((a,b)=>a.when-b.when)[0];
-  if(scheduled){
-    const topic=pickSubjectTopic(scheduled.subj, scheduled.topicId || null);
+  }).filter(ev=>ev.subj && ev.when).sort((a,b)=>a.when-b.when);
+  const activeScheduled = scheduledItems.find(ev=>isScheduleEventActiveNow(ev, now));
+  if(activeScheduled){
+    const topic=pickSubjectTopic(activeScheduled.subj, activeScheduled.topicId || null);
     return buildStudyRecommendation({
       type:'scheduled',
       source:'agenda',
-      subject:scheduled.subj,
+      subject:activeScheduled.subj,
       topic,
-      event:scheduled,
-      reason:formatScheduleOccurrence(scheduled.when),
-      confidenceLabel:'Agenda',
+      event:activeScheduled,
+      reason:'Sessão da agenda em andamento agora.',
+      confidenceLabel:'Agenda agora',
     });
   }
   const reviewTarget=allSubjectTopics(subjects)
@@ -2916,6 +2975,19 @@ function getRecommendedStudyAction(){
       task:openTask,
       reason:`Tarefa aberta: ${openTask.title}.`,
       confidenceLabel:'Tarefa aberta',
+    });
+  }
+  const scheduled=scheduledItems[0];
+  if(scheduled){
+    const topic=pickSubjectTopic(scheduled.subj, scheduled.topicId || null);
+    return buildStudyRecommendation({
+      type:'scheduled',
+      source:'agenda',
+      subject:scheduled.subj,
+      topic,
+      event:scheduled,
+      reason:formatScheduleOccurrence(scheduled.when),
+      confidenceLabel:'Agenda',
     });
   }
   const sessions=AppDB.getSessions().filter(x=>x.type==='focus'&&x.subjectId).sort((a,b)=>new Date(b.startedAt)-new Date(a.startedAt));
@@ -2976,12 +3048,13 @@ function renderNextSession(){
   if(!title||!meta||!btn)return;
   if(kicker) kicker.textContent='Próxima ação recomendada';
   const focusMin = Pomo.focusMin || Math.max(1, Math.round((Pomo.totalSec || 0) / 60)) || 25;
-  if(chip) chip.textContent=Pomo.isRunning || Pomo.leftSec < Pomo.totalSec
-    ?`${Pomo.isRunning ?'Em andamento' : 'Pausado'} • ${fmtSec(Math.max(Pomo.leftSec,0))} restantes`
+  const hasRemaining = hasPomoRemaining();
+  if(chip) chip.textContent=Pomo.isRunning || hasRemaining
+    ?`${Pomo.isRunning ?'Em andamento' : 'Pausado'} ⬢ ${fmtSec(Math.max(Pomo.leftSec,0))} restantes`
     : (target?.confidenceLabel || `Foque por ${focusMin}min e revise depois.`);
   if(!target){
     title.textContent='Defina sua primeira missão';
-    if(detail) detail.textContent='Matérias • Planejamento inicial';
+    if(detail) detail.textContent='Matérias ⬢ Planejamento inicial';
     meta.innerHTML='<i data-lucide="book-plus"></i><span>Comece criando seu mapa de estudos.</span>';
     btn.disabled=true;
   } else {
@@ -2991,10 +3064,10 @@ function renderNextSession(){
     const btnLabel=btn.querySelector('span');
     const icon=btn.querySelector('i');
     if(Pomo.isRunning){
-      if(btnLabel) btnLabel.textContent=`Pausar sessão de ${focusMin}min`;
+      if(btnLabel) btnLabel.textContent=Pomo.phase==='focus' ?'Descansar 10min' : 'Pausar descanso';
       if(icon) icon.setAttribute('data-lucide','pause');
-    } else if(Pomo.leftSec < Pomo.totalSec){
-      if(btnLabel) btnLabel.textContent=`Retomar sessão de ${focusMin}min`;
+    } else if(hasRemaining){
+      if(btnLabel) btnLabel.textContent=Pomo.phase==='focus' ?`Retomar sessão de ${focusMin}min` : 'Retomar descanso';
       if(icon) icon.setAttribute('data-lucide','play');
     } else {
       if(btnLabel) btnLabel.textContent=`Iniciar sessão de ${focusMin}min`;
@@ -3003,7 +3076,7 @@ function renderNextSession(){
     title.textContent=target.subject.name;
     const iconName = ({pomodoro:'timer',agenda:'calendar-clock',review:'rotate-ccw',task:'list-checks',continuity:'route',progress:'trending-up'})[target.source] || 'sparkles';
     if(detail) detail.textContent=target.topic
-      ? topicDetail(target.topic)
+      ?topicDetail(target.topic)
       : 'Defina conteúdos desta matéria';
     meta.innerHTML=`<i data-lucide="${iconName}"></i><span>${esc(target.reason || 'Recomendação baseada no seu progresso atual.')}</span>`;
   }
@@ -3027,7 +3100,7 @@ function renderHeroPomodoro(target){
   const resetBtn=document.getElementById('btn-hero-pomo-reset');
   const finishBtn=document.getElementById('btn-hero-pomo-finish');
   if(!display||!progress||!subject||!mainBtn)return;
-  const isActive=Pomo.isRunning || Pomo.leftSec < Pomo.totalSec;
+  const isActive=Pomo.isRunning || hasPomoRemaining();
   const left=Math.max(0, Number(Pomo.leftSec)||0);
   const total=Math.max(1, Number(Pomo.totalSec)||((Pomo.focusMin||25)*60));
   const shownSec=isActive ?left : total;
@@ -3036,6 +3109,7 @@ function renderHeroPomodoro(target){
   const completeRatio=isActive ?Math.min(1, Math.max(0, 1-(left/total))) : 0;
   progress.style.strokeDasharray=C.toFixed(2);
   progress.style.strokeDashoffset=(C*(1-completeRatio)).toFixed(2);
+  document.getElementById('hero-pomodoro')?.style.setProperty('--hero-pomo-progress', `${Math.round(completeRatio*100)}%`);
   const subjectName=target?.subject?.name || 'Pronto para foco';
   const topicCode=target?.topic?.code ?` · ${target.topic.code}` : '';
   subject.textContent=`${subjectName}${topicCode}`;
@@ -3047,12 +3121,12 @@ function renderHeroPomodoro(target){
   const minutes=Math.max(1, Math.round(total/60));
   if(Pomo.isRunning){
     if(icon) icon.setAttribute('data-lucide','pause');
-    if(label) label.textContent='Pausar';
-    mainBtn.setAttribute('aria-label',`Pausar sessão de ${minutes}min`);
+    if(label) label.textContent=Pomo.phase==='focus' ?'Descansar' : 'Pausar';
+    mainBtn.setAttribute('aria-label',Pomo.phase==='focus' ?'Iniciar descanso de 10 minutos' : `Pausar descanso de ${minutes}min`);
   }else if(isActive){
     if(icon) icon.setAttribute('data-lucide','play');
     if(label) label.textContent='Retomar';
-    mainBtn.setAttribute('aria-label',`Retomar sessão de ${minutes}min`);
+    mainBtn.setAttribute('aria-label',Pomo.phase==='focus' ?`Retomar sessão de ${minutes}min` : `Retomar descanso de ${minutes}min`);
   }else{
     if(icon) icon.setAttribute('data-lucide','play');
     if(label) label.textContent='Iniciar';
@@ -3149,37 +3223,42 @@ function renderPomo(){
   const progress=isOvertime ?0 : Pomo.leftSec/Math.max(Pomo.totalSec,1);
   
   const displayEl = document.getElementById('pomoDisplay');
-  displayEl.textContent = (isOvertime ?'+' : '') + fmtSec(absSec);
-  displayEl.style.color = isOvertime ?'var(--rose-l)' : '';
+  if(displayEl){
+    displayEl.textContent = (isOvertime ?'+' : '') + fmtSec(absSec);
+    displayEl.style.color = isOvertime ?'var(--rose-l)' : '';
+  }
   
   const circleEl = document.getElementById('pomoCircle');
-  circleEl.style.strokeDashoffset=C*progress;
-  if(isOvertime) {
-    circleEl.style.filter=`drop-shadow(0 0 14px rgba(244,63,94,0.6))`;
-    circleEl.setAttribute('stroke', 'var(--rose-l)');
-  } else {
+  if(circleEl){
+    circleEl.style.strokeDashoffset=C*progress;
+    if(isOvertime) {
+      circleEl.style.filter=`drop-shadow(0 0 14px rgba(244,63,94,0.6))`;
+      circleEl.setAttribute('stroke', 'var(--rose-l)');
+    } else {
       circleEl.style.filter=`drop-shadow(0 0 ${3+(1-progress)*8}px rgba(255,90,31,0.34))`;
       circleEl.setAttribute('stroke', 'url(#pg)');
+    }
   }
   
   const phases={focus:'Sessão de Foco',break:'Pausa Curta',longBreak:'Pausa Longa'};
-  document.getElementById('pomoPhase').textContent=phases[Pomo.phase]||'Foco';
+  const phaseEl=document.getElementById('pomoPhase');
+  if(phaseEl) phaseEl.textContent=phases[Pomo.phase]||'Foco';
   
   const chip=document.getElementById('pomo-subject-chip');
-  if(Pomo.activeSubjectId&&Pomo.isRunning){
+  if(chip&&Pomo.activeSubjectId&&Pomo.isRunning){
     const subj=AppDB.getSubjects().find(s=>s.id===Pomo.activeSubjectId);
     const topic=subj?.topics?.find(item=>item.id===Pomo.activeTopicId);
     if(subj){chip.innerHTML=`${subj.icon} ${esc(subj.name)}${topic ?` · ${esc(topic.code)}` : ''}`;chip.classList.add('visible');}
-  } else { chip.classList.remove('visible'); }
+  } else if(chip) { chip.classList.remove('visible'); }
   const btnTxt=document.getElementById('pomoBtnTxt');
   const btnIco=document.getElementById('pomoIcon');
   const btnFin=document.getElementById('btn-pomo-finish');
-  if(btnFin){
+  if(btnFin&&btnTxt&&btnIco){
     if(Pomo.isRunning){
       btnTxt.textContent='Pausar';btnIco.setAttribute('data-lucide','pause');
       btnFin.style.display='flex';
     }
-    else if(Pomo.leftSec<Pomo.totalSec){
+    else if(hasPomoRemaining()){
       btnTxt.textContent='Continuar';btnIco.setAttribute('data-lucide','play');
       btnFin.style.display='flex';
     }
@@ -3188,7 +3267,7 @@ function renderPomo(){
       btnFin.style.display='none';
     }
   }
-  lucide.createIcons({nodes:[btnIco]});
+  if(btnIco) lucide.createIcons({nodes:[btnIco]});
   updateDashboardState();
   renderWorkspacePomodoroState();
 }
@@ -3296,7 +3375,7 @@ function renderSubjectGrid(){
     return `<button class="subj-card" type="button" data-action="subject-open" data-subject-id="${subj.id}">
       <div class="subj-top">
         <div class="subj-left">
-          <div class="subj-icon" style="background:${subj.bg}">${subj.icon}</div>
+          <div class="subj-icon" style="background:${subj.bg};color:var(${subj.colorVar})"><i data-lucide="${subj.lucide||'book'}"></i></div>
           <div><div class="subj-name">${esc(subj.name)}</div><div class="subj-time">${subj.totalTopics} conteúdo${subj.totalTopics===1?'':'s'}</div></div>
         </div>
         <span class="subj-pct" style="color:var(${subj.colorVar})">${pct}%</span>
@@ -3437,7 +3516,7 @@ function buildAgendaWorkspace(){
     
     let eventsHtml = dayEvents.map(ev => 
       `<button class="calendar-event" type="button" data-action="agenda-edit" data-id="${ev.id}" style="background:${ev.subj.bg};border-left:3px solid var(${ev.subj.colorVar})">
-         ${ev.subj.icon} <span style="font-weight:bold;margin-right:2px;">${ev.startTime}</span> <span>${esc(ev.subj.name)}</span>${ev.recurrence==='weekly' ?' <span title="Recorrente">↻</span>' : ''}
+         ${ev.subj.icon} <span style="font-weight:bold;margin-right:2px;">${ev.startTime}</span> <span>${esc(ev.subj.name)}</span>${ev.recurrence==='weekly' ?' <span title="Recorrente">?</span>' : ''}
        </button>`
     ).join('');
 
@@ -3550,7 +3629,7 @@ function buildPomodoroWorkspace(){
             <div class="workspace-row-icon">${subj.icon || 'Aa'}</div>
             <div>
               <div class="workspace-row-title">${subj ?esc(subj.name) : 'Matéria livre'}</div>
-              <div class="workspace-row-meta">${fmtMin(session.durationMinutes)} ? ${relDate(session.startedAt)}</div>
+              <div class="workspace-row-meta">${fmtMin(session.durationMinutes)} ?${relDate(session.startedAt)}</div>
             </div>
           </div>
           <div class="workspace-row-actions"><span class="workspace-pill">Foco</span></div>
@@ -3563,7 +3642,7 @@ function buildPomodoroWorkspace(){
     'Entre na sua próxima sessão.',
     'Use esta sala para escolher a matéria, controlar o ritmo e acompanhar o que já foi feito hoje.',
     actions,
-    `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Matéria ativa</div><div class="workspace-mini-value">${activeSubject?.icon || '—'}</div><div class="workspace-mini-copy">${activeSubject ?esc(activeSubject.name) : 'Escolha uma matéria para começar.'}</div></div><span class="workspace-pill">${Pomo.phase==='focus' ?'Foco' : 'Pausa'}</span></div>
+    `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Matéria ativa</div><div class="workspace-mini-value">${activeSubject?.icon || '?'}</div><div class="workspace-mini-copy">${activeSubject ?esc(activeSubject.name) : 'Escolha uma matéria para começar.'}</div></div><span class="workspace-pill">${Pomo.phase==='focus' ?'Foco' : 'Pausa'}</span></div>
      <div class="workspace-mini-stat"><div><div class="workspace-mini-label">Ciclos</div><div class="workspace-mini-value">${Pomo.sessionCount}</div><div class="workspace-mini-copy">sessão${Pomo.sessionCount===1?'':'ões'} completas nesta sequência.</div></div><span class="workspace-pill">${Pomo.isRunning ?'Em andamento' : 'Pronto'}</span></div>`,
     `<div class="workspace-grid">
       <div class="workspace-card workspace-pomo-main">
@@ -3589,7 +3668,7 @@ function subjectIconHtml(subject){
   if(subject.lucide){
     return `<i data-lucide="${subject.lucide}"></i>`;
   }
-  return esc(subject.icon || '•');
+  return esc(subject.icon || '⬢');
 }
 
 function getSubjectsHeroData(){
@@ -3754,7 +3833,7 @@ function buildSubjectsWorkspace(){
 function buildMoodWorkspace(){
   const moods = AppDB.getMoods();
   const labels = {
-    'icons/1.png':'Ótimo',
+    'icons/1.png':'?timo',
     'icons/2.png':'Bem',
     'icons/3.png':'Focado',
     'icons/4.png':'Cansado',
@@ -3774,8 +3853,8 @@ function buildMoodWorkspace(){
     'Seu humor também faz parte da performance.',
     'Registre como você está, veja o histórico recente e acompanhe o ritmo emocional do estudo.',
     `${workspaceActionButton('mood-open-calendar','Abrir calendário','calendar','primary')}${workspaceActionButton('view-dashboard','Voltar ao dashboard','layout-dashboard')}`,
-    `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Hoje</div><div class="workspace-mini-value">${current ?'✓' : '—'}</div><div class="workspace-mini-copy">${current ?labels[current] : 'Ainda sem registro para hoje.'}</div></div><span class="workspace-pill">Estado</span></div>
-     <div class="workspace-mini-stat"><div><div class="workspace-mini-label">Últimos registros</div><div class="workspace-mini-value">${recent.length}</div><div class="workspace-mini-copy">dias com humor salvo na base atual.</div></div><span class="workspace-pill">Histórico</span></div>`,
+    `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Hoje</div><div class="workspace-mini-value">${current ?'?' : '?'}</div><div class="workspace-mini-copy">${current ?labels[current] : 'Ainda sem registro para hoje.'}</div></div><span class="workspace-pill">Estado</span></div>
+     <div class="workspace-mini-stat"><div><div class="workspace-mini-label">?ltimos registros</div><div class="workspace-mini-value">${recent.length}</div><div class="workspace-mini-copy">dias com humor salvo na base atual.</div></div><span class="workspace-pill">Histórico</span></div>`,
     `<div class="workspace-grid">
       <div class="workspace-card">
         <div class="workspace-card-header"><div><div class="workspace-card-title">Como você está hoje</div><div class="workspace-card-copy">Escolha um estado para registrar rapidamente.</div></div></div>
@@ -3963,9 +4042,9 @@ function updateScheduleEvent(id, patch){
 function deleteScheduleEvent(id){
   AppDB.saveSchedule(AppDB.getSchedule().filter(e=>e.id!==id)); renderSchedule(); renderNextSession(); refreshWorkspaceView();
 }
-function addTask(subjectId,title){
+function addTask(subjectId,title,topicId=null){
   const tasks=AppDB.getTasks();
-  tasks.push({id:uid(),subjectId,title,done:false,createdAt:new Date().toISOString(),completedAt:null});
+  tasks.push({id:uid(),subjectId,topicId,title,done:false,createdAt:new Date().toISOString(),completedAt:null});
   Analytics.track(EVENT_NAMES.taskCreate,{context:'tasks',subject_id:subjectId});
   AppDB.saveTasks(tasks); renderSubjectGrid(); renderTasks(); renderNextSession(); refreshWorkspaceView();
 }
@@ -4073,7 +4152,7 @@ function deleteSubject(id){
 
 /* MODAL OPENERS */
 
-let _selectedPomoSubj=null, _selectedPomoTopic=null, _selectedPomoDur=25;
+let _selectedPomoSubj=null, _selectedPomoTopic=null, _selectedPomoDur=25, _pomoStartStayOnCurrentView=false;
 let _moodMonthOffset=0; // 0=mês atual, -1=anterior, etc.
 
 function _renderMoodCalendar(){
@@ -4166,11 +4245,21 @@ function fillPomoTopicSelect(subjectId, preferredTopicId=null, forceExplicitChoi
   _selectedPomoTopic = selectedValue || null;
   confirmBtn.disabled = !_selectedPomoTopic;
 }
+function fillLinkedTopicSelect(select, subjectId, preferredTopicId=null, allowEmpty=true){
+  if(!select) return null;
+  const subject = AppDB.getSubjects().find(item=>item.id===subjectId) || null;
+  const topics = Array.isArray(subject?.topics) ?subject.topics : [];
+  const preferred = topics.find(topic=>topic.id===preferredTopicId) || getSubjectPreferredTopic(subject);
+  select.innerHTML = `${allowEmpty ?'<option value="">Sem conteúdo específico</option>' : ''}${topics.map(topic=>`<option value="${topic.id}">${esc(topic.code)} - ${esc(topic.title)}</option>`).join('')}`;
+  select.value = preferred?.id || '';
+  return select.value || null;
+}
 function openPomoModal(options={}){
   const subjects=AppDB.getSubjects();
   const preferredSubjectId = options.subjectId || null;
   const preferredTopicId = options.topicId || null;
   const forceExplicitTopicChoice = options.forceExplicitTopicChoice !== false;
+  _pomoStartStayOnCurrentView = !!options.stayOnCurrentView;
   _selectedPomoSubj=preferredSubjectId||Pomo.activeSubjectId||subjects[0]?.id||null;
   _selectedPomoTopic=null;
   _selectedPomoDur=Pomo.focusMin;
@@ -4210,6 +4299,7 @@ function openScheduleModal(options={}){
   const subjects=AppDB.getSubjects();
   if(!subjects.length){ toast('Adicione uma matéria antes de criar uma sessão.'); return; }
   const sel=document.getElementById('sched-form-subject');
+  const topicSel=document.getElementById('sched-form-topic');
   const titleEl=document.getElementById('modal-schedule-title');
   const saveBtn=document.getElementById('btn-sched-save');
   const dateInput=document.getElementById('sched-form-date');
@@ -4218,6 +4308,7 @@ function openScheduleModal(options={}){
   const durInput=document.getElementById('sched-form-dur');
   const labelInput=document.getElementById('sched-form-label');
   sel.innerHTML=subjects.map(s=>`<option value="${s.id}">${s.icon} ${esc(s.name)}</option>`).join('');
+  sel.onchange=()=>fillLinkedTopicSelect(topicSel, sel.value, null, true);
   _editingScheduleId = eventId;
   if(eventId){
     const event = AppDB.getSchedule().find(item=>item.id===eventId);
@@ -4225,6 +4316,7 @@ function openScheduleModal(options={}){
     if(titleEl) titleEl.textContent='Editar sessão';
     if(saveBtn) saveBtn.textContent='Atualizar';
     sel.value=event.subjectId;
+    fillLinkedTopicSelect(topicSel, event.subjectId, event.topicId || null, true);
     dateInput.value=getScheduleEventDate(event);
     repeatInput.value=event.recurrence || 'once';
     timeInput.value=event.startTime;
@@ -4234,8 +4326,9 @@ function openScheduleModal(options={}){
     if(titleEl) titleEl.textContent='Nova aula / evento';
     if(saveBtn) saveBtn.textContent='Salvar';
     sel.selectedIndex=0;
+    fillLinkedTopicSelect(topicSel, sel.value, null, true);
     const fallbackDate = prefillDate && parseLocalDate(prefillDate)
-      ? prefillDate
+      ?prefillDate
       : scheduleDateForWeekday(Number.isInteger(prefillDayOfWeek) ?prefillDayOfWeek : new Date().getDay());
     dateInput.value=fallbackDate;
     repeatInput.value='once';
@@ -4249,7 +4342,10 @@ function openScheduleModal(options={}){
 function openAddTaskModal(preSubjectId){
   const subjects=AppDB.getSubjects();
   const sel=document.getElementById('task-form-subject');
+  const topicSel=document.getElementById('task-form-topic');
   sel.innerHTML=subjects.map(s=>`<option value="${s.id}"${s.id===preSubjectId ?' selected' : ''}>${s.icon} ${esc(s.name)}</option>`).join('');
+  fillLinkedTopicSelect(topicSel, sel.value, null, true);
+  sel.onchange=()=>fillLinkedTopicSelect(topicSel, sel.value, null, true);
   document.getElementById('task-form-title').value='';
   Modal.open('modal-add-task');
 }
@@ -4382,8 +4478,8 @@ function buildSearchResults(query){
           type:'topic',
           id:topic.id,
           subjectId:subject.id,
-          title:`${topic.code} ? ${topic.title}`,
-          meta:`${subject.icon || 'Aa'} ${subject.name} ? ${TOPIC_STATUS_META[topic.status].label || 'Conteúdo'}`,
+          title:`${topic.code} ?${topic.title}`,
+          meta:`${subject.icon || 'Aa'} ${subject.name} ?${TOPIC_STATUS_META[topic.status].label || 'Conteúdo'}`,
           tag:'Conteúdo'
         });
       }
@@ -4398,7 +4494,7 @@ function buildSearchResults(query){
         type:'tasks',
         id:task.id,
         title:task.title,
-        meta:`${subject ?`${subject.icon} ${subject.name} ? ` : ''}${task.done ?'Concluída' : 'Em aberto'}`,
+        meta:`${subject ?`${subject.icon} ${subject.name} ?` : ''}${task.done ?'Concluída' : 'Em aberto'}`,
         tag:'Tarefas'
       });
     }
@@ -4414,8 +4510,8 @@ function buildSearchResults(query){
       out.push({
         type:'agenda',
         id:eventItem.id,
-        title:eventItem.label ?`${eventItem.label} • ${subject ?`${subject.icon} ${subject.name}` : 'Sessão'}` : `${subject ?`${subject.icon} ${subject.name}` : 'Sessão'} • ${eventItem.startTime}`,
-        meta:`${day} às ${eventItem.startTime} • ${eventItem.durationMinutes}min • ${recurrenceLabel}`,
+        title:eventItem.label ?`${eventItem.label} ⬢ ${subject ?`${subject.icon} ${subject.name}` : 'Sessão'}` : `${subject ?`${subject.icon} ${subject.name}` : 'Sessão'} ⬢ ${eventItem.startTime}`,
+        meta:`${day} às ${eventItem.startTime} ⬢ ${eventItem.durationMinutes}min ⬢ ${recurrenceLabel}`,
         tag:'Agenda'
       });
     }
@@ -4610,7 +4706,7 @@ function handleWorkspaceAction(action, button){
       return;
     case 'pomodoro-main':
       if(Pomo.isRunning) Pomo.pause();
-      else if(Pomo.leftSec<Pomo.totalSec) Pomo.resume();
+      else if(hasPomoRemaining()) Pomo.resume();
       else openPomoModal();
       return;
     case 'pomodoro-reset':
@@ -4716,8 +4812,8 @@ function initThemeMode(){
 
 function initEventBindings(){
   const byId = id => document.getElementById(id);
-  const on = (id, event, handler) => byId(id).addEventListener(event, e => safeCall(()=>handler(e), `event:${id}:${event}`));
-  const onNode = (node, event, handler, context) => node.addEventListener(event, e => safeCall(()=>handler(e), context));
+  const on = (id, event, handler) => byId(id)?.addEventListener(event, e => safeCall(()=>handler(e), `event:${id}:${event}`));
+  const onNode = (node, event, handler, context) => node?.addEventListener(event, e => safeCall(()=>handler(e), context));
   // Overlay + Escape
   on('modal-overlay','click',()=>Modal.closeAll());
   document.addEventListener('keydown',e=>{ if(e.key==='Escape')Modal.closeAll(); Modal.trap(e); });
@@ -4803,7 +4899,7 @@ function initEventBindings(){
       Pomo.pause();
       return;
     }
-    if(Pomo.leftSec<Pomo.totalSec){
+    if(hasPomoRemaining()){
       Pomo.resume();
       setActiveView('pomodoro');
       return;
@@ -4821,13 +4917,22 @@ function initEventBindings(){
     setActiveView('pomodoro');
   });
   on('btn-hero-pomo-main','click',()=>{
-    document.getElementById('btn-next-session-start')?.click();
+    if(Pomo.isRunning){
+      Pomo.pause();
+      return;
+    }
+    if(hasPomoRemaining()){
+      Pomo.resume();
+      return;
+    }
+    const target=getHeroPomodoroTarget();
+    openPomoModal({subjectId:target?.subject?.id || null, topicId:target?.topic?.id || null, forceExplicitTopicChoice:true, stayOnCurrentView:true});
   });
   on('btn-hero-pomo-reset','click',()=>{
-    if(Pomo.isRunning || Pomo.leftSec<Pomo.totalSec) Pomo.reset();
+    if(Pomo.isRunning || hasPomoRemaining()) Pomo.reset();
   });
   on('btn-hero-pomo-finish','click',()=>{
-    if(Pomo.isRunning || Pomo.leftSec<Pomo.totalSec) Pomo._complete(true);
+    if(Pomo.isRunning || hasPomoRemaining()) Pomo._complete(true);
   });
   on('btn-next-task-create','click',()=>{
     setActiveView('tasks');
@@ -4849,6 +4954,7 @@ function initEventBindings(){
   on('btn-schedule-add','click',()=>openScheduleModal());
   on('btn-sched-save','click',()=>{
     const subjectId=byId('sched-form-subject').value;
+    const topicId=byId('sched-form-topic').value || null;
     const date=byId('sched-form-date').value || todayKey();
     const dateObj=parseLocalDate(date) || new Date();
     const dayOfWeek=dateObj.getDay();
@@ -4858,10 +4964,10 @@ function initEventBindings(){
     const label=byId('sched-form-label').value.trim() || '';
     if(!subjectId)return;
     if(_editingScheduleId){
-      const updated = updateScheduleEvent(_editingScheduleId,{subjectId,date,recurrence,dayOfWeek,startTime,durationMinutes,label});
+      const updated = updateScheduleEvent(_editingScheduleId,{subjectId,topicId,date,recurrence,dayOfWeek,startTime,durationMinutes,label});
       if(!updated) toast('Não foi possível atualizar a sessão.');
     } else {
-      addScheduleEvent({subjectId,date,recurrence,dayOfWeek,startTime,durationMinutes,label});
+      addScheduleEvent({subjectId,topicId,date,recurrence,dayOfWeek,startTime,durationMinutes,label});
     }
     _editingScheduleId = null;
     Modal.close('modal-schedule');
@@ -4871,24 +4977,26 @@ function initEventBindings(){
   on('btn-tasks-add','click',()=>openAddTaskModal(null));
   on('btn-task-save','click',()=>{
     const subjectId=byId('task-form-subject').value;
+    const topicId=byId('task-form-topic').value || null;
     const title=byId('task-form-title').value.trim();
     if(!title||!subjectId)return;
-    addTask(subjectId,title); Modal.close('modal-add-task');
+    addTask(subjectId,title,topicId); Modal.close('modal-add-task');
   });
   on('task-form-title','keydown',e=>{ if(e.key==='Enter')byId('btn-task-save').click(); });
 
   // Pomodoro
   on('btn-pomo-main','click',()=>{
     if(Pomo.isRunning){Pomo.pause();}
-    else if(Pomo.leftSec<Pomo.totalSec){Pomo.resume();}
+    else if(hasPomoRemaining()){Pomo.resume();}
     else{openPomoModal();}
   });
   on('btn-pomo-reset','click',()=>Pomo.reset());
   on('btn-pomo-start-confirm','click',()=>{
     if(!_selectedPomoSubj || !_selectedPomoTopic)return;
     Modal.close('modal-pomo-subject');
-    setActiveView('pomodoro');
+    if(!_pomoStartStayOnCurrentView) setActiveView('pomodoro');
     Pomo.start(_selectedPomoSubj,_selectedPomoDur,_selectedPomoTopic);
+    _pomoStartStayOnCurrentView=false;
   });
 
   // Note
@@ -5061,11 +5169,10 @@ const DEFAULT_LAYOUT = [
   {id:'hero',     x:0,  y:0,  w:12, h:6},
   {id:'today',    x:0,  y:6,  w:4,  h:5},
   {id:'schedule', x:4,  y:6,  w:4,  h:7},
-  {id:'pomodoro', x:0,  y:11, w:4,  h:6},
   {id:'tasks',    x:8,  y:6,  w:4,  h:13},
-  {id:'analysis', x:4,  y:13, w:4,  h:6},
-  {id:'note',     x:0,  y:17, w:4,  h:7},
-  {id:'subjects', x:0,  y:24, w:8,  h:10},
+  {id:'analysis', x:0,  y:11, w:4,  h:6},
+  {id:'note',     x:4,  y:13, w:4,  h:7},
+  {id:'subjects', x:0,  y:20, w:8,  h:10},
   {id:'goals',    x:8,  y:19, w:4,  h:11},
 ];
 
@@ -5080,11 +5187,30 @@ function enableGridFallback(reason){
 }
 
 function getInitialDashboardLayout(saved){
-  const migrated = AppDB._get('sf_layout_hero_pomodoro_v1', false);
-  if(migrated) return Array.isArray(saved) ?saved : DEFAULT_LAYOUT;
-  AppDB._set('sf_layout_hero_pomodoro_v1', true);
+  const layoutVersion = 'dashboard-layout-with-hero-pomodoro-v3';
+  const currentVersion = AppDB._get('sf_dashboard_layout_version', null);
+  if(currentVersion !== layoutVersion){
+    AppDB._set('sf_dashboard_layout_version', layoutVersion);
+    AppDB._set('sf_layout', DEFAULT_LAYOUT);
+    return DEFAULT_LAYOUT;
+  }
+  const migrated = AppDB._get('sf_layout_without_dashboard_pomo_v1', false);
+  if(migrated) return sanitizeDashboardLayout(saved);
+  AppDB._set('sf_layout_without_dashboard_pomo_v1', true);
   const hero = Array.isArray(saved) ?saved.find(item=>item.id==='hero') : null;
-  return hero && Number(hero.w) >= 10 ?saved : DEFAULT_LAYOUT;
+  const hasRemovedPomodoro = Array.isArray(saved) && saved.some(item=>item.id==='pomodoro');
+  return hero && Number(hero.w) >= 10 && !hasRemovedPomodoro ?sanitizeDashboardLayout(saved) : DEFAULT_LAYOUT;
+}
+
+function sanitizeDashboardLayout(layout){
+  if(!Array.isArray(layout)) return DEFAULT_LAYOUT;
+  const available = new Set([...document.querySelectorAll('#mainGrid > .grid-stack-item')].map(item=>item.id));
+  const cleaned = layout.filter(item=>item && available.has(item.id));
+  const expected = new Set(DEFAULT_LAYOUT.map(item=>item.id));
+  const hasAllExpected = [...expected].every(id=>cleaned.some(item=>item.id===id));
+  const hero = cleaned.find(item=>item.id==='hero');
+  if(!hasAllExpected || !hero || Number(hero.w) < 10) return DEFAULT_LAYOUT;
+  return cleaned;
 }
 
 function initGrid(){
@@ -5123,6 +5249,7 @@ function initGrid(){
   if(initialLayout && Array.isArray(initialLayout)){
     try{ gsGrid.load(initialLayout, false); } catch(e){ console.warn('[StudyFlow] Layout corrompido, usando padrão.',e); }
   }
+  AppDB._set('sf_layout', gsGrid.save(false));
 
   // Persist on change
   gsGrid.on('change dragstop resizestop', ()=>{
@@ -5219,17 +5346,25 @@ safeCall(()=>setActiveView(getActiveView(), {track:false,focus:false}), 'startup
 setTimeout(()=>safeCall(()=>renderWeeklyAnalysis(), 'startup:renderWeeklyAnalysis'),200);
 // Register Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js?v=25',{updateViaCache:'none'}).catch(e=>console.warn('[PWA] SW:',e));
+  navigator.serviceWorker.register('./sw.js?v=26',{updateViaCache:'none'}).then(reg=>{
+    if(reg.waiting) reg.waiting.postMessage({type:'SKIP_WAITING'});
+    reg.addEventListener('updatefound',()=>{
+      const worker = reg.installing;
+      if(!worker) return;
+      worker.addEventListener('statechange',()=>{
+        if(worker.state === 'installed' && navigator.serviceWorker.controller){
+          worker.postMessage({type:'SKIP_WAITING'});
+        }
+      });
+    });
+  }).catch(e=>console.warn('[PWA] SW:',e));
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    if(!sessionStorage.getItem('sf_sw_refreshed_v26')){
+      sessionStorage.setItem('sf_sw_refreshed_v26','1');
+      window.location.reload();
+    }
+  });
 }
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
