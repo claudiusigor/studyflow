@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -38,7 +38,7 @@
       --blue-glow:rgba(0,87,255,0.35);
       --ease:cubic-bezier(0.4,0,0.2,1);
     }
-    html,body{height:100%;}
+    html,body{height:100%;overflow-x:hidden;}
     /* Safe area for PWA (notch / home bar) */
     .shell{padding-left:max(32px, env(safe-area-inset-left));padding-right:max(32px, env(safe-area-inset-right));padding-bottom:max(40px, env(safe-area-inset-bottom));}
     body{font-family:"Aptos","Segoe UI",system-ui,sans-serif;background:var(--bg-base);color:var(--t1);min-height:100vh;-webkit-font-smoothing:antialiased;}
@@ -185,7 +185,7 @@
     #pomo-subject-chip{display:none;align-items:center;gap:6px;font-size:0.75rem;font-weight:600;background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--r2);padding:4px 10px;color:var(--t2);}
     #pomo-subject-chip.visible{display:flex;}
     /* Session annotation */
-    .session-note-card{background:var(--surface);border:1px solid var(--surface-border);box-shadow:0 14px 32px rgba(52,32,17,.08);display:flex;flex-direction:column;gap:20px;padding:24px;}
+    .session-note-card{background:var(--surface);border:1px solid var(--surface-border);box-shadow:0 14px 32px rgba(52,32,17,.08);display:flex;flex-direction:column;gap:16px;padding:20px;}
     body.theme-dark .session-note-card{background:#201813;border-color:#3a2d25;box-shadow:0 16px 34px rgba(0,0,0,.32);}
     .session-note-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
     .session-note-heading{display:flex;align-items:flex-start;gap:12px;min-width:0;}
@@ -202,7 +202,7 @@
     .session-note-icon-btn svg{width:16px;height:16px;}
     body.theme-dark .session-note-icon-btn{background:#261c17;color:#c7a791;}
     body.theme-dark .session-note-icon-btn:hover{background:#32231c;color:#ff9b64;}
-    .session-note-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:12px 14px;border-radius:20px;background:#fff8f2;border:1px solid rgba(232,217,205,.9);}
+    .session-note-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:10px 12px;border-radius:18px;background:#fff8f2;border:1px solid rgba(232,217,205,.9);}
     body.theme-dark .session-note-meta{background:#241b16;border-color:#3a2d25;}
     .session-note-meta-item{display:flex;align-items:flex-start;gap:10px;min-width:0;}
     .session-note-meta-icon{width:30px;height:30px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fffdf9;border:1px solid rgba(232,217,205,.95);color:#b17a55;}
@@ -211,9 +211,9 @@
     .session-note-meta-copy{min-width:0;}
     .session-note-meta-label{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);}
     .session-note-meta-value{margin-top:3px;font-size:.84rem;font-weight:700;line-height:1.35;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .session-note-audio{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:18px;background:#fff7ef;border:1px solid rgba(235,221,208,.95);}
+    .session-note-audio{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:18px;background:#fff7ef;border:1px solid rgba(235,221,208,.95);}
     body.theme-dark .session-note-audio{background:#241b16;border-color:#3a2d25;}
-    .session-note-audio-toggle,.session-note-audio-tts{width:40px;height:40px;flex-shrink:0;border:none;border-radius:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 180ms var(--ease),background 180ms var(--ease),color 180ms var(--ease),box-shadow 180ms var(--ease);}
+    .session-note-audio-toggle,.session-note-audio-tts{width:38px;height:38px;flex-shrink:0;border:none;border-radius:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 180ms var(--ease),background 180ms var(--ease),color 180ms var(--ease),box-shadow 180ms var(--ease);}
     .session-note-audio-toggle{background:linear-gradient(180deg,#ff8a4c,#ff5a1f);color:#fff;box-shadow:0 10px 18px rgba(255,90,31,.18);}
     .session-note-audio-toggle:hover{transform:translateY(-1px);box-shadow:0 12px 20px rgba(255,90,31,.24);}
     .session-note-audio-tts{background:#fffdf9;color:#9b7457;border:1px solid rgba(232,217,205,.95);}
@@ -226,21 +226,21 @@
     .session-note-audio.is-playing .session-note-wave-bar{animation:sessionWave 1.8s ease-in-out infinite;}
     .session-note-audio-time{font-size:.8rem;font-weight:700;color:#8e6a52;min-width:40px;text-align:right;}
     body.theme-dark .session-note-audio-time{color:#e5bb9c;}
-    .session-note-section{display:flex;flex-direction:column;gap:10px;}
+    .session-note-section{display:flex;flex-direction:column;gap:8px;}
     .session-note-section-title{font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#9d7558;}
     body.theme-dark .session-note-section-title{color:#d4a98b;}
     .session-note-summary-wrap{position:relative;}
-    .session-note-summary{width:100%;min-height:146px;resize:none;border:none;border-radius:22px;padding:18px 18px 42px;background:#fffdf9;border:1px solid rgba(232,217,205,.95);font:inherit;font-size:.88rem;line-height:1.6;color:var(--t1);outline:none;transition:border-color 180ms var(--ease),box-shadow 180ms var(--ease);}
+    .session-note-summary{width:100%;min-height:112px;resize:none;border:none;border-radius:20px;padding:16px 16px 40px;background:#fffdf9;border:1px solid rgba(232,217,205,.95);font:inherit;font-size:.86rem;line-height:1.55;color:var(--t1);outline:none;transition:border-color 180ms var(--ease),box-shadow 180ms var(--ease);}
     .session-note-summary::placeholder{color:#b19582;}
     .session-note-summary:focus{border-color:rgba(255,90,31,.3);box-shadow:0 0 0 4px rgba(255,90,31,.09);}
     body.theme-dark .session-note-summary{background:#1d1511;border-color:#3a2d25;color:#f3ebe5;}
     body.theme-dark .session-note-summary::placeholder{color:#b5937e;}
-    .session-note-summary-affordance{position:absolute;right:14px;bottom:14px;width:30px;height:30px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#fff5eb;border:1px solid rgba(232,217,205,.95);color:#b17a55;pointer-events:none;}
+    .session-note-summary-affordance{position:absolute;right:12px;bottom:12px;width:28px;height:28px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:#fff5eb;border:1px solid rgba(232,217,205,.95);color:#b17a55;pointer-events:none;}
     body.theme-dark .session-note-summary-affordance{background:#261c17;border-color:#3a2d25;color:#d9a67f;}
     .session-note-summary-affordance svg{width:14px;height:14px;}
     .session-note-autosave{margin-top:6px;font-size:.72rem;color:var(--t3);min-height:1em;}
-    .session-note-insights-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
-    .session-note-insight,.session-note-insight-add{min-height:148px;border-radius:22px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid rgba(232,217,205,.95);background:#fffdf9;transition:transform 180ms var(--ease),box-shadow 180ms var(--ease),border-color 180ms var(--ease),background 180ms var(--ease);}
+    .session-note-insights-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;}
+    .session-note-insight,.session-note-insight-add{min-height:126px;border-radius:20px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid rgba(232,217,205,.95);background:#fffdf9;transition:transform 180ms var(--ease),box-shadow 180ms var(--ease),border-color 180ms var(--ease),background 180ms var(--ease);}
     .session-note-insight:hover,.session-note-insight-add:hover{transform:translateY(-2px);box-shadow:0 12px 20px rgba(53,31,13,.08);}
     body.theme-dark .session-note-insight,body.theme-dark .session-note-insight-add{background:#1d1511;border-color:#3a2d25;}
     .session-note-insight-head{display:flex;align-items:center;justify-content:space-between;gap:8px;}
@@ -251,14 +251,14 @@
     .session-note-insight-remove:hover{background:#fff4eb;color:#b54a32;}
     body.theme-dark .session-note-insight-remove:hover{background:#2a1f1a;color:#ff9c78;}
     .session-note-insight-remove svg{width:14px;height:14px;}
-    .session-note-insight-text{margin-top:18px;font-size:.84rem;line-height:1.55;color:var(--t1);}
+    .session-note-insight-text{margin-top:14px;font-size:.8rem;line-height:1.5;color:var(--t1);}
     .session-note-insight-add{align-items:flex-start;justify-content:flex-end;cursor:pointer;background:linear-gradient(180deg,#fffdf9,#fff8f1);}
     .session-note-insight-add-icon{width:34px;height:34px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:#fff3e8;border:1px solid rgba(232,217,205,.95);color:#ff7a1f;margin-bottom:auto;}
     .session-note-insight-add-label{font-size:.84rem;font-weight:700;color:var(--t1);}
     .session-note-insight-add-copy{margin-top:6px;font-size:.76rem;line-height:1.45;color:var(--t2);}
     body.theme-dark .session-note-insight-add{background:linear-gradient(180deg,#211813,#1b1410);}
     body.theme-dark .session-note-insight-add-icon{background:#2a1f19;border-color:#3a2d25;color:#ff9b64;}
-    .session-note-empty{display:flex;align-items:center;justify-content:center;min-height:148px;text-align:center;border-radius:22px;border:1px dashed rgba(232,217,205,.95);background:#fffdf9;color:var(--t2);padding:16px;font-size:.82rem;line-height:1.55;}
+    .session-note-empty{display:flex;align-items:center;justify-content:center;min-height:126px;text-align:center;border-radius:20px;border:1px dashed rgba(232,217,205,.95);background:#fffdf9;color:var(--t2);padding:14px;font-size:.8rem;line-height:1.5;}
     body.theme-dark .session-note-empty{background:#1d1511;border-color:#3a2d25;}
     .session-note-modal-list{display:flex;flex-direction:column;gap:10px;max-height:220px;overflow:auto;padding-right:4px;}
     .session-note-modal-item{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:12px 14px;border-radius:16px;background:var(--glass);border:1px solid var(--glass-border);}
@@ -502,22 +502,54 @@
       body.edit-mode .ui-resizable-se,body.edit-mode .ui-resizable-sw,body.edit-mode .ui-resizable-s,body.edit-mode .ui-resizable-e,body.edit-mode .ui-resizable-w{background:rgba(255,90,31,.16);border:1px solid rgba(255,90,31,.26);border-radius:12px;}
     }
     @media(max-width:680px){
-      body.edit-mode .ui-resizable-e,
-      body.edit-mode .ui-resizable-w,
-      body.edit-mode .ui-resizable-se,
-      body.edit-mode .ui-resizable-sw{display:none!important;}
-      body.edit-mode .ui-resizable-s{
+      body.edit-mode .grid-stack-item .ui-resizable-handle:not(.ui-resizable-s){
+        display:none!important;
+        width:0!important;
+        height:0!important;
+        min-width:0!important;
+        min-height:0!important;
+        opacity:0!important;
+        pointer-events:none!important;
+        border:0!important;
+        background:transparent!important;
+        box-shadow:none!important;
+      }
+      body.edit-mode .grid-stack-item .ui-resizable-s{
         left:50%!important;
         right:auto!important;
-        bottom:8px!important;
-        width:72px!important;
+        bottom:10px!important;
+        width:48px!important;
         height:18px!important;
-        min-width:72px!important;
+        min-width:48px!important;
         min-height:18px!important;
-        transform:translateX(-50%);
+        margin-left:-24px!important;
+        transform:none!important;
+        border-radius:0!important;
+        background:transparent!important;
+        border:0!important;
+        box-shadow:none!important;
+        opacity:1!important;
+        outline:none!important;
+        overflow:visible!important;
+      }
+      body.edit-mode .grid-stack-item .ui-resizable-s::before{
+        content:''!important;
+        position:absolute!important;
+        left:50%!important;
+        top:50%!important;
+        width:34px!important;
+        height:8px!important;
+        transform:translate(-50%,-50%)!important;
         border-radius:999px!important;
-        background:rgba(255,90,31,.18)!important;
-        border:1px solid rgba(255,90,31,.28)!important;
+        background:rgba(255,90,31,.24)!important;
+        box-shadow:none!important;
+        pointer-events:none!important;
+      }
+      body.edit-mode .grid-stack-item .ui-resizable-s::after{
+        content:none!important;
+      }
+      body.edit-mode .grid-stack-item>.grid-stack-item-content{
+        box-shadow:0 0 0 1px rgba(255,90,31,.14),var(--shadow-card)!important;
       }
     }
     /* Edit toggle button */
@@ -1326,8 +1358,8 @@
           <div class="session-note-section">
             <div class="session-note-section-title">Resumo da sess&atilde;o</div>
             <div class="session-note-summary-wrap">
-              <textarea class="session-note-summary" id="note-summary-input" placeholder="O que voc&ecirc; aprendeu? Quais pontos foram mais importantes?
-Ainda ficou com alguma d&uacute;vida?"></textarea>
+              <textarea class="session-note-summary" id="note-summary-input" placeholder="O que voc&ecirc; aprendeuQuais pontos foram mais importantes
+Ainda ficou com alguma d&uacute;vida"></textarea>
               <div class="session-note-summary-affordance" aria-hidden="true"><i data-lucide="pen-line"></i></div>
             </div>
             <div class="session-note-autosave" id="note-autosave-status"></div>
@@ -1428,6 +1460,10 @@ Ainda ficou com alguma d&uacute;vida?"></textarea>
     <div class="modal-title" id="modal-pomo-subject-title">Para qual matéria</div>
     <div class="subj-select-list" id="pomo-subject-list"></div>
     <div class="field">
+      <label for="pomo-topic-select">Conteúdo da sessão</label>
+      <select id="pomo-topic-select"></select>
+    </div>
+    <div class="field">
       <label>Duração da sessão</label>
       <div style="display:flex;gap:8px;" id="pomo-dur-btns">
         <button class="btn-glass tertiary" style="flex:1;padding:8px 0;font-size:0.8rem;" data-min="25">25 min</button>
@@ -1484,8 +1520,8 @@ Ainda ficou com alguma d&uacute;vida?"></textarea>
 <div id="modal-note" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-note-title" aria-hidden="true">
   <div class="modal-card" style="max-width:560px" tabindex="-1">
     <div class="modal-title" id="modal-note-title">Editar anota&ccedil;&atilde;o da sess&atilde;o</div>
-    <div class="field"><label for="note-form-summary">Resumo da sess&atilde;o</label><textarea id="note-form-summary" rows="5" placeholder="O que voc&ecirc; aprendeu? Quais pontos foram mais importantes?
-Ainda ficou com alguma d&uacute;vida?"></textarea></div>
+    <div class="field"><label for="note-form-summary">Resumo da sess&atilde;o</label><textarea id="note-form-summary" rows="5" placeholder="O que voc&ecirc; aprendeuQuais pontos foram mais importantes
+Ainda ficou com alguma d&uacute;vida"></textarea></div>
     <div class="field">
       <label>Insights chave</label>
       <div class="session-note-modal-list" id="note-form-insights"></div>
@@ -1551,7 +1587,7 @@ Ainda ficou com alguma d&uacute;vida?"></textarea></div>
       <button class="btn-glass secondary" style="flex:none;padding:9px 18px;" id="btn-export-json">Exportar dados</button>
       <button class="btn-glass secondary" style="flex:none;padding:9px 18px;" id="btn-import-json">Importar dados</button>
       <button class="btn-glass secondary" style="flex:none;padding:9px 18px;" id="btn-export-events">Exportar eventos</button>
-      <button class="btn-glass tertiary" style="flex:none;padding:9px 18px;color:var(--amber-l);border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.08);" id="btn-pmmg-reset">🎖️ Edital PMMG</button>
+      <button class="btn-glass tertiary" style="flex:none;padding:9px 18px;color:var(--amber-l);border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.08);" id="btn-pmmg-reset"><i data-lucide="shield"></i> Edital PMMG</button>
       <button class="btn-glass primary" style="flex:none;padding:9px 24px;" id="btn-subj-add-new"><i data-lucide="plus"></i>Nova Matéria</button>
     </div>
   </div>
@@ -1610,7 +1646,7 @@ const COLOR_THEMES = [
   {key:'violet', colorVar:'--violet-l', bg:'rgba(139,92,246,0.18)', grad:'linear-gradient(90deg,#8b5cf6,#a78bfa)', glow:'rgba(139,92,246,0.5)', swatch:'#8b5cf6', lucide:'globe'},
 ];
 
-const DEFAULT_POMO = {phase:'focus',sessionCount:0,focusDurationMinutes:25,breakDurationMinutes:5,longBreakDurationMinutes:15,longBreakAfter:4,activeSubjectId:null};
+const DEFAULT_POMO = {phase:'focus',sessionCount:0,focusDurationMinutes:25,breakDurationMinutes:5,longBreakDurationMinutes:15,longBreakAfter:4,activeSubjectId:null,activeTopicId:null};
 const STORAGE_VERSION = 5;
 const VIEW_IDS = ['dashboard','agenda','tasks','pomodoro','subjects','mood'];
 const PMMG_EDITAL_URL = 'https://pmminas.com/wp-content/uploads/2024/05/EDITAL-VERTICALIZADO-CFSD-PMMG-2025-@pmminas-METODO-OBA-OTAVIO-SOUZA.pdf';
@@ -1687,7 +1723,7 @@ function openPMMGEdital(){
 
 /* HELPERS */
 
-function uid(){ return typeof crypto!=='undefined'&&crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2); }
+function uid(){ return typeof crypto!=='undefined' && crypto.randomUUID ?crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2); }
 function dateKey(d){ const dt=typeof d==='string'?new Date(d):(d||new Date()); return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`; }
 function todayKey(){ return dateKey(new Date()); }
 function fmtMin(m){ const h=Math.floor(m/60),mn=m%60; if(!h)return `${mn}m`; if(!mn)return `${h}h`; return `${h}h ${mn}m`; }
@@ -1699,7 +1735,7 @@ function relDate(str){ if(!str)return ''; const d=new Date(str),t=new Date(),dk=
 const FOCUSABLE_SEL = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
 function decodeMojibake(str){
   if(typeof str!=='string') return str;
-  if(!/[ÃÂðâ]/.test(str)) return str;
+  if(!/[\u00c3\u00c2\u00f0\ufffd]|\u00ef\u00bf\u00bd/.test(str)) return str;
   try { return decodeURIComponent(escape(str)); } catch(_){ return str; }
 }
 function hasVisibleEmoji(str){
@@ -1707,21 +1743,21 @@ function hasVisibleEmoji(str){
   return /[\u{1F300}-\u{1FAFF}\u2600-\u27BF]/u.test(str);
 }
 function looksBrokenText(str){
-  return typeof str==='string' && /[ÃÂðâ�]/.test(str);
+  return typeof str==='string' && /[\u00c3\u00c2\u00f0\ufffd]|\u00ef\u00bf\u00bd|[A-Za-z?-?]\\?[A-Za-z?-?]/.test(str);
 }
 function sanitizeText(str, fallback=''){
-  const raw = typeof str === 'string' ? str : (typeof fallback === 'string' ? fallback : '');
+  const raw = typeof str === 'string' ?str : (typeof fallback === 'string' ?fallback : '');
   const trimmed = decodeMojibake(raw).trim();
   if(trimmed) return trimmed;
-  return typeof fallback === 'string' ? fallback : '';
+  return typeof fallback === 'string' ?fallback : '';
 }
 function topicFromSeed(subjectId, item, index){
   const [code,title,status='not_started'] = item;
   return sanitizeTopic({id:`${subjectId}-topic-${String(index+1).padStart(2,'0')}`, code, title, status});
 }
 function getDefaultTopicsForSubject(subject){
-  const id = sanitizeText(subject?.id || '', '');
-  const name = normSearch(subject?.name || '');
+  const id = sanitizeText(subject.id || '', '');
+  const name = normSearch(subject.name || '');
   let seed = SUBJECT_TOPIC_SEED[id];
   if(!seed && name.includes('portugues')) seed = SUBJECT_TOPIC_SEED.s1;
   if(!seed && name.includes('raciocinio')) seed = SUBJECT_TOPIC_SEED.s3;
@@ -1732,23 +1768,23 @@ function getDefaultTopicsForSubject(subject){
   return seed.map((item,index)=>topicFromSeed(id || `subject-${name || 'custom'}`, item, index));
 }
 function sanitizeTopic(input){
-  const safe = input && typeof input === 'object' ? input : {};
-  const status = TOPIC_STATUS_META[safe.status] ? safe.status : 'not_started';
-  const progress = Number.isFinite(Number(safe.progress)) ? Math.max(0, Math.min(100, Number(safe.progress))) : undefined;
+  const safe = input && typeof input === 'object' ?input : {};
+  const status = TOPIC_STATUS_META[safe.status] ?safe.status : 'not_started';
+  const progress = Number.isFinite(Number(safe.progress)) ?Math.max(0, Math.min(100, Number(safe.progress))) : undefined;
   return {
     id: sanitizeText(safe.id, uid()),
     code: sanitizeText(safe.code, ''),
     title: sanitizeText(safe.title, 'Conteúdo'),
     status,
-    ...(progress !== undefined ? {progress} : {}),
-    lastStudiedAt: safe.lastStudiedAt ? sanitizeText(safe.lastStudiedAt, null) : null,
-    reviewDue: safe.reviewDue ? sanitizeText(safe.reviewDue, null) : null,
-    completedAt: safe.completedAt ? sanitizeText(safe.completedAt, null) : null,
+    ...(progress !== undefined ?{progress} : {}),
+    lastStudiedAt: safe.lastStudiedAt ?sanitizeText(safe.lastStudiedAt, null) : null,
+    reviewDue: safe.reviewDue ?sanitizeText(safe.reviewDue, null) : null,
+    completedAt: safe.completedAt ?sanitizeText(safe.completedAt, null) : null,
   };
 }
 function normalizeSubjectTopics(subject){
-  const rawTopics = Array.isArray(subject?.topics) ? subject.topics : [];
-  const topics = rawTopics.length ? rawTopics.map(sanitizeTopic) : getDefaultTopicsForSubject(subject);
+  const rawTopics = Array.isArray(subject.topics) ?subject.topics : [];
+  const topics = rawTopics.length ?rawTopics.map(sanitizeTopic) : getDefaultTopicsForSubject(subject);
   return topics.map((topic,index)=>({
     ...topic,
     id: topic.id || `${subject.id || 'subject'}-topic-${index+1}`,
@@ -1756,14 +1792,14 @@ function normalizeSubjectTopics(subject){
   }));
 }
 function calculateSubjectProgress(subject){
-  const topics = Array.isArray(subject?.topics) ? subject.topics : [];
+  const topics = Array.isArray(subject?.topics) ?subject.topics : [];
   if(!topics.length) return 0;
   const weighted = topics.reduce((sum,topic)=>sum + (TOPIC_STATUS_WEIGHTS[topic.status] || 0), 0);
   return Math.round((weighted / topics.length) * 100);
 }
 function filterTopics(topics, query='', status='all'){
   const q = normSearch(query);
-  return (Array.isArray(topics) ? topics : []).filter(topic=>{
+  return (Array.isArray(topics) ?topics : []).filter(topic=>{
     const statusMatch = !status || status === 'all' || topic.status === status;
     const queryMatch = !q || normSearch(`${topic.code} ${topic.title}`).includes(q);
     return statusMatch && queryMatch;
@@ -1774,11 +1810,11 @@ function nextTopicStatus(status){
   return TOPIC_STATUS_ORDER[(idx + 1) % TOPIC_STATUS_ORDER.length] || 'not_started';
 }
 function sanitizeSubject(input){
-  const safe = input && typeof input === 'object' ? input : {};
+  const safe = input && typeof input === 'object' ?input : {};
   const base = {
     id: sanitizeText(safe.id, uid()),
     name: sanitizeText(safe.name, 'Matéria'),
-    icon: hasVisibleEmoji(safe.icon) ? safe.icon : '📘',
+    icon: hasVisibleEmoji(safe.icon) ?safe.icon : '📘',
     colorVar: sanitizeText(safe.colorVar || safe.color, '--indigo-l'),
     bg: sanitizeText(safe.bg, 'rgba(0,87,255,0.15)'),
     grad: sanitizeText(safe.grad, 'linear-gradient(90deg,#0057FF,#3B82F6)'),
@@ -1796,7 +1832,7 @@ function sanitizeSubject(input){
   };
 }
 function mergePMMGSubjectDefaults(subjects){
-  const current = (Array.isArray(subjects) ? subjects : []).map(sanitizeSubject);
+  const current = (Array.isArray(subjects) ?subjects : []).map(sanitizeSubject);
   const ids = new Set(current.map(subject=>subject.id));
   const names = new Set(current.map(subject=>normSearch(subject.name)));
   getPMMGSubjects().forEach(subject=>{
@@ -1808,7 +1844,7 @@ function mergePMMGSubjectDefaults(subjects){
   return current;
 }
 function syncSubjectsToOfficialEdital(subjects){
-  const current = (Array.isArray(subjects) ? subjects : []).map(sanitizeSubject);
+  const current = (Array.isArray(subjects) ?subjects : []).map(sanitizeSubject);
   const defaults = getPMMGSubjects();
   return defaults.map(base=>{
     const matches = current.filter(subject=>
@@ -1816,8 +1852,8 @@ function syncSubjectsToOfficialEdital(subjects){
     );
     if(!matches.length) return base;
     const preferred = matches.sort((a,b)=>{
-      const scoreA = (a.id === base.id ? 10 : 0) + ((a.topics?.length || 0) / 100) + (a.progress || 0);
-      const scoreB = (b.id === base.id ? 10 : 0) + ((b.topics?.length || 0) / 100) + (b.progress || 0);
+      const scoreA = (a.id === base.id ?10 : 0) + ((a.topics.length || 0) / 100) + (a.progress || 0);
+      const scoreB = (b.id === base.id ?10 : 0) + ((b.topics.length || 0) / 100) + (b.progress || 0);
       return scoreB - scoreA;
     })[0];
     return sanitizeSubject({
@@ -1831,7 +1867,7 @@ function syncSubjectsToOfficialEdital(subjects){
       grad: base.grad,
       glow: base.glow,
       lucide: base.lucide,
-      topics: Array.isArray(preferred.topics) && preferred.topics.length ? preferred.topics : base.topics,
+      topics: Array.isArray(preferred.topics) && preferred.topics.length ?preferred.topics : base.topics,
       monthlyTargetHours: preferred.monthlyTargetHours || base.monthlyTargetHours,
     });
   });
@@ -1845,30 +1881,30 @@ function syncStorageToOfficialEdital(){
   AppDB.saveSessions(AppDB.getSessions().filter(session => !session.subjectId || validSubjIds.has(session.subjectId)));
 }
 function sanitizeTask(input){
-  const safe = input && typeof input === 'object' ? input : {};
+  const safe = input && typeof input === 'object' ?input : {};
   return {
     id: sanitizeText(safe.id, uid()),
     subjectId: sanitizeText(safe.subjectId, ''),
     title: sanitizeText(safe.title, 'Tarefa'),
     done: !!safe.done,
     createdAt: sanitizeText(safe.createdAt, new Date().toISOString()),
-    completedAt: safe.completedAt ? sanitizeText(safe.completedAt, null) : null,
+    completedAt: safe.completedAt ?sanitizeText(safe.completedAt, null) : null,
   };
 }
 function sanitizeScheduleEvent(input){
-  const safe = input && typeof input === 'object' ? input : {};
+  const safe = input && typeof input === 'object' ?input : {};
   return {
     id: sanitizeText(safe.id, uid()),
     subjectId: sanitizeText(safe.subjectId, ''),
     dayOfWeek: Math.min(6, Math.max(0, parseInt(safe.dayOfWeek, 10) || 0)),
-    startTime: /^\d{2}:\d{2}$/.test(String(safe.startTime || '')) ? safe.startTime : '08:00',
+    startTime: /^\d{2}:\d{2}$/.test(String(safe.startTime || '')) ?safe.startTime : '08:00',
     durationMinutes: Math.max(15, parseInt(safe.durationMinutes, 10) || 90),
     label: sanitizeText(safe.label || '', ''),
   };
 }
 function sanitizeSessionInsight(input){
-  const safe = input && typeof input === 'object' ? input : {};
-  const icon = ['star','target','lightbulb','custom'].includes(safe.icon) ? safe.icon : 'star';
+  const safe = input && typeof input === 'object' ?input : {};
+  const icon = ['star','target','lightbulb','custom'].includes(safe.icon) ?safe.icon : 'star';
   return {
     id: sanitizeText(safe.id, uid()),
     icon,
@@ -1876,14 +1912,14 @@ function sanitizeSessionInsight(input){
   };
 }
 function sanitizeNote(input){
-  const safe = input && typeof input === 'object' ? input : {};
-  const legacyChecklist = Array.isArray(safe.checklist) ? safe.checklist.map(item => ({
-    id: sanitizeText(item?.id, uid()),
-    icon: item?.done ? 'target' : 'star',
-    text: sanitizeText(item?.label, 'Insight da sessão'),
+  const safe = input && typeof input === 'object' ?input : {};
+  const legacyChecklist = Array.isArray(safe.checklist) ?safe.checklist.map(item => ({
+    id: sanitizeText(item.id, uid()),
+    icon: item.done ?'target' : 'star',
+    text: sanitizeText(item.label, 'Insight da sessão'),
   })) : [];
   const insights = Array.isArray(safe.insights) && safe.insights.length
-    ? safe.insights.map(sanitizeSessionInsight)
+    ?safe.insights.map(sanitizeSessionInsight)
     : legacyChecklist;
   const summary = sanitizeText(safe.summary || safe.body || '', '');
   const subjectName = sanitizeText(safe.subjectName || '', '');
@@ -1894,10 +1930,10 @@ function sanitizeNote(input){
     subjectName,
     contentName,
     sessionLabel,
-    audioUrl: safe.audioUrl ? sanitizeText(safe.audioUrl, null) : null,
+    audioUrl: safe.audioUrl ?sanitizeText(safe.audioUrl, null) : null,
     summary,
     insights,
-    updatedAt: safe.updatedAt ? sanitizeText(safe.updatedAt, null) : null,
+    updatedAt: safe.updatedAt ?sanitizeText(safe.updatedAt, null) : null,
     body: summary,
     checklist: insights.map(item=>({id:item.id,label:item.text,done:item.icon==='target'})),
   };
@@ -1915,7 +1951,8 @@ function getSessionAnnotationDefaults(){
   const target = getNextStudyTarget();
   const now = new Date();
   const activeSubject = AppDB.getSubjects().find(subject=>subject.id===Pomo.activeSubjectId) || target?.subject || AppDB.getSubjects()[0] || null;
-  const activeTopic = activeSubject?.topics?.find(topic=>topic.status==='studying')
+  const activeTopic = (Pomo.activeTopicId && activeSubject?.topics?.find(topic=>topic.id===Pomo.activeTopicId))
+    || activeSubject?.topics?.find(topic=>topic.status==='studying')
     || activeSubject?.topics?.find(topic=>topic.status==='review')
     || activeSubject?.topics?.[0]
     || null;
@@ -1924,7 +1961,7 @@ function getSessionAnnotationDefaults(){
   const end = endDate.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
   return {
     subjectName: activeSubject?.name || 'Matéria não definida',
-    contentName: activeTopic ? `${activeTopic.title}${activeTopic.code ? ` (${activeTopic.code})` : ''}` : (target?.title || 'Conteúdo em definição'),
+    contentName: activeTopic ?`${activeTopic.title}${activeTopic.code ?` (${activeTopic.code})` : ''}` : (target?.title || 'Conteúdo em definição'),
     sessionLabel: `Hoje, ${start} - ${end}`,
   };
 }
@@ -1938,7 +1975,7 @@ function buildSessionAnnotationSpeech(note){
   if(note.subjectName) bits.push(`Matéria: ${note.subjectName}.`);
   if(note.contentName) bits.push(`Conteúdo: ${note.contentName}.`);
   if(note.summary) bits.push(note.summary);
-  if(note.insights?.length){
+  if(note.insights.length){
     bits.push('Insights chave.');
     note.insights.forEach(item=>bits.push(item.text + '.'));
   }
@@ -2000,14 +2037,14 @@ function toast(message){
   window._toastTimer = setTimeout(()=>t.classList.remove('show'), 3200);
 }
 function inferPlatform(){
-  return window.matchMedia('(max-width: 900px)').matches ? 'mobile' : 'desktop';
+  return window.matchMedia('(max-width: 900px)').matches ?'mobile' : 'desktop';
 }
 const Analytics = {
   key: 'sf_events',
   max: 500,
   list(){
     const items = AppDB._get(this.key, []);
-    return Array.isArray(items) ? items : [];
+    return Array.isArray(items) ?items : [];
   },
   track(eventName, extra={}){
     if(!eventName) return;
@@ -2016,7 +2053,7 @@ const Analytics = {
       event_name: eventName,
       timestamp: new Date().toISOString(),
       platform: inferPlatform(),
-      theme: document.body.classList.contains('theme-dark') ? 'dark' : 'light',
+      theme: document.body.classList.contains('theme-dark') ?'dark' : 'light',
       context: extra.context || 'ui',
       subject_id: extra.subject_id || null,
     });
@@ -2044,19 +2081,19 @@ const AppDB = {
   _set(k,v){ this._cache[k]=v; try{ localStorage.setItem(k,JSON.stringify(v)); } catch(e){ console.warn('[StudyFlow] localStorage falhou:',k,e.name); } },
   getSubjects() {
     const raw = this._get('sf_subjects',[]);
-    return Array.isArray(raw) ? raw.map(sanitizeSubject) : [];
+    return Array.isArray(raw) ?raw.map(sanitizeSubject) : [];
   },
   getSessions() {
     const raw = this._get('sf_sessions',[]);
-    return Array.isArray(raw) ? raw.filter(s=>s && typeof s==='object') : [];
+    return Array.isArray(raw) ?raw.filter(s=>s && typeof s==='object') : [];
   },
   getSchedule() {
     const raw = this._get('sf_schedule',[]);
-    return Array.isArray(raw) ? raw.map(sanitizeScheduleEvent) : [];
+    return Array.isArray(raw) ?raw.map(sanitizeScheduleEvent) : [];
   },
   getTasks() {
     const raw = this._get('sf_tasks',[]);
-    return Array.isArray(raw) ? raw.map(sanitizeTask) : [];
+    return Array.isArray(raw) ?raw.map(sanitizeTask) : [];
   },
   getNote()     { return sanitizeNote(this._get('sf_note',{id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],updatedAt:null})); },
   getMoods()    { return this._get('sf_moods',{}); },
@@ -2073,7 +2110,7 @@ const AppDB = {
   saveMood(k,v)  { const m=this.getMoods(); if(!v)delete m[k]; else m[k]=v; this._set('sf_moods',m); },
   savePomoState(v){ this._set('sf_pomo_state',v); },
   saveExamDate(v){ this._set('sf_exam_date',v); },
-  saveActiveView(v){ this._set('sf_active_view', VIEW_IDS.includes(v) ? v : 'dashboard'); },
+  saveActiveView(v){ this._set('sf_active_view', VIEW_IDS.includes(v) ?v : 'dashboard'); },
 };
 
 /* AppStats */
@@ -2140,11 +2177,11 @@ const AppStats = {
 
 function getPMMGSubjects(){
   return [
-    {id:'s1', name:'Língua Portuguesa', icon:'📝', colorVar:'--amber-l', bg:'rgba(255,90,31,0.14)', grad:'linear-gradient(90deg,#ff5a1f,#ff8754)', glow:'rgba(255,90,31,0.32)', lucide:'book-open', monthlyTargetHours:20},
-    {id:'s4', name:'Literatura', icon:'📖', colorVar:'--violet-l', bg:'rgba(139,92,246,0.14)', grad:'linear-gradient(90deg,#8b5cf6,#a78bfa)', glow:'rgba(139,92,246,0.28)', lucide:'book-marked', monthlyTargetHours:8},
-    {id:'s5', name:'Noções de Língua Inglesa', icon:'🌐', colorVar:'--sky-l', bg:'rgba(14,165,233,0.13)', grad:'linear-gradient(90deg,#0ea5e9,#38bdf8)', glow:'rgba(14,165,233,0.28)', lucide:'languages', monthlyTargetHours:8},
-    {id:'s6', name:'Noções de Direito e Direitos Humanos', icon:'⚖️', colorVar:'--emerald-l', bg:'rgba(16,185,129,0.13)', grad:'linear-gradient(90deg,#10b981,#34d399)', glow:'rgba(16,185,129,0.28)', lucide:'scale', monthlyTargetHours:16},
-    {id:'s3', name:'Raciocínio Lógico-Matemático', icon:'🧮', colorVar:'--amber-l', bg:'rgba(245,158,11,0.15)', grad:'linear-gradient(90deg,#f59e0b,#fbbf24)', glow:'rgba(245,158,11,0.25)', lucide:'calculator', monthlyTargetHours:15},
+    {id:'s1', name:'Língua Portuguesa', icon:'LP', colorVar:'--amber-l', bg:'rgba(255,90,31,0.14)', grad:'linear-gradient(90deg,#ff5a1f,#ff8754)', glow:'rgba(255,90,31,0.32)', lucide:'book-open', monthlyTargetHours:20},
+    {id:'s4', name:'Literatura', icon:'Li', colorVar:'--violet-l', bg:'rgba(139,92,246,0.14)', grad:'linear-gradient(90deg,#8b5cf6,#a78bfa)', glow:'rgba(139,92,246,0.28)', lucide:'book-marked', monthlyTargetHours:8},
+    {id:'s5', name:'Noções de Língua Inglesa', icon:'EN', colorVar:'--sky-l', bg:'rgba(14,165,233,0.13)', grad:'linear-gradient(90deg,#0ea5e9,#38bdf8)', glow:'rgba(14,165,233,0.28)', lucide:'languages', monthlyTargetHours:8},
+    {id:'s6', name:'Noções de Direito e Direitos Humanos', icon:'DH', colorVar:'--emerald-l', bg:'rgba(16,185,129,0.13)', grad:'linear-gradient(90deg,#10b981,#34d399)', glow:'rgba(16,185,129,0.28)', lucide:'scale', monthlyTargetHours:16},
+    {id:'s3', name:'Raciocínio Lógico-Matemático', icon:'RL', colorVar:'--amber-l', bg:'rgba(245,158,11,0.15)', grad:'linear-gradient(90deg,#f59e0b,#fbbf24)', glow:'rgba(245,158,11,0.25)', lucide:'calculator', monthlyTargetHours:15},
   ].map(sanitizeSubject);
 }
 
@@ -2166,7 +2203,7 @@ function migrateSubjectsEncoding(){
       if(fixedIcon !== out.icon){ out.icon = fixedIcon; changed = true; }
       if((looksBrokenText(out.icon) || !hasVisibleEmoji(out.icon)) && fallback){ out.icon = fallback.icon; changed = true; }
     }
-    if(typeof out.icon !== 'string' || !hasVisibleEmoji(out.icon)){ out.icon = fallback?.icon || '📘'; changed = true; }
+    if(typeof out.icon !== 'string' || !hasVisibleEmoji(out.icon)){ out.icon = fallback.icon || 'Aa'; changed = true; }
     return out;
   });
   if(changed) AppDB.saveSubjects(next);
@@ -2208,19 +2245,19 @@ function importAppData(file){
   reader.onload = () => {
     safeCall(() => {
       const parsed = JSON.parse(String(reader.result || '{}'));
-      AppDB.saveSubjects(Array.isArray(parsed.sf_subjects) ? parsed.sf_subjects : []);
-      AppDB.saveTasks(Array.isArray(parsed.sf_tasks) ? parsed.sf_tasks : []);
-      AppDB.saveSchedule(Array.isArray(parsed.sf_schedule) ? parsed.sf_schedule : []);
-      AppDB.saveSessions(Array.isArray(parsed.sf_sessions) ? parsed.sf_sessions : []);
+      AppDB.saveSubjects(Array.isArray(parsed.sf_subjects) ?parsed.sf_subjects : []);
+      AppDB.saveTasks(Array.isArray(parsed.sf_tasks) ?parsed.sf_tasks : []);
+      AppDB.saveSchedule(Array.isArray(parsed.sf_schedule) ?parsed.sf_schedule : []);
+      AppDB.saveSessions(Array.isArray(parsed.sf_sessions) ?parsed.sf_sessions : []);
       AppDB.saveNote(parsed.sf_note || {id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],updatedAt:null});
-      AppDB._set('sf_moods', parsed.sf_moods && typeof parsed.sf_moods === 'object' ? parsed.sf_moods : {});
+      AppDB._set('sf_moods', parsed.sf_moods && typeof parsed.sf_moods === 'object' ?parsed.sf_moods : {});
       AppDB.savePomoState(parsed.sf_pomo_state || {...DEFAULT_POMO});
       AppDB.saveExamDate(parsed.sf_exam_date || null);
       AppDB._set('sf_layout', parsed.sf_layout || null);
-      AppDB._set('sf_theme', parsed.sf_theme === 'dark' ? 'dark' : 'light');
+      AppDB._set('sf_theme', parsed.sf_theme === 'dark' ?'dark' : 'light');
       AppDB.saveActiveView(parsed.sf_active_view || 'dashboard');
       AppDB._set('sf_sidebar_collapsed', !!parsed.sf_sidebar_collapsed);
-      AppDB._set('sf_events', Array.isArray(parsed.sf_events) ? parsed.sf_events : []);
+      AppDB._set('sf_events', Array.isArray(parsed.sf_events) ?parsed.sf_events : []);
       AppDB.saveDataVersion(STORAGE_VERSION);
       syncStorageToOfficialEdital();
       migrateSubjectsEncoding();
@@ -2320,7 +2357,7 @@ function updateDashboardState(){
   document.body.classList.toggle('dashboard-focus', isFocus);
   document.body.classList.toggle('dashboard-idle', !isFocus && !hasProgress);
   document.body.classList.toggle('dashboard-post-session', !!isPost);
-  document.getElementById('pomodoro')?.classList.toggle('is-active', isFocus);
+  document.getElementById('pomodoro').classList.toggle('is-active', isFocus);
 
   const feedback = document.getElementById('dashboard-feedback');
   if(feedback){
@@ -2337,7 +2374,7 @@ function updateDashboardState(){
 
 const Pomo = {
   timer:null, leftSec:0, totalSec:0, isRunning:false, startedAt:null,
-  phase:'focus', sessionCount:0, activeSubjectId:null,
+  phase:'focus', sessionCount:0, activeSubjectId:null, activeTopicId:null,
   focusMin:25, breakMin:5, longBreakMin:15, longBreakAfter:4,
 
   init(){
@@ -2345,6 +2382,7 @@ const Pomo = {
     const subjects = AppDB.getSubjects();
     this.phase=s.phase||'focus'; this.sessionCount=s.sessionCount||0;
     this.activeSubjectId=s.activeSubjectId || (subjects[0]?.id || null);
+    this.activeTopicId=s.activeTopicId || null;
     this.focusMin=s.focusDurationMinutes||25; this.breakMin=s.breakDurationMinutes||5;
     this.longBreakMin=s.longBreakDurationMinutes||15; this.longBreakAfter=s.longBreakAfter||4;
     this.totalSec=this._phaseDur()*60; this.leftSec=this.totalSec;
@@ -2352,11 +2390,12 @@ const Pomo = {
   },
   _phaseDur(){ if(this.phase==='focus')return this.focusMin; if(this.phase==='longBreak')return this.longBreakMin; return this.breakMin; },
   _persist(){
-    AppDB.savePomoState({phase:this.phase,sessionCount:this.sessionCount,focusDurationMinutes:this.focusMin,breakDurationMinutes:this.breakMin,longBreakDurationMinutes:this.longBreakMin,longBreakAfter:this.longBreakAfter,activeSubjectId:this.activeSubjectId});
+    AppDB.savePomoState({phase:this.phase,sessionCount:this.sessionCount,focusDurationMinutes:this.focusMin,breakDurationMinutes:this.breakMin,longBreakDurationMinutes:this.longBreakMin,longBreakAfter:this.longBreakAfter,activeSubjectId:this.activeSubjectId,activeTopicId:this.activeTopicId});
   },
-  start(subjId,durMin){
+  start(subjId,durMin,topicId=null){
     clearInterval(this.timer);
     if(subjId) this.activeSubjectId=subjId;
+    this.activeTopicId=topicId || null;
     this.phase='focus';
     if(durMin){ this.focusMin=durMin; this.totalSec=durMin*60; this.leftSec=this.totalSec; }
     DashboardFeedback = null;
@@ -2365,14 +2404,16 @@ const Pomo = {
     this.isRunning=true; this._persist();
     this.timer=setInterval(()=>this._tick(),1000);
     renderPomo();
+    renderNote();
     if(getActiveView()==='pomodoro') refreshWorkspaceView();
   },
-  pause(){ clearInterval(this.timer); this.isRunning=false; this._persist(); renderPomo(); if(getActiveView()==='pomodoro') refreshWorkspaceView(); },
+  pause(){ clearInterval(this.timer); this.isRunning=false; this._persist(); renderPomo(); renderNote(); if(getActiveView()==='pomodoro') refreshWorkspaceView(); },
   resume(){
     if(this.isRunning)return;
     this.isRunning=true;
     this.timer=setInterval(()=>this._tick(),1000);
     renderPomo();
+    renderNote();
     if(getActiveView()==='pomodoro') refreshWorkspaceView();
   },
   reset(){
@@ -2380,6 +2421,7 @@ const Pomo = {
     this.phase='focus'; this.sessionCount=0;
     this.leftSec=this.focusMin*60; this.totalSec=this.leftSec;
     this._persist(); renderPomo();
+    renderNote();
     if(getActiveView()==='pomodoro') refreshWorkspaceView();
   },
   _tick(){
@@ -2399,8 +2441,8 @@ const Pomo = {
     if(this.startedAt){
       const sessions=AppDB.getSessions();
       const elapsedMin = Math.round((this.totalSec - this.leftSec) / 60);
-      dur = elapsedMin > 0 ? elapsedMin : 1;
-      sessions.push({id:uid(),subjectId:this.activeSubjectId,startedAt:this.startedAt,endedAt:new Date().toISOString(),durationMinutes:dur,type:this.phase==='focus'?'focus':'break'});
+      dur = elapsedMin > 0 ?elapsedMin : 1;
+      sessions.push({id:uid(),subjectId:this.activeSubjectId,topicId:this.activeTopicId,startedAt:this.startedAt,endedAt:new Date().toISOString(),durationMinutes:dur,type:this.phase==='focus'?'focus':'break'});
       if(this.phase==='focus') Analytics.track(EVENT_NAMES.focusComplete,{context:'pomodoro',subject_id:this.activeSubjectId});
       AppDB.saveSessions(sessions);
     }
@@ -2409,7 +2451,7 @@ const Pomo = {
     else { this.phase='focus'; }
     this.totalSec=this._phaseDur()*60; this.leftSec=this.totalSec; this.startedAt=null;
     this._persist();
-    renderPomo(); renderTodayHours(); renderStreak(); renderWeeklyAnalysis(); renderSubjectGrid(); renderGoals(); renderTasks();
+    renderPomo(); renderTodayHours(); renderStreak(); renderWeeklyAnalysis(); renderSubjectGrid(); renderGoals(); renderTasks(); renderNote();
     renderNextSession();
     if(getActiveView()==='pomodoro') refreshWorkspaceView();
     this.resume();
@@ -2430,7 +2472,7 @@ function renderSchedule(){
   });
   const strip=weekDays.map(d=>{
     const isToday=dateKey(d)===tk;
-    return `<div class="schedule-day-pill${isToday?' today':''}">
+    return `<div class="schedule-day-pill${isToday ?' today' : ''}">
       <span class="dow">${DAY_ABBR[d.getDay()]}</span>
       <span class="num">${d.getDate()}</span>
     </div>`;
@@ -2459,7 +2501,7 @@ function renderSchedule(){
       <div class="sched-dot" style="background:var(${ev.subj.colorVar});box-shadow:0 0 6px var(${ev.subj.colorVar})"></div>
       <div class="sched-date"><div class="mo">${MONTH_ABBR[ev.date.getMonth()]}</div><div class="dy">${ev.date.getDate()}</div></div>
       <div class="sched-info">
-        <div class="sched-subject">${ev.subj.icon} ${esc(ev.subj.name)}${ev.label ? `  -  ${esc(ev.label)}` : ''}${isToday ? '<span class="today-chip">Hoje</span>' : ''}</div>
+        <div class="sched-subject">${ev.subj.icon} ${esc(ev.subj.name)}${ev.label ?`  -  ${esc(ev.label)}` : ''}${isToday ?'<span class="today-chip">Hoje</span>' : ''}</div>
         <div class="sched-time"><i data-lucide="clock" style="width:11px;height:11px"></i>${ev.startTime}  -  ${minToTime(timeToMin(ev.startTime)+ev.durationMinutes)}  -  ${ev.durationMinutes}min</div>
       </div>
       <button class="sched-delete nav-btn" data-id="${ev.id}" title="Remover"><i data-lucide="x"></i></button>
@@ -2476,12 +2518,12 @@ function renderTodayHours(){
   const total=focMin+brkMin;
   const yd=new Date(); yd.setDate(yd.getDate()-1);
   const ydFoc=AppStats.focusOnDate(sessions,dateKey(yd));
-  const delta=ydFoc>0 ? Math.round(((focMin-ydFoc)/ydFoc)*100) : 0;
+  const delta=ydFoc>0 ?Math.round(((focMin-ydFoc)/ydFoc)*100) : 0;
   const totalEl=document.getElementById('today-total');
-  totalEl.textContent=total>0 ? fmtMin(total) : 'Hoje ainda não começou';
+  totalEl.textContent=total>0 ?fmtMin(total) : 'Hoje ainda não começou';
   totalEl.classList.toggle('is-empty', total===0);
-  document.getElementById('today-focus-val').textContent=focMin>0 ? fmtMin(focMin) : '0m';
-  document.getElementById('today-break-val').textContent=brkMin>0 ? fmtMin(brkMin) : '0m';
+  document.getElementById('today-focus-val').textContent=focMin>0 ?fmtMin(focMin) : '0m';
+  document.getElementById('today-break-val').textContent=brkMin>0 ?fmtMin(brkMin) : '0m';
   const df=document.getElementById('today-delta');
   const dv=document.getElementById('today-delta-val');
   dv.textContent=(delta>=0?'+':'')+delta+'%';
@@ -2538,7 +2580,7 @@ function getNextStudyTarget(){
   }
   const sessions=AppDB.getSessions().filter(x=>x.type==='focus'&&x.subjectId).sort((a,b)=>new Date(b.startedAt)-new Date(a.startedAt));
   const lastSession = sessions[0] || null;
-  const last=lastSession ? subjects.find(subj=>subj.id===lastSession.subjectId) : null;
+  const last=lastSession ?subjects.find(subj=>subj.id===lastSession.subjectId) : null;
   if(last)return {type:'resume',subject:last};
   const minMap=AppStats.monthlyMinBySubject(AppDB.getSessions());
   const nextSubject=[...subjects].sort((a,b)=>(minMap[a.id]||0)-(minMap[b.id]||0))[0] || subjects[0];
@@ -2601,9 +2643,9 @@ function renderNoteWaveform(){
 function renderNoteInsights(note){
   const wrap = document.getElementById('note-insights-grid');
   if(!wrap) return;
-  const items = Array.isArray(note.insights) ? note.insights.slice(0,3) : [];
+  const items = Array.isArray(note.insights) ?note.insights.slice(0,3) : [];
   const insightCards = items.length
-    ? items.map(item=>`
+    ?items.map(item=>`
       <article class="session-note-insight" data-insight-id="${item.id}" tabindex="0" role="button" aria-label="Editar insight">
         <div class="session-note-insight-head">
           <div class="session-note-insight-icon"><i data-lucide="${getInsightIconName(item.icon)}"></i></div>
@@ -2670,7 +2712,7 @@ function renderNote(){
   if(audioBar) audioBar.classList.toggle('is-playing', NoteUIState.audio.isPlaying);
   const icon = document.getElementById('note-audio-icon');
   if(icon){
-    icon.setAttribute('data-lucide', NoteUIState.audio.isPlaying ? 'pause' : 'play');
+    icon.setAttribute('data-lucide', NoteUIState.audio.isPlaying ?'pause' : 'play');
     lucide.createIcons({nodes:[icon]});
   }
 }
@@ -2679,11 +2721,11 @@ function renderPomo(){
   const C=2*Math.PI*42;
   const isOvertime = Pomo.leftSec <= 0;
   const absSec = Math.abs(Pomo.leftSec);
-  const progress=isOvertime ? 0 : Pomo.leftSec/Math.max(Pomo.totalSec,1);
+  const progress=isOvertime ?0 : Pomo.leftSec/Math.max(Pomo.totalSec,1);
   
   const displayEl = document.getElementById('pomoDisplay');
-  displayEl.textContent = (isOvertime ? '+' : '') + fmtSec(absSec);
-  displayEl.style.color = isOvertime ? 'var(--rose-l)' : '';
+  displayEl.textContent = (isOvertime ?'+' : '') + fmtSec(absSec);
+  displayEl.style.color = isOvertime ?'var(--rose-l)' : '';
   
   const circleEl = document.getElementById('pomoCircle');
   circleEl.style.strokeDashoffset=C*progress;
@@ -2701,7 +2743,8 @@ function renderPomo(){
   const chip=document.getElementById('pomo-subject-chip');
   if(Pomo.activeSubjectId&&Pomo.isRunning){
     const subj=AppDB.getSubjects().find(s=>s.id===Pomo.activeSubjectId);
-    if(subj){chip.innerHTML=`${subj.icon} ${esc(subj.name)}`;chip.classList.add('visible');}
+    const topic=subjá.topics?.find(item=>item.id===Pomo.activeTopicId);
+    if(subj){chip.innerHTML=`${subj.icon} ${esc(subj.name)}${topic ?` · ${esc(topic.code)}` : ''}`;chip.classList.add('visible');}
   } else { chip.classList.remove('visible'); }
   const btnTxt=document.getElementById('pomoBtnTxt');
   const btnIco=document.getElementById('pomoIcon');
@@ -2735,7 +2778,7 @@ function drawLineChart(focusArr,breakArr){
   const ctx=canvas.getContext('2d'); ctx.scale(dpr,dpr);
   const W=rect.width,H=80;
   const allVals=[...focusArr,...breakArr].filter(v=>v>0);
-  const maxVal=allVals.length?Math.max(...allVals)*1.2:4;
+  const maxVal=allVals.length ?Math.max(...allVals)*1.2 : 4;
   function drawLine(data,stroke,glowColor,fill1){
     const xs=W/(data.length-1);
     ctx.beginPath();
@@ -2761,7 +2804,7 @@ function renderWeeklyAnalysis(){
   const sessions=AppDB.getSessions();
   const focMin=AppStats.weeklyFocusMin(sessions);
   const prevFocMin=AppStats.weeklyFocusMin(sessions,-1);
-  const delta=prevFocMin>0 ? Math.round(((focMin-prevFocMin)/prevFocMin)*100) : 0;
+  const delta=prevFocMin>0 ?Math.round(((focMin-prevFocMin)/prevFocMin)*100) : 0;
   document.getElementById('analysis-total').textContent=fmtMin(focMin)||'0m';
   const dv=document.getElementById('analysis-delta-val');
   dv.textContent=(delta>=0?'+':'')+delta+'%';
@@ -2789,7 +2832,8 @@ function renderTasks(){
   document.getElementById('tasks-delta-val').textContent=(delta>=0?'+':'')+delta;
   document.getElementById('tasks-delta').className='stat-delta '+(delta>=0?'delta-up':'delta-down');
   document.getElementById('tasks-sub').textContent=total>0
-    ? `${total} tarefa${total!==1?'s':''} concluída${total!==1?'s':''} esta semana`
+    ?
+    `${total} tarefa${total!==1?'s':''} concluída${total!==1?'s':''} esta semana`
     : 'Você ainda não definiu sua próxima missão';
   // Bar chart
   const bc=document.getElementById('barChart');
@@ -2872,7 +2916,7 @@ const VIEW_CONFIG = {
   agenda: { title:'Agenda de estudo', copy:'Planeje sua semana, ajuste sessões e mantenha o edital em movimento.' },
   tasks: { title:'Tarefas acionáveis', copy:'Transforme intenção em execução com uma fila clara do que fazer agora.' },
   pomodoro: { title:'Sala de foco', copy:'Entre em uma sessão mais profunda com contexto, ritmo e controle do seu tempo.' },
-  subjects: { title:'Olá, Claus! 👋', copy:'Vamos evoluir juntos hoje.' },
+  subjects: { title:'Olá, Claus! ', copy:'Vamos evoluir juntos hoje.' },
   mood: { title:'Humor e energia', copy:'Acompanhe como você estuda ao longo da semana e registre seu estado com mais contexto.' },
 };
 
@@ -2888,7 +2932,7 @@ const WorkspaceState = {
 };
 
 function normalizeViewId(viewId){
-  return VIEW_IDS.includes(viewId) ? viewId : 'dashboard';
+  return VIEW_IDS.includes(viewId) ?viewId : 'dashboard';
 }
 
 function getActiveView(){
@@ -2911,7 +2955,7 @@ function buildWorkspaceShell(viewId, kicker, title, copy, actions, side, body){
   return `<section class="workspace-shell" data-workspace="${viewId}">
     <div class="workspace-hero">
       <div class="workspace-header-card">
-        <div class="workspace-kicker"><i data-lucide="${VIEW_CONFIG[viewId]?.icon || 'sparkles'}"></i><span>${kicker}</span></div>
+        <div class="workspace-kicker"><i data-lucide="${VIEW_CONFIG[viewId].icon || 'sparkles'}"></i><span>${kicker}</span></div>
         <h2 class="workspace-title-xl">${title}</h2>
         <p class="workspace-copy">${copy}</p>
         <div class="workspace-actions">${actions}</div>
@@ -2933,7 +2977,7 @@ function buildAgendaWorkspace(){
   const actions = `${workspaceActionButton('agenda-add','Nova sess\u00E3o','plus','primary')}${workspaceActionButton('view-dashboard','Voltar ao dashboard','layout-dashboard')}`;
   
   const side = `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Atividade Mensal</div><div class="workspace-mini-value" style="font-size:1.8rem"><i data-lucide="calendar"></i></div><div class="workspace-mini-copy">Seu cronograma no m\u00EAs atual.</div></div><span class="workspace-pill">Vis\u00E3o Geral</span></div>
-                <div class="workspace-mini-stat"><div><div class="workspace-mini-label">Ritmo da semana</div><div class="workspace-mini-value">${events.length}</div><div class="workspace-mini-copy">sess\u00E3o${events.length===1?'':'\u00F5es'} no escopo semanal.</div></div><span class="workspace-pill">Recorrente</span></div>`;
+                <div class="workspace-mini-stat"><div><div class="workspace-mini-label">Ritmo da semana</div><div class="workspace-mini-value">${events.length}</div><div class="workspace-mini-copy">sessão${events.length===1?'':'ões'} no escopo semanal.</div></div><span class="workspace-pill">Recorrente</span></div>`;
   
   const now = new Date();
   const monthBase = new Date(now.getFullYear(), now.getMonth() + (WorkspaceState.agendaMonthOffset || 0), 1);
@@ -2970,8 +3014,8 @@ function buildAgendaWorkspace(){
        </button>`
     ).join('');
 
-    const todayBadge = isToday ? '<span class="calendar-today-badge">Hoje</span>' : '';
-    gridHtml += `<div class="calendar-day clickable ${isToday ? 'today' : ''}" role="button" tabindex="0" data-action="agenda-day-add" data-year="${year}" data-month="${month}" data-day="${d}" data-dow="${dow}" ${dayEvents.length===0?'style="opacity:0.8;"':''}>
+    const todayBadge = isToday ?'<span class="calendar-today-badge">Hoje</span>' : '';
+    gridHtml += `<div class="calendar-day clickable ${isToday ?'today' : ''}" role="button" tabindex="0" data-action="agenda-day-add" data-year="${year}" data-month="${month}" data-day="${d}" data-dow="${dow}" ${dayEvents.length===0?'style="opacity:0.8;"':''}>
       <div class="calendar-date">${d}${todayBadge}</div>
       ${eventsHtml}
     </div>`;
@@ -3022,18 +3066,19 @@ function buildTasksWorkspace(){
   const side = `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Em aberto</div><div class="workspace-mini-value">${open}</div><div class="workspace-mini-copy">tarefas prontas para virar execução.</div></div><span class="workspace-pill">Agora</span></div>
     <div class="workspace-mini-stat"><div><div class="workspace-mini-label">Concluídas</div><div class="workspace-mini-value">${completed}</div><div class="workspace-mini-copy">já finalizadas na sua base atual.</div></div><span class="workspace-pill">Histórico</span></div>`;
   const rows = visible.length
-    ? visible.map(task=>{
+    ?
+    visible.map(task=>{
         const subj = subjects.find(s=>s.id===task.subjectId);
         return `<div class="workspace-row">
           <div class="workspace-row-main">
-            <button class="workspace-row-icon" type="button" data-action="tasks-toggle" data-id="${task.id}" aria-label="${task.done?'Reabrir':'Concluir'} tarefa">${task.done ? '<i data-lucide="check-check"></i>' : (subj?.icon || '📘')}</button>
+            <button class="workspace-row-icon" type="button" data-action="tasks-toggle" data-id="${task.id}" aria-label="${task.done?'Reabrir':'Concluir'} tarefa">${task.done ?'<i data-lucide="check-check"></i>' : (subj.icon || 'Aa')}</button>
             <div>
               <div class="workspace-row-title">${esc(task.title)}</div>
-              <div class="workspace-row-meta">${subj ? `${subj.icon} ${esc(subj.name)} · ` : ''}${task.done ? `concluída em ${relDate(task.completedAt)}` : `criada em ${relDate(task.createdAt)}`}</div>
+              <div class="workspace-row-meta">${subj ?`${subj.icon} ${esc(subj.name)} · ` : ''}${task.done ?`concluída em ${relDate(task.completedAt)}` : `criada em ${relDate(task.createdAt)}`}</div>
             </div>
           </div>
           <div class="workspace-row-actions">
-            <span class="workspace-pill">${task.done ? 'Concluída' : 'Em aberto'}</span>
+            <span class="workspace-pill">${task.done ?'Concluída' : 'Em aberto'}</span>
             <button class="nav-btn" type="button" data-action="tasks-delete" data-id="${task.id}" aria-label="Excluir tarefa"><i data-lucide="trash-2"></i></button>
           </div>
         </div>`;
@@ -3048,14 +3093,14 @@ function buildTasksWorkspace(){
     side,
     `<div class="workspace-toolbar">
       <div class="workspace-filter-row">
-        <button class="workspace-chip${WorkspaceState.tasksFilter==='open'?' active':''}" type="button" data-action="tasks-filter" data-filter="open">Em aberto</button>
-        <button class="workspace-chip${WorkspaceState.tasksFilter==='done'?' active':''}" type="button" data-action="tasks-filter" data-filter="done">Concluídas</button>
-        <button class="workspace-chip${WorkspaceState.tasksFilter==='all'?' active':''}" type="button" data-action="tasks-filter" data-filter="all">Tudo</button>
+        <button class="workspace-chip${WorkspaceState.tasksFilter==='open' ?' active' : ''}" type="button" data-action="tasks-filter" data-filter="open">Em aberto</button>
+        <button class="workspace-chip${WorkspaceState.tasksFilter==='done' ?' active' : ''}" type="button" data-action="tasks-filter" data-filter="done">Concluídas</button>
+        <button class="workspace-chip${WorkspaceState.tasksFilter==='all' ?' active' : ''}" type="button" data-action="tasks-filter" data-filter="all">Tudo</button>
       </div>
       <div class="workspace-filter-row">
-        <button class="workspace-chip${WorkspaceState.tasksWindow==='all'?' active':''}" type="button" data-action="tasks-window" data-window="all">Período total</button>
-        <button class="workspace-chip${WorkspaceState.tasksWindow==='week'?' active':''}" type="button" data-action="tasks-window" data-window="week">Esta semana</button>
-        <button class="workspace-chip${WorkspaceState.tasksWindow==='today'?' active':''}" type="button" data-action="tasks-window" data-window="today">Hoje</button>
+        <button class="workspace-chip${WorkspaceState.tasksWindow==='all' ?' active' : ''}" type="button" data-action="tasks-window" data-window="all">Período total</button>
+        <button class="workspace-chip${WorkspaceState.tasksWindow==='week' ?' active' : ''}" type="button" data-action="tasks-window" data-window="week">Esta semana</button>
+        <button class="workspace-chip${WorkspaceState.tasksWindow==='today' ?' active' : ''}" type="button" data-action="tasks-window" data-window="today">Hoje</button>
       </div>
     </div>
     <div class="workspace-card" style="margin-top:16px">
@@ -3070,14 +3115,15 @@ function buildPomodoroWorkspace(){
   const sessionsToday = AppDB.getSessions().filter(session=>session.type==='focus' && dateKey(session.startedAt)===todayKey()).slice(-3).reverse();
   const actions = `${workspaceActionButton('pomodoro-start-flow','Começar foco','play','primary')}${workspaceActionButton('view-dashboard','Voltar ao overview','layout-dashboard')}`;
   const history = sessionsToday.length
-    ? sessionsToday.map(session=>{
+    ?
+    sessionsToday.map(session=>{
         const subj = AppDB.getSubjects().find(s=>s.id===session.subjectId);
         return `<div class="workspace-row">
           <div class="workspace-row-main">
-            <div class="workspace-row-icon">${subj?.icon || '📘'}</div>
+            <div class="workspace-row-icon">${subj.icon || 'Aa'}</div>
             <div>
-              <div class="workspace-row-title">${subj ? esc(subj.name) : 'Matéria livre'}</div>
-              <div class="workspace-row-meta">${fmtMin(session.durationMinutes)} · ${relDate(session.startedAt)}</div>
+              <div class="workspace-row-title">${subj ?esc(subj.name) : 'Matéria livre'}</div>
+              <div class="workspace-row-meta">${fmtMin(session.durationMinutes)} ? ${relDate(session.startedAt)}</div>
             </div>
           </div>
           <div class="workspace-row-actions"><span class="workspace-pill">Foco</span></div>
@@ -3090,18 +3136,18 @@ function buildPomodoroWorkspace(){
     'Entre na sua próxima sessão.',
     'Use esta sala para escolher a matéria, controlar o ritmo e acompanhar o que já foi feito hoje.',
     actions,
-    `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Matéria ativa</div><div class="workspace-mini-value">${activeSubject?.icon || '—'}</div><div class="workspace-mini-copy">${activeSubject ? esc(activeSubject.name) : 'Escolha uma matéria para começar.'}</div></div><span class="workspace-pill">${Pomo.phase==='focus' ? 'Foco' : 'Pausa'}</span></div>
-     <div class="workspace-mini-stat"><div><div class="workspace-mini-label">Ciclos</div><div class="workspace-mini-value">${Pomo.sessionCount}</div><div class="workspace-mini-copy">sessão${Pomo.sessionCount===1?'':'ões'} completas nesta sequência.</div></div><span class="workspace-pill">${Pomo.isRunning ? 'Em andamento' : 'Pronto'}</span></div>`,
+    `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Matéria ativa</div><div class="workspace-mini-value">${activeSubject?.icon || '—'}</div><div class="workspace-mini-copy">${activeSubject ?esc(activeSubject.name) : 'Escolha uma matéria para começar.'}</div></div><span class="workspace-pill">${Pomo.phase==='focus' ?'Foco' : 'Pausa'}</span></div>
+     <div class="workspace-mini-stat"><div><div class="workspace-mini-label">Ciclos</div><div class="workspace-mini-value">${Pomo.sessionCount}</div><div class="workspace-mini-copy">sessão${Pomo.sessionCount===1?'':'ões'} completas nesta sequência.</div></div><span class="workspace-pill">${Pomo.isRunning ?'Em andamento' : 'Pronto'}</span></div>`,
     `<div class="workspace-grid">
       <div class="workspace-card workspace-pomo-main">
         <div class="workspace-card-header"><div><div class="workspace-card-title">Timer principal</div><div class="workspace-card-copy">Pronto para iniciar, pausar ou retomar sem sair da tela.</div></div></div>
         <div class="workspace-pomo-display" id="workspace-pomo-display">25:00</div>
         <div class="workspace-pomo-phase" id="workspace-pomo-phase">Sessão de foco</div>
-        <div class="workspace-copy" id="workspace-pomo-subject">${activeSubject ? `Matéria ativa: ${activeSubject.icon} ${esc(activeSubject.name)}` : 'Escolha uma matéria para iniciar a sessão.'}</div>
+        <div class="workspace-copy" id="workspace-pomo-subject">${activeSubject ?`Matéria ativa: ${activeSubject.icon} ${esc(activeSubject.name)}` : 'Escolha uma matéria e um conteúdo para iniciar a sessão.'}</div>
         <div class="workspace-pomo-actions">
           <button class="btn-glass primary" id="workspace-pomo-main-btn" type="button" data-action="pomodoro-main"><i data-lucide="play"></i><span>Iniciar</span></button>
           <button class="btn-glass secondary" id="workspace-pomo-reset-btn" type="button" data-action="pomodoro-reset"><i data-lucide="rotate-ccw"></i><span>Resetar</span></button>
-          ${workspaceActionButton('pomodoro-finish','Finalizar','check-check','secondary', Pomo.isRunning || Pomo.leftSec < Pomo.totalSec ? '' : 'style="display:none"')}
+          ${workspaceActionButton('pomodoro-finish','Finalizar','check-check','secondary', Pomo.isRunning || Pomo.leftSec < Pomo.totalSec ?'' : 'style="display:none"')}
         </div>
       </div>
       <div class="workspace-stack">
@@ -3113,10 +3159,10 @@ function buildPomodoroWorkspace(){
 }
 
 function subjectIconHtml(subject){
-  if(subject?.lucide){
+  if(subject.lucide){
     return `<i data-lucide="${subject.lucide}"></i>`;
   }
-  return esc(subject?.icon || '•');
+  return esc(subject.icon || '•');
 }
 
 function getSubjectsHeroData(){
@@ -3153,7 +3199,7 @@ function buildSubjectsHeroCard(){
 function subjectOverviewCard(subject, selectedSubjectId){
   const pct = calculateSubjectProgress(subject);
   const active = subject.id === selectedSubjectId;
-  return `<button class="subject-overview-card${active?' active':''}" type="button" data-action="subject-open" data-subject-id="${subject.id}" aria-pressed="${active?'true':'false'}">
+  return `<button class="subject-overview-card${active ?' active' : ''}" type="button" data-action="subject-open" data-subject-id="${subject.id}" aria-pressed="${active ?'true' : 'false'}">
     <div class="subject-overview-top">
       <div class="subject-overview-icon" style="background:${subject.bg};color:var(${subject.colorVar})">${subjectIconHtml(subject)}</div>
     </div>
@@ -3177,13 +3223,13 @@ function topicFilterOptionsHtml(activeFilter){
     ['review','Revisão'],
     ['done','Concluído'],
   ];
-  return labels.map(([value,label])=>`<option value="${value}" ${activeFilter===value?'selected':''}>${label}</option>`).join('');
+  return labels.map(([value,label])=>`<option value="${value}" ${activeFilter===value ?'selected' : ''}>${label}</option>`).join('');
 }
 
 function subjectTabsHtml(activeTab){
   return ['Conteúdos','Estatísticas','Questões','Revisões'].map(label=>{
-    const tab = normSearch(label).replace('conteudos','contents').replace('estatisticas','stats').replace('questoes','questions').replace('revisoes','reviews');
-    return `<button class="subject-tab${activeTab===tab?' active':''}" type="button" data-action="subject-tab" data-tab="${tab}">${label}</button>`;
+    const tab = normSearch(label).replace('conteúdos','contents').replace('estatisticas','stats').replace('questoes','questions').replace('revisoes','reviews');
+    return `<button class="subject-tab${activeTab===tab ?' active' : ''}" type="button" data-action="subject-tab" data-tab="${tab}">${label}</button>`;
   }).join('');
 }
 
@@ -3210,15 +3256,17 @@ function buildSubjectDetailWorkspace(subject){
   const filtered = filterTopics(subject.topics, query, filter);
   const tabs = subjectTabsHtml(activeTab);
   const emptyCopy = subject.topics.length
-    ? 'Tente buscar por outro termo ou ajuste o filtro.'
+    ?
+    'Tente buscar por outro termo ou ajuste o filtro.'
     : 'Esta matéria ainda não possui conteúdos cadastrados.';
   const content = activeTab === 'contents'
-    ? `<div class="topic-toolbar">
+    ?
+    `<div class="topic-toolbar">
         <label class="topic-search" for="topic-search-input"><i data-lucide="search"></i><input id="topic-search-input" type="search" value="${esc(query)}" placeholder="Buscar conteúdo..." aria-label="Buscar conteúdo"></label>
         <label class="topic-filter-select" for="topic-filter-select"><i data-lucide="sliders-horizontal"></i><select id="topic-filter-select" aria-label="Filtrar conteúdos">${topicFilterOptionsHtml(filter)}</select></label>
       </div>
       <div class="topic-list" id="topic-list">
-        ${filtered.length ? filtered.map(topic=>topicRowHtml(subject, topic)).join('') : `<div class="workspace-empty"><strong>Nenhum conteúdo encontrado.</strong>${emptyCopy}</div>`}
+        ${filtered.length ?filtered.map(topic=>topicRowHtml(subject, topic)).join('') : `<div class="workspace-empty"><strong>Nenhum conteúdo encontrado.</strong>${emptyCopy}</div>`}
       </div>`
     : `<div class="subject-placeholder-panel"><strong>${activeTab==='stats'?'Estatísticas':activeTab==='questions'?'Questões':'Revisões'} em preparação</strong>Esta área já está estruturada para a próxima evolução do módulo.</div>`;
 
@@ -3242,7 +3290,7 @@ function buildSubjectDetailWorkspace(subject){
         </div>
       </aside>
     </div>
-    <nav class="subject-tabs" aria-label="Áreas da matéria">${tabs}</nav>
+    <nav class="subject-tabs" aria-label="áreas da matéria">${tabs}</nav>
     <div class="subject-detail-body">${content}</div>
   </section>`;
 }
@@ -3253,7 +3301,8 @@ function buildSubjectsWorkspace(){
   WorkspaceState.subjectDetailId = selectedId;
   const selected = subjects.find(subject=>subject.id===selectedId) || null;
   const rows = subjects.length
-    ? subjects.map(subject=>subjectOverviewCard(subject, selectedId)).join('')
+    ?
+    subjects.map(subject=>subjectOverviewCard(subject, selectedId)).join('')
     : `<div class="workspace-empty"><strong>Sem matérias cadastradas</strong>Crie a primeira matéria para começar a estruturar seu módulo.</div>`;
   return `<section class="subjects-master-layout" data-workspace="subjects">
     <div class="subjects-main-column">
@@ -3287,9 +3336,10 @@ function buildMoodWorkspace(){
   const today = todayKey();
   const current = moods[today] || '';
   const recent = Object.entries(moods).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,5);
-  const picker = Object.entries(labels).map(([icon,label])=>`<button class="workspace-mood-btn${current===icon?' active':''}" type="button" data-action="mood-set" data-mood="${icon}"><img src="${icon}" alt="${label}" draggable="false"><span>${label}</span></button>`).join('');
+  const picker = Object.entries(labels).map(([icon,label])=>`<button class="workspace-mood-btn${current===icon ?' active' : ''}" type="button" data-action="mood-set" data-mood="${icon}"><img src="${icon}" alt="${label}" draggable="false"><span>${label}</span></button>`).join('');
   const notes = recent.length
-    ? recent.map(([day,icon])=>`<div class="workspace-note-item"><div class="workspace-row-icon"><img src="${icon}" alt="humor" draggable="false" style="width:24px;height:24px"></div><div><div class="workspace-row-title">${new Date(day+'T00:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'long'})}</div><div class="workspace-row-meta">${labels[icon] || 'Registrado'} · histórico recente</div></div></div>`).join('')
+    ?
+    recent.map(([day,icon])=>`<div class="workspace-note-item"><div class="workspace-row-icon"><img src="${icon}" alt="humor" draggable="false" style="width:24px;height:24px"></div><div><div class="workspace-row-title">${new Date(day+'T00:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'long'})}</div><div class="workspace-row-meta">${labels[icon] || 'Registrado'} · histórico recente</div></div></div>`).join('')
     : `<div class="workspace-empty"><strong>Nenhum humor registrado</strong>Marque o seu estado de hoje para começar um histórico útil.</div>`;
   return buildWorkspaceShell(
     'mood',
@@ -3297,11 +3347,11 @@ function buildMoodWorkspace(){
     'Seu humor também faz parte da performance.',
     'Registre como você está, veja o histórico recente e acompanhe o ritmo emocional do estudo.',
     `${workspaceActionButton('mood-open-calendar','Abrir calendário','calendar','primary')}${workspaceActionButton('view-dashboard','Voltar ao dashboard','layout-dashboard')}`,
-    `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Hoje</div><div class="workspace-mini-value">${current ? '✓' : '—'}</div><div class="workspace-mini-copy">${current ? labels[current] : 'Ainda sem registro para hoje.'}</div></div><span class="workspace-pill">Estado</span></div>
+    `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Hoje</div><div class="workspace-mini-value">${current ?'✓' : '—'}</div><div class="workspace-mini-copy">${current ?labels[current] : 'Ainda sem registro para hoje.'}</div></div><span class="workspace-pill">Estado</span></div>
      <div class="workspace-mini-stat"><div><div class="workspace-mini-label">Últimos registros</div><div class="workspace-mini-value">${recent.length}</div><div class="workspace-mini-copy">dias com humor salvo na base atual.</div></div><span class="workspace-pill">Histórico</span></div>`,
     `<div class="workspace-grid">
       <div class="workspace-card">
-        <div class="workspace-card-header"><div><div class="workspace-card-title">Como você está hoje?</div><div class="workspace-card-copy">Escolha um estado para registrar rapidamente.</div></div></div>
+        <div class="workspace-card-header"><div><div class="workspace-card-title">Como você está hoje</div><div class="workspace-card-copy">Escolha um estado para registrar rapidamente.</div></div></div>
         <div class="workspace-mood-picker">${picker}</div>
       </div>
       <div class="workspace-card">
@@ -3328,7 +3378,7 @@ function renderWorkspace(viewId){
     subjects: buildSubjectsWorkspace,
     mood: buildMoodWorkspace,
   };
-  const html = builders[activeView] ? builders[activeView]() : '';
+  const html = builders[activeView] ?builders[activeView]() : '';
   host.hidden = false;
   host.innerHTML = html;
   bindWorkspaceActions(activeView);
@@ -3341,7 +3391,7 @@ function renderWorkspacePomodoroState(){
   if(!display) return;
   const isOvertime = Pomo.leftSec <= 0;
   const absSec = Math.abs(Pomo.leftSec);
-  display.textContent = `${isOvertime ? '+' : ''}${fmtSec(absSec)}`;
+  display.textContent = `${isOvertime ?'+' : ''}${fmtSec(absSec)}`;
   const phase = document.getElementById('workspace-pomo-phase');
   if(phase){
     const phases = {focus:'Sessão de foco',break:'Pausa curta',longBreak:'Pausa longa'};
@@ -3350,7 +3400,8 @@ function renderWorkspacePomodoroState(){
   const subject = document.getElementById('workspace-pomo-subject');
   if(subject){
     const activeSubject = AppDB.getSubjects().find(s=>s.id===Pomo.activeSubjectId);
-    subject.textContent = activeSubject ? `Matéria ativa: ${activeSubject.icon} ${activeSubject.name}` : 'Escolha uma matéria para iniciar a sessão.';
+    const activeTopic = activeSubject?.topics?.find(topic=>topic.id===Pomo.activeTopicId);
+    subject.textContent = activeSubject ?`Matéria ativa: ${activeSubject.icon} ${activeSubject.name}${activeTopic ?` · ${activeTopic.code} ${activeTopic.title}` : ''}` : 'Escolha uma matéria e um conteúdo para iniciar a sessão.';
   }
   const mainBtn = document.getElementById('workspace-pomo-main-btn');
   if(mainBtn){
@@ -3370,8 +3421,8 @@ function renderWorkspacePomodoroState(){
   const resetBtn = document.getElementById('workspace-pomo-reset-btn');
   if(resetBtn){
     resetBtn.disabled = Pomo.leftSec === Pomo.totalSec && !Pomo.isRunning;
-    resetBtn.style.opacity = resetBtn.disabled ? '.56' : '1';
-    resetBtn.style.cursor = resetBtn.disabled ? 'not-allowed' : 'pointer';
+    resetBtn.style.opacity = resetBtn.disabled ?'.56' : '1';
+    resetBtn.style.cursor = resetBtn.disabled ?'not-allowed' : 'pointer';
   }
   const host = document.getElementById('workspaceView');
   if(host){
@@ -3390,20 +3441,20 @@ function setActiveView(viewId, options={}){
   if(!isDashboard && gsEditMode) toggleEditMode();
   if(grid) {
     grid.hidden = !isDashboard;
-    grid.style.setProperty('display', isDashboard ? '' : 'none', 'important');
+    grid.style.setProperty('display', isDashboard ?'' : 'none', 'important');
   }
   if(workspace) {
     workspace.hidden = isDashboard;
-    workspace.style.setProperty('display', isDashboard ? 'none' : 'flex', 'important');
+    workspace.style.setProperty('display', isDashboard ?'none' : 'flex', 'important');
   }
   updateWorkspaceHeading(nextView);
   setSidebarActive(document.querySelector(`[data-view="${nextView}"]`));
   safeCall(()=>renderWorkspace(nextView),`view:${nextView}:render`);
   if(options.focus !== false){
     if(nextView === 'dashboard'){
-      document.getElementById('mainGrid')?.focus({preventScroll:true});
+      document.getElementById('mainGrid').focus({preventScroll:true});
     } else {
-      document.getElementById('workspaceView')?.focus({preventScroll:true});
+      document.getElementById('workspaceView').focus({preventScroll:true});
     }
   }
   if(options.track !== false && current !== nextView){
@@ -3415,7 +3466,7 @@ function bindWorkspaceActions(viewId){
   const host = document.getElementById('workspaceView');
   if(host) host.dataset.view = viewId;
   if(viewId === 'subjects'){
-    const search = host?.querySelector('#topic-search-input');
+    const search = host.querySelector('#topic-search-input');
     if(search){
       search.addEventListener('input', event=>{
         WorkspaceState.subjectTopicSearch = event.target.value;
@@ -3430,12 +3481,12 @@ function bindWorkspaceActions(viewId){
         });
       });
     }
-    const filterSelect = host?.querySelector('#topic-filter-select');
+    const filterSelect = host.querySelector('#topic-filter-select');
     if(filterSelect){
       filterSelect.addEventListener('change', event=>{
         WorkspaceState.subjectTopicFilter = event.target.value || 'all';
         renderWorkspace('subjects');
-        requestAnimationFrame(()=>document.getElementById('topic-filter-select')?.focus({preventScroll:true}));
+        requestAnimationFrame(()=>document.getElementById('topic-filter-select').focus({preventScroll:true}));
       });
     }
   }
@@ -3494,7 +3545,7 @@ function addTask(subjectId,title){
 function toggleTask(id){
   const tasks=AppDB.getTasks(); const t=tasks.find(t=>t.id===id);
   if(!t)return;
-  t.done=!t.done; t.completedAt=t.done?new Date().toISOString():null;
+  t.done=!t.done; t.completedAt=t.done ?new Date().toISOString() : null;
   if(t.done) Analytics.track(EVENT_NAMES.taskDone,{context:'tasks',subject_id:t.subjectId});
   AppDB.saveTasks(tasks); renderSubjectGrid(); renderTasks(); renderGoals(); renderNextSession(); refreshWorkspaceView();
 }
@@ -3504,11 +3555,12 @@ function deleteTask(id){
 function saveNote(payload, legacyChecklist){
   const current = AppDB.getNote();
   const next = typeof payload === 'object' && payload !== null
-    ? sanitizeNote({...current, ...payload, updatedAt:new Date().toISOString()})
+    ?
+    sanitizeNote({...current, ...payload, updatedAt:new Date().toISOString()})
     : sanitizeNote({
         ...current,
         summary: payload || '',
-        insights: Array.isArray(legacyChecklist) ? legacyChecklist.map(item=>({id:item.id, icon:item.done ? 'target' : 'star', text:item.label})) : current.insights,
+        insights: Array.isArray(legacyChecklist) ?legacyChecklist.map(item=>({id:item.id, icon:item.done ?'target' : 'star', text:item.label})) : current.insights,
         updatedAt:new Date().toISOString(),
       });
   AppDB.saveNote(next);
@@ -3528,7 +3580,7 @@ function upsertSessionInsight(text, icon='star', insightId=null){
   const clean = sanitizeText(text, '');
   if(!clean) return false;
   const note = AppDB.getNote();
-  const insights = Array.isArray(note.insights) ? [...note.insights] : [];
+  const insights = Array.isArray(note.insights) ?[...note.insights] : [];
   if(insightId){
     const existing = insights.find(item=>item.id===insightId);
     if(existing){
@@ -3566,7 +3618,7 @@ function cycleTopicStatus(subjectId, topicId){
   topic.status = nextTopicStatus(topic.status);
   const now = new Date().toISOString();
   topic.lastStudiedAt = now;
-  topic.completedAt = topic.status === 'done' ? now : null;
+  topic.completedAt = topic.status === 'done' ?now : null;
   if(topic.status === 'review'){
     const due = new Date();
     due.setDate(due.getDate()+7);
@@ -3593,7 +3645,7 @@ function deleteSubject(id){
 
 /* MODAL OPENERS */
 
-let _selectedPomoSubj=null, _selectedPomoDur=25;
+let _selectedPomoSubj=null, _selectedPomoTopic=null, _selectedPomoDur=25;
 let _moodMonthOffset=0; // 0=mês atual, -1=anterior, etc.
 
 function _renderMoodCalendar(){
@@ -3623,8 +3675,8 @@ function _renderMoodCalendar(){
     const dk = dateKey(new Date(dispY, dispM, i));
     const isToday = dk===tk;
     const em = moods[dk]||'';
-    html+=`<div class="mood-day${isToday?' today':''}">
-      ${em?`<div class="mood-day-emoji"><img src="${em}" alt="humor" draggable="false"></div>`:''}
+    html+=`<div class="mood-day${isToday ?' today' : ''}">
+      ${em ?`<div class="mood-day-emoji"><img src="${em}" alt="humor" draggable="false"></div>` : ''}
       <div class="mood-day-num">${i}</div>
     </div>`;
   }
@@ -3655,21 +3707,67 @@ function openMoodModal(){
   Modal.open('modal-mood');
 }
 
-function openPomoModal(){
+function getSubjectPreferredTopic(subject){
+  if(!subject) return null;
+  return subject.topics?.find(topic=>topic.id===Pomo.activeTopicId)
+    || subject.topics?.find(topic=>topic.status==='studying')
+    || subject.topics?.find(topic=>topic.status==='review')
+    || subject.topics?.[0]
+    || null;
+}
+function fillPomoTopicSelect(subjectId, preferredTopicId=null, forceExplicitChoice=false){
+  const select = document.getElementById('pomo-topic-select');
+  const confirmBtn = document.getElementById('btn-pomo-start-confirm');
+  if(!select || !confirmBtn) return;
+  const subject = AppDB.getSubjects().find(item=>item.id===subjectId) || null;
+  const topics = Array.isArray(subject.topics) ?subject.topics : [];
+  if(!subject || !topics.length){
+    select.innerHTML = '<option value="">Sem conteúdo disponível</option>';
+    select.disabled = true;
+    _selectedPomoTopic = null;
+    confirmBtn.disabled = !subjectId;
+    return;
+  }
+  const preferred = preferredTopicId || getSubjectPreferredTopic(subject)?.id || '';
+  const selectedValue = forceExplicitChoice ?'' : preferred;
+  select.disabled = false;
+  select.innerHTML = ['<option value="">Selecione um conteúdo</option>']
+    .concat(topics.map(topic=>`<option value="${topic.id}" ${topic.id===selectedValue?'selected':''}>${esc(topic.code)} · ${esc(topic.title)}</option>`))
+    .join('');
+  select.value = selectedValue;
+  _selectedPomoTopic = selectedValue || null;
+  confirmBtn.disabled = !_selectedPomoTopic;
+}
+function openPomoModal(options={}){
   const subjects=AppDB.getSubjects();
-  _selectedPomoSubj=Pomo.activeSubjectId||subjects[0].id||null;
+  const preferredSubjectId = options.subjectId || null;
+  const preferredTopicId = options.topicId || null;
+  const forceExplicitTopicChoice = options.forceExplicitTopicChoice !== false;
+  _selectedPomoSubj=preferredSubjectId||Pomo.activeSubjectId||subjects[0]?.id||null;
+  _selectedPomoTopic=null;
   _selectedPomoDur=Pomo.focusMin;
   const list=document.getElementById('pomo-subject-list');
-  list.innerHTML=subjects.length?subjects.map(s=>`
-    <div class="subj-select-row${s.id===_selectedPomoSubj?' selected':''}" data-sid="${s.id}">
+  list.innerHTML=subjects.length ?subjects.map(s=>`
+    <div class="subj-select-row${s.id===_selectedPomoSubj ?' selected' : ''}" data-sid="${s.id}">
       <span style="font-size:1.1rem">${s.icon}</span>
       <span style="color:var(${s.colorVar})">${esc(s.name)}</span>
-    </div>`).join(''):`<div class="empty-state">Nenhuma matéria. Adicione em Configurações Matérias.</div>`;
+    </div>`).join('') : `<div class="empty-state">Nenhuma matéria. Adicione em Configurações Matérias.</div>`;
   list.querySelectorAll('.subj-select-row').forEach(r=>r.addEventListener('click',()=>{
     _selectedPomoSubj=r.dataset.sid;
+    _selectedPomoTopic=null;
     list.querySelectorAll('.subj-select-row').forEach(x=>x.classList.remove('selected'));
     r.classList.add('selected');
+    fillPomoTopicSelect(_selectedPomoSubj, null, true);
   }));
+  fillPomoTopicSelect(_selectedPomoSubj, preferredTopicId, forceExplicitTopicChoice);
+  const topicSelect=document.getElementById('pomo-topic-select');
+  if(topicSelect){
+    topicSelect.onchange=()=>{
+      _selectedPomoTopic=topicSelect.value || null;
+      const confirmBtn = document.getElementById('btn-pomo-start-confirm');
+      if(confirmBtn) confirmBtn.disabled = !_selectedPomoTopic;
+    };
+  }
   const durBtns=document.querySelectorAll('#pomo-dur-btns button');
   durBtns.forEach(b=>{
     b.classList.toggle('primary',parseInt(b.dataset.min,10)===_selectedPomoDur);
@@ -3706,7 +3804,7 @@ function openScheduleModal(options={}){
     if(titleEl) titleEl.textContent='Nova aula / evento';
     if(saveBtn) saveBtn.textContent='Salvar';
     sel.selectedIndex=0;
-    daySel.value=String(Number.isInteger(prefillDayOfWeek) ? prefillDayOfWeek : 1);
+    daySel.value=String(Number.isInteger(prefillDayOfWeek) ?prefillDayOfWeek : 1);
     timeInput.value=prefillTime;
     durInput.value='90';
     labelInput.value='';
@@ -3717,7 +3815,7 @@ function openScheduleModal(options={}){
 function openAddTaskModal(preSubjectId){
   const subjects=AppDB.getSubjects();
   const sel=document.getElementById('task-form-subject');
-  sel.innerHTML=subjects.map(s=>`<option value="${s.id}"${s.id===preSubjectId?' selected':''}>${s.icon} ${esc(s.name)}</option>`).join('');
+  sel.innerHTML=subjects.map(s=>`<option value="${s.id}"${s.id===preSubjectId ?' selected' : ''}>${s.icon} ${esc(s.name)}</option>`).join('');
   document.getElementById('task-form-title').value='';
   Modal.open('modal-add-task');
 }
@@ -3725,9 +3823,10 @@ function openAddTaskModal(preSubjectId){
 function renderNoteFormInsights(note){
   const list = document.getElementById('note-form-insights');
   if(!list) return;
-  const insights = Array.isArray(note.insights) ? note.insights : [];
+  const insights = Array.isArray(note.insights) ?note.insights : [];
   list.innerHTML = insights.length
-    ? insights.map(item=>`
+    ?
+    insights.map(item=>`
       <div class="session-note-modal-item" data-id="${item.id}">
         <div class="session-note-modal-item-icon"><i data-lucide="${getInsightIconName(item.icon)}"></i></div>
         <div style="font-size:0.84rem;line-height:1.5;color:var(--t1)">${esc(item.text)}</div>
@@ -3768,7 +3867,7 @@ function openSubjectsModal(){
   document.getElementById('subj-modal-footer').style.display='flex';
   // Build color swatches
   const sw=document.getElementById('subj-color-swatches');
-  sw.innerHTML=COLOR_THEMES.map(t=>`<div class="color-swatch${t.key===_subjFormSelectedColor?' selected':''}" data-key="${t.key}" style="background:${t.swatch}" title="${t.key}"></div>`).join('');
+  sw.innerHTML=COLOR_THEMES.map(t=>`<div class="color-swatch${t.key===_subjFormSelectedColor ?' selected' : ''}" data-key="${t.key}" style="background:${t.swatch}" title="${t.key}"></div>`).join('');
   sw.querySelectorAll('.color-swatch').forEach(s=>s.addEventListener('click',()=>{_subjFormSelectedColor=s.dataset.key;sw.querySelectorAll('.color-swatch').forEach(x=>x.classList.remove('selected'));s.classList.add('selected');}));
   Modal.open('modal-subjects');
 }
@@ -3776,14 +3875,14 @@ function openSubjectsModal(){
 function refreshSubjectsList(){
   const subjects=AppDB.getSubjects();
   const list=document.getElementById('subjects-list-in-modal');
-  list.innerHTML=subjects.length?subjects.map(s=>`
+  list.innerHTML=subjects.length ?subjects.map(s=>`
     <div class="subj-modal-row">
       <div class="subj-modal-row-info"><span style="font-size:1.1rem">${s.icon}</span><span style="font-weight:600">${esc(s.name)}</span><span style="font-size:0.75rem;color:var(--t2)">${s.monthlyTargetHours}h/mês</span></div>
       <div class="subj-modal-actions">
         <button class="nav-btn" data-edit="${s.id}" title="Editar"><i data-lucide="pen-line"></i></button>
         <button class="nav-btn" data-del="${s.id}" title="Excluir" style="color:var(--rose-l)"><i data-lucide="trash-2"></i></button>
       </div>
-    </div>`).join(''):`<div class="empty-state">Nenhuma matéria cadastrada ainda.</div>`;
+    </div>`).join('') : `<div class="empty-state">Nenhuma matéria cadastrada ainda.</div>`;
   lucide.createIcons({nodes:list.querySelectorAll('[data-lucide]')});
 }
 
@@ -3791,7 +3890,7 @@ function showSubjectForm(editId){
   const sec=document.getElementById('subject-form-section');
   document.getElementById('subj-modal-footer').style.display='none';
   sec.style.display='block';
-  document.getElementById('subj-form-subtitle').textContent=editId?'Editar Matéria':'Nova Matéria';
+  document.getElementById('subj-form-subtitle').textContent=editId ?'Editar Matéria' : 'Nova Matéria';
   document.getElementById('subj-form-edit-id').value=editId||'';
   if(editId){
     const s=AppDB.getSubjects().find(x=>x.id===editId);
@@ -3799,7 +3898,7 @@ function showSubjectForm(editId){
       document.getElementById('subj-form-name').value=s.name;
       document.getElementById('subj-form-icon').value=s.icon;
       document.getElementById('subj-form-target').value=s.monthlyTargetHours;
-      _subjFormSelectedColor=COLOR_THEMES.find(t=>t.colorVar===s.colorVar).key||'indigo';
+      _subjFormSelectedColor=COLOR_THEMES.find(t=>t.colorVar===s.colorVar)?.key||'indigo';
     }
   } else {
     document.getElementById('subj-form-name').value='';
@@ -3838,20 +3937,20 @@ function buildSearchResults(query){
       out.push({
         type:'subjects',
         id:subject.id,
-        title:`${subject.icon || '📘'} ${subject.name}`,
+        title:`${subject.icon || 'Aa'} ${subject.name}`,
         meta:'Matéria',
         tag:'Matérias'
       });
     }
     subject.topics.forEach(topic=>{
-      const topicHay = normSearch(`${subject.name} ${topic.code} ${topic.title} conteudo conteúdos edital`);
+      const topicHay = normSearch(`${subject.name} ${topic.code} ${topic.title} conteúdo conteúdos edital`);
       if(topicHay.includes(q)){
         out.push({
           type:'topic',
           id:topic.id,
           subjectId:subject.id,
-          title:`${topic.code} · ${topic.title}`,
-          meta:`${subject.icon || '📘'} ${subject.name} · ${TOPIC_STATUS_META[topic.status]?.label || 'Conteúdo'}`,
+          title:`${topic.code} ? ${topic.title}`,
+          meta:`${subject.icon || 'Aa'} ${subject.name} ? ${TOPIC_STATUS_META[topic.status].label || 'Conteúdo'}`,
           tag:'Conteúdo'
         });
       }
@@ -3866,7 +3965,7 @@ function buildSearchResults(query){
         type:'tasks',
         id:task.id,
         title:task.title,
-        meta:`${subject ? `${subject.icon} ${subject.name} · ` : ''}${task.done ? 'Concluída' : 'Em aberto'}`,
+        meta:`${subject ?`${subject.icon} ${subject.name} ? ` : ''}${task.done ?'Concluída' : 'Em aberto'}`,
         tag:'Tarefas'
       });
     }
@@ -3875,13 +3974,13 @@ function buildSearchResults(query){
   schedule.forEach(eventItem=>{
     const subject = subjects.find(s=>s.id===eventItem.subjectId);
     const day = DAY_ABBR[eventItem.dayOfWeek] || 'Dia';
-    const hay = normSearch(`${eventItem.label || ''} ${subject?.name || ''} ${day} ${eventItem.startTime} agenda sessao sessão`);
+    const hay = normSearch(`${eventItem.label || ''} ${subject?.name || ''} ${day} ${eventItem.startTime} agenda sessão sessão`);
     if(hay.includes(q)){
       out.push({
         type:'agenda',
         id:eventItem.id,
-        title:eventItem.label ? `${eventItem.label} · ${subject ? `${subject.icon} ${subject.name}` : 'Sessão'}` : `${subject ? `${subject.icon} ${subject.name}` : 'Sessão'} · ${eventItem.startTime}`,
-        meta:`${day} às ${eventItem.startTime} · ${eventItem.durationMinutes}min`,
+        title:eventItem.label ?`${eventItem.label} ? ${subject ?`${subject.icon} ${subject.name}` : 'Sessão'}` : `${subject ?`${subject.icon} ${subject.name}` : 'Sessão'} ? ${eventItem.startTime}`,
+        meta:`${day} às ${eventItem.startTime} ? ${eventItem.durationMinutes}min`,
         tag:'Agenda'
       });
     }
@@ -3981,7 +4080,7 @@ function setSidebarActive(source){
     el.classList.remove('active');
     el.removeAttribute('aria-current');
   });
-  const link = typeof source === 'string' ? document.querySelector(source) : source;
+  const link = typeof source === 'string' ?document.querySelector(source) : source;
   if(!link || !link.matches('[data-view]')) return;
   link.classList.add('active');
   link.setAttribute('aria-current','page');
@@ -3992,14 +4091,14 @@ function setSidebarCollapsed(collapsed){
   const btn=document.getElementById('sidebar-toggle');
   if(!btn)return;
   btn.setAttribute('aria-expanded', String(!collapsed));
-  btn.setAttribute('aria-label', collapsed ? 'Expandir menu lateral' : 'Recolher menu lateral');
-  btn.setAttribute('title', collapsed ? 'Expandir menu' : 'Recolher menu');
-  btn.innerHTML='<i data-lucide="'+(collapsed?'panel-left-open':'panel-left-close')+'"></i>';
+  btn.setAttribute('aria-label', collapsed ?'Expandir menu lateral' : 'Recolher menu lateral');
+  btn.setAttribute('title', collapsed ?'Expandir menu' : 'Recolher menu');
+  btn.innerHTML='<i data-lucide="'+(collapsed ?'panel-left-open' : 'panel-left-close')+'"></i>';
   lucide.createIcons({nodes:[btn]});
 }
 function initSidebarInteractions(){
   setSidebarCollapsed(!!AppDB._get('sf_sidebar_collapsed', false));
-  document.getElementById('sidebar-toggle')?.addEventListener('click',()=>safeCall(()=>setSidebarCollapsed(!document.body.classList.contains('sidebar-collapsed')),'event:sidebar-toggle:click'));
+  document.getElementById('sidebar-toggle').addEventListener('click',()=>safeCall(()=>setSidebarCollapsed(!document.body.classList.contains('sidebar-collapsed')),'event:sidebar-toggle:click'));
   document.querySelectorAll('[data-view]').forEach(link=>{
     link.addEventListener('click',event=>safeCall(()=>{
       event.preventDefault();
@@ -4016,7 +4115,7 @@ function initSidebarInteractions(){
 
 function handleWorkspaceAction(action, button){
   if(!action) return;
-  const subjectId = button?.dataset.subjectId || button?.dataset.subjectId || null;
+  const subjectId = button.dataset.subjectId || button.dataset.subjectId || null;
   switch(action){
     case 'view-dashboard':
       setActiveView('dashboard');
@@ -4101,10 +4200,9 @@ function handleWorkspaceAction(action, button){
       showSubjectForm(button.dataset.subjectId);
       return;
     case 'subject-hero-start': {
-      const sid = button.dataset.subjectId || WorkspaceState.subjectDetailId || AppDB.getSubjects()[0]?.id;
+      const sid = button.dataset.subjectId || WorkspaceState.subjectDetailId || AppDB.getSubjects()[0].id;
       if(!sid){ setActiveView('subjects'); toast('Crie uma matéria para iniciar o foco.'); return; }
-      setActiveView('pomodoro');
-      Pomo.start(sid, Pomo.focusMin || 25);
+      openPomoModal({subjectId:sid, forceExplicitTopicChoice:true});
       return;
     }
     case 'subject-hero-swap':
@@ -4139,13 +4237,13 @@ function handleWorkspaceAction(action, button){
       exportAppData();
       return;
     case 'subjects-import':
-      document.getElementById('import-json-file')?.click();
+      document.getElementById('import-json-file').click();
       return;
     case 'subjects-export-events':
       Analytics.export();
       return;
     case 'subjects-reset':
-      document.getElementById('btn-pmmg-reset')?.click();
+      document.getElementById('btn-pmmg-reset').click();
       return;
     case 'mood-set':
       AppDB.saveMood(todayKey(), button.dataset.mood || null);
@@ -4163,29 +4261,29 @@ function handleWorkspaceAction(action, button){
 function setThemeMode(mode, source='system'){
   const dark=mode==='dark';
   document.body.classList.toggle('theme-dark', dark);
-  AppDB._set('sf_theme', dark?'dark':'light');
-  document.querySelector('meta[name="theme-color"]').setAttribute('content', dark?'#11100f':'#f5efe7');
+  AppDB._set('sf_theme', dark ?'dark' : 'light');
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ?'#11100f' : '#f5efe7');
   const btn=document.getElementById('side-theme-toggle');
   if(!btn)return;
   btn.checked=dark;
-  btn.setAttribute('aria-label', dark?'Ativar tema claro':'Ativar tema escuro');
+  btn.setAttribute('aria-label', dark ?'Ativar tema claro' : 'Ativar tema escuro');
   const label=document.getElementById('theme-toggle-label');
-  if(label) label.textContent=dark?'Tema claro':'Tema escuro';
+  if(label) label.textContent=dark ?'Tema claro' : 'Tema escuro';
   const icon=document.querySelector('.theme-switch-copy [data-lucide]');
-  icon.setAttribute('data-lucide', dark?'sun':'moon');
+  icon.setAttribute('data-lucide', dark ?'sun' : 'moon');
   lucide.createIcons({nodes:[document.querySelector('.theme-switch-row')]});
   if(source==='user') Analytics.track(EVENT_NAMES.themeToggle,{context:'theme'});
 }
 function initThemeMode(){
   const saved=AppDB._get('sf_theme', 'light');
-  setThemeMode(saved==='dark'?'dark':'light','system');
-  document.getElementById('side-theme-toggle').addEventListener('change',event=>setThemeMode(event.target.checked?'dark':'light','user'));
+  setThemeMode(saved==='dark' ?'dark' : 'light','system');
+  document.getElementById('side-theme-toggle').addEventListener('change',event=>setThemeMode(event.target.checked ?'dark' : 'light','user'));
 }
 
 function initEventBindings(){
   const byId = id => document.getElementById(id);
-  const on = (id, event, handler) => byId(id)?.addEventListener(event, e => safeCall(()=>handler(e), `event:${id}:${event}`));
-  const onNode = (node, event, handler, context) => node?.addEventListener(event, e => safeCall(()=>handler(e), context));
+  const on = (id, event, handler) => byId(id).addEventListener(event, e => safeCall(()=>handler(e), `event:${id}:${event}`));
+  const onNode = (node, event, handler, context) => node.addEventListener(event, e => safeCall(()=>handler(e), context));
   // Overlay + Escape
   on('modal-overlay','click',()=>Modal.closeAll());
   document.addEventListener('keydown',e=>{ if(e.key==='Escape')Modal.closeAll(); Modal.trap(e); });
@@ -4267,10 +4365,9 @@ function initEventBindings(){
   });
 
   on('btn-next-session-start','click',()=>{
-    const sid=byId('btn-next-session-start').dataset.subjectId || AppDB.getSubjects()[0]?.id;
+    const sid=byId('btn-next-session-start').dataset.subjectId || AppDB.getSubjects()[0].id;
     if(!sid){ setActiveView('subjects'); toast('Crie uma matéria para iniciar o foco.'); return; }
-    setActiveView('pomodoro');
-    Pomo.start(sid, Pomo.focusMin || 25);
+    openPomoModal({subjectId:sid, forceExplicitTopicChoice:true});
   });
   on('btn-next-task-create','click',()=>{
     setActiveView('tasks');
@@ -4279,7 +4376,7 @@ function initEventBindings(){
   initThemeMode();
   on('btn-notifications','click',()=>toast('Sem notificações no momento.'));
   on('side-edit-layout','click',()=>{document.getElementById('btn-edit-layout').click();setSidebarActive(document.querySelector(`[data-view="${getActiveView()}"]`));});
-  on('side-focus-now','click',()=>{ setActiveView('pomodoro'); document.getElementById('btn-next-session-start').click(); });
+  on('side-focus-now','click',()=>{ document.getElementById('btn-next-session-start').click(); });
   on('side-pmmg-reset','click',()=>{openPMMGEdital();setSidebarActive(document.querySelector(`[data-view="${getActiveView()}"]`));});
 
   // Schedule
@@ -4321,10 +4418,10 @@ function initEventBindings(){
   });
   on('btn-pomo-reset','click',()=>Pomo.reset());
   on('btn-pomo-start-confirm','click',()=>{
-    if(!_selectedPomoSubj)return;
+    if(!_selectedPomoSubj || !_selectedPomoTopic)return;
     Modal.close('modal-pomo-subject');
     setActiveView('pomodoro');
-    Pomo.start(_selectedPomoSubj,_selectedPomoDur);
+    Pomo.start(_selectedPomoSubj,_selectedPomoDur,_selectedPomoTopic);
   });
 
   // Note
@@ -4381,7 +4478,7 @@ function initEventBindings(){
   });
   on('btn-subj-form-save','click',()=>{
     const name=document.getElementById('subj-form-name').value.trim();
-    const icon=document.getElementById('subj-form-icon').value.trim()||'📘';
+    const icon=document.getElementById('subj-form-icon').value.trim()||'Aa';
     const target=parseInt(document.getElementById('subj-form-target').value,10)||10;
     const editId=document.getElementById('subj-form-edit-id').value;
     const theme=COLOR_THEMES.find(t=>t.key===_subjFormSelectedColor)||COLOR_THEMES[0];
@@ -4489,7 +4586,7 @@ function initEventBindings(){
   window.addEventListener('resize',()=>safeCall(()=>renderWeeklyAnalysis(),'event:resize'));
   on('btn-export-json','click',()=>{ exportAppData(); Analytics.track('data_export',{context:'backup'}); });
   on('btn-export-events','click',()=>Analytics.export());
-  on('btn-import-json','click',()=>byId('import-json-file')?.click());
+  on('btn-import-json','click',()=>byId('import-json-file').click());
   on('import-json-file','change',event=>importAppData(event.target.files?.[0] || null));
 }
 
@@ -4534,7 +4631,7 @@ function initGrid(){
     disableOneColumnMode: true,
     draggable: { handle: '.drag-handle, .card-hd', scroll: true },
     resizable: { handles: narrowMobile ? 's' : (coarsePointer ? 'se,s,sw' : 'e,se,s,sw,w') },
-    alwaysShowResizeHandle: coarsePointer,
+    alwaysShowResizeHandle: !narrowMobile && coarsePointer,
   }, '#mainGrid');
   document.getElementById('mainGrid').classList.remove('grid-fallback');
 
@@ -4650,10 +4747,12 @@ safeCall(()=>setActiveView(getActiveView(), {track:false,focus:false}), 'startup
 setTimeout(()=>safeCall(()=>renderWeeklyAnalysis(), 'startup:renderWeeklyAnalysis'),200);
 // Register Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js?v=11',{updateViaCache:'none'}).catch(e=>console.warn('[PWA] SW:',e));
+  navigator.serviceWorker.register('./sw.js?v=14',{updateViaCache:'none'}).catch(e=>console.warn('[PWA] SW:',e));
 }
 </script>
 </body>
 </html>
+
+
 
 

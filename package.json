@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "dev": "node scripts/dev-server.js",
     "test": "node scripts/test.js"
   },
   "devDependencies": {
