@@ -265,7 +265,15 @@
     .session-note-modal-item-icon{width:34px;height:34px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05);color:var(--amber-l);}
     .session-note-modal-item-remove{background:none;border:none;color:var(--t3);cursor:pointer;padding:6px;border-radius:10px;}
     .session-note-modal-item-remove:hover{background:rgba(255,255,255,.05);color:var(--rose-l);}
+    body.theme-dark .session-note-modal-item{background:#1d1511;border-color:#3a2d25;color:#f3ebe5;}
+    body.theme-dark .session-note-modal-item-icon{background:#261c17;border-color:#3a2d25;color:#ff9b64;}
+    body.theme-dark .session-note-modal-item-remove{color:#b99882;}
+    body.theme-dark .session-note-modal-item-remove:hover{background:#2a1f1a;color:#ff9c78;}
     .session-note-modal-composer{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;}
+    #note-form-new-insight{background:var(--surface);border:1px solid var(--surface-border);border-radius:var(--r3);padding:10px 12px;color:var(--t1);font-family:inherit;font-size:0.82rem;outline:none;transition:border-color 180ms var(--ease),background 180ms var(--ease),box-shadow 180ms var(--ease);}
+    #note-form-new-insight::placeholder{color:var(--t3);}
+    body.theme-dark #note-form-new-insight{background:#1d1511;border-color:#3a2d25;color:#f3ebe5;}
+    body.theme-dark #note-form-new-insight::placeholder{color:#9f806c;}
     .session-note-icon-pick{display:flex;gap:8px;align-items:center;}
     .session-note-icon-option{width:40px;height:40px;border-radius:14px;border:1px solid var(--glass-border);background:var(--glass);color:var(--t2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background 180ms var(--ease),border-color 180ms var(--ease),color 180ms var(--ease),transform 180ms var(--ease);}
     .session-note-icon-option:hover,.session-note-icon-option.active{background:rgba(255,90,31,.12);border-color:rgba(255,90,31,.28);color:var(--amber);}
@@ -758,8 +766,8 @@
     .workspace-header-card::after{content:'';position:absolute;right:7%;top:22%;width:220px;height:108px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.03));box-shadow:inset 0 1px 0 rgba(255,255,255,.26),0 18px 46px rgba(255,90,31,.14);z-index:-1;}
     .workspace-kicker{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.76);margin-bottom:14px;}
     .workspace-kicker svg{width:15px;height:15px;}
-    .workspace-title-xl{font-family:Georgia,'Times New Roman',serif;font-size:clamp(2rem,3.2vw,3.4rem);line-height:.95;letter-spacing:-.06em;color:#fff;max-width:12ch;}
-    .workspace-copy{margin-top:14px;color:var(--t2);font-size:.95rem;line-height:1.55;max-width:62ch;}
+    .workspace-title-xl{font-family:Georgia,'Times New Roman',serif;font-size:clamp(2rem,3.2vw,3.4rem);line-height:1;letter-spacing:-.06em;color:#fff;max-width:min(720px,100%);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;overflow-wrap:anywhere;text-wrap:balance;}
+    .workspace-copy{margin-top:14px;color:var(--t2);font-size:.95rem;line-height:1.55;max-width:62ch;overflow-wrap:anywhere;}
     .workspace-header-card .workspace-copy{color:rgba(255,255,255,.8);}
     .workspace-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
     .workspace-header-card .btn-glass.primary{background:#fff;border-color:#fff;color:#241a14;box-shadow:none;}
@@ -947,10 +955,13 @@
 
     .next-session{min-height:270px;padding:34px 36px;background:radial-gradient(circle at 74% 31%,rgba(255,198,94,.7) 0 7%,transparent 28%),radial-gradient(circle at 78% 48%,rgba(255,90,31,.58) 0 12%,transparent 38%),linear-gradient(135deg,#241007 0%,#4b1c10 46%,#e45a1f 100%);box-shadow:0 24px 70px rgba(116,48,18,.16);}
     .next-session::after{right:7%;top:26%;width:230px;height:112px;background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.035));box-shadow:inset 0 1px 0 rgba(255,255,255,.32),0 18px 46px rgba(255,90,31,.18);}
-    .next-session-title{font-size:clamp(2.05rem,3.6vw,3.2rem);max-width:9.8ch;}
-    .next-session-detail{letter-spacing:-.01em;}
-    .next-session-chip{display:inline-flex;align-items:center;gap:6px;width:max-content;max-width:100%;margin-top:14px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.84);font-size:.75rem;font-weight:850;}
+    .next-session-title{font-size:clamp(1.95rem,3.05vw,3rem);line-height:1.02;max-width:min(610px,62%);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;overflow-wrap:anywhere;text-wrap:balance;}
+    .next-session-detail{letter-spacing:-.01em;max-width:min(780px,72%);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere;line-height:1.35;}
+    .next-session-meta span{min-width:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere;}
+    .next-session-chip{display:inline-flex;align-items:center;gap:6px;width:fit-content;max-width:min(100%,540px);margin-top:14px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.84);font-size:.75rem;font-weight:850;line-height:1.25;white-space:normal;}
     .next-session-actions{max-width:420px;}
+    .next-session-actions #btn-next-session-start{background:#fffdf9;color:#241a14;border-color:rgba(255,255,255,.72);box-shadow:none;}
+    .next-session-actions #btn-next-session-start:hover{background:#fff4e8;color:#241a14;box-shadow:none;}
 
     .grid-stack>.grid-stack-item>.grid-stack-item-content{border-radius:28px;animation:card-rise-soft .22s var(--ease) both;}
     .card{border-radius:28px;padding:24px;border-color:#eadfd2;}
@@ -1000,7 +1011,8 @@
     @media(max-width:680px){
       .next-session{min-height:300px;padding:26px;}
       .next-session::after{opacity:.42;width:180px;height:92px;right:-20px;top:34px;}
-      .next-session-title{font-size:2.2rem;}
+      .next-session-title{font-size:clamp(1.95rem,10vw,2.2rem);max-width:100%;}
+      .next-session-detail{max-width:100%;}
       .next-session-actions{flex-direction:column;max-width:none;}
       .schedule-week-strip{gap:5px;}
       .schedule-day-pill{min-height:46px;padding:7px 3px;}
@@ -1015,9 +1027,10 @@
     .subjects-hero-copy{display:flex;flex-direction:column;justify-content:center;min-width:0;}
     .subjects-hero-kicker{display:inline-flex;align-items:center;gap:8px;width:max-content;font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.78);}
     .subjects-hero-kicker svg{width:14px;height:14px;}
-    .subjects-hero-title{margin:18px 0 0;font-family:Georgia,'Times New Roman',serif;font-size:clamp(2.15rem,4vw,3.4rem);line-height:.94;letter-spacing:-.05em;color:#fff;max-width:9.8ch;text-wrap:balance;}
-    .subjects-hero-detail{margin-top:10px;font-size:1rem;font-weight:850;color:rgba(255,248,238,.92);}
-    .subjects-hero-meta{display:flex;align-items:center;gap:8px;margin-top:16px;color:rgba(255,255,255,.78);font-size:.9rem;}
+    .subjects-hero-title{margin:18px 0 0;font-family:Georgia,'Times New Roman',serif;font-size:clamp(2rem,3.35vw,3.05rem);line-height:1.02;letter-spacing:-.05em;color:#fff;max-width:min(620px,100%);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;overflow-wrap:anywhere;text-wrap:balance;}
+    .subjects-hero-detail{margin-top:10px;font-size:1rem;font-weight:850;color:rgba(255,248,238,.92);max-width:68ch;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere;line-height:1.35;}
+    .subjects-hero-meta{display:flex;align-items:center;gap:8px;margin-top:16px;color:rgba(255,255,255,.78);font-size:.9rem;min-width:0;}
+    .subjects-hero-meta span{min-width:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere;}
     .subjects-hero-meta svg{width:15px;height:15px;flex-shrink:0;}
     .subjects-hero-actions{display:flex;gap:12px;margin-top:24px;max-width:460px;}
     .subjects-hero-actions .btn-glass{padding-inline:18px;}
@@ -1101,7 +1114,7 @@
     body.theme-dark .subject-overview-bar{background:#30231c;}
     @media(max-width:1220px){.subjects-master-layout{grid-template-columns:1fr;}.subjects-side-column{position:static;}.subject-overview-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
     @media(max-width:900px){.subjects-hero-card{grid-template-columns:1fr;min-height:0;padding:28px;}.subjects-hero-visual{min-height:150px;}.subjects-hero-note{position:static;margin-top:14px;justify-self:flex-start;}.subject-detail-head{grid-template-columns:1fr;}.topic-toolbar{grid-template-columns:1fr;}}
-    @media(max-width:680px){.subjects-overview-block,.subject-detail-head,.subject-detail-body{padding:20px;}.subject-overview-intro{display:block;}.subject-overview-manage{margin-top:14px;}.subject-overview-grid{grid-template-columns:1fr;}.subject-tabs{padding:0 20px;gap:8px 18px;}.subject-tab{min-height:42px;}.topic-row{grid-template-columns:44px minmax(0,1fr) 16px;gap:10px;}.topic-status-pill{grid-column:2 / 4;justify-self:start;}.subjects-hero-actions{flex-direction:column;max-width:none;}.subjects-hero-title{font-size:2.4rem;}}
+    @media(max-width:680px){.subjects-overview-block,.subject-detail-head,.subject-detail-body{padding:20px;}.subject-overview-intro{display:block;}.subject-overview-manage{margin-top:14px;}.subject-overview-grid{grid-template-columns:1fr;}.subject-tabs{padding:0 20px;gap:8px 18px;}.subject-tab{min-height:42px;}.topic-row{grid-template-columns:44px minmax(0,1fr) 16px;gap:10px;}.topic-status-pill{grid-column:2 / 4;justify-self:start;}.subjects-hero-actions{flex-direction:column;max-width:none;}.subjects-hero-title{font-size:clamp(2rem,10vw,2.35rem);}}
   </style>
 </head>
 <body>
@@ -1484,13 +1497,14 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
   <div class="modal-card" tabindex="-1">
     <div class="modal-title" id="modal-schedule-title">Nova aula / evento</div>
     <div class="field"><label for="sched-form-subject">Matéria</label><select id="sched-form-subject"></select></div>
-    <div class="field"><label for="sched-form-day">Dia da semana</label>
-      <select id="sched-form-day">
-        <option value="1">Segunda-feira</option><option value="2">Terça-feira</option>
-        <option value="3">Quarta-feira</option><option value="4">Quinta-feira</option>
-        <option value="5">Sexta-feira</option><option value="6">Sábado</option>
-        <option value="0">Domingo</option>
-      </select>
+    <div class="two-col">
+      <div class="field"><label for="sched-form-date">Data</label><input type="date" id="sched-form-date"></div>
+      <div class="field"><label for="sched-form-repeat">Repetição</label>
+        <select id="sched-form-repeat">
+          <option value="once">Apenas nesta data</option>
+          <option value="weekly">Toda semana</option>
+        </select>
+      </div>
     </div>
     <div class="two-col">
       <div class="field"><label for="sched-form-time">Horário</label><input type="time" id="sched-form-time" value="08:00"></div>
@@ -1520,9 +1534,8 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
 <!-- Note: edit -->
 <div id="modal-note" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-note-title" aria-hidden="true">
   <div class="modal-card" style="max-width:560px" tabindex="-1">
-    <div class="modal-title" id="modal-note-title">Editar anota&ccedil;&atilde;o da sess&atilde;o</div>
-    <div class="field"><label for="note-form-summary">Resumo da sess&atilde;o</label><textarea id="note-form-summary" rows="5" placeholder="O que voc&ecirc; aprendeuQuais pontos foram mais importantes
-Ainda ficou com alguma d&uacute;vida"></textarea></div>
+    <div class="modal-title" id="modal-note-title">Insights da sess&atilde;o</div>
+    <p style="margin:6px 0 18px;color:var(--t2);font-size:.86rem;line-height:1.5;">Use esta janela apenas para destacar ideias-chave. O resumo principal fica salvo diretamente no card.</p>
     <div class="field">
       <label>Insights chave</label>
       <div class="session-note-modal-list" id="note-form-insights"></div>
@@ -1534,14 +1547,13 @@ Ainda ficou com alguma d&uacute;vida"></textarea></div>
         </div>
         <div class="session-note-modal-composer">
           <div></div>
-          <input type="text" id="note-form-new-insight" placeholder="Novo insight da sess&atilde;o" style="background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--r3);padding:10px 12px;color:var(--t1);font-family:inherit;font-size:0.82rem;outline:none;">
+          <input type="text" id="note-form-new-insight" placeholder="Novo insight da sess&atilde;o">
           <button class="btn-glass" style="flex:none;width:44px;padding:10px 0;" id="btn-note-add-insight" type="button" aria-label="Adicionar novo insight"><i data-lucide="plus"></i></button>
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn-glass secondary" style="flex:none;padding:9px 20px;" onclick="Modal.close('modal-note')">Cancelar</button>
-      <button class="btn-glass primary" style="flex:none;padding:9px 24px;" id="btn-note-save">Salvar</button>
+      <button class="btn-glass primary" style="flex:none;padding:9px 24px;" id="btn-note-save">Concluir</button>
     </div>
   </div>
 </div>
@@ -1647,8 +1659,8 @@ const COLOR_THEMES = [
   {key:'violet', colorVar:'--violet-l', bg:'rgba(139,92,246,0.18)', grad:'linear-gradient(90deg,#8b5cf6,#a78bfa)', glow:'rgba(139,92,246,0.5)', swatch:'#8b5cf6', lucide:'globe'},
 ];
 
-const DEFAULT_POMO = {phase:'focus',sessionCount:0,focusDurationMinutes:25,breakDurationMinutes:5,longBreakDurationMinutes:15,longBreakAfter:4,activeSubjectId:null,activeTopicId:null};
-const STORAGE_VERSION = 5;
+const DEFAULT_POMO = {phase:'focus',sessionCount:0,focusDurationMinutes:25,breakDurationMinutes:5,longBreakDurationMinutes:15,longBreakAfter:4,activeSubjectId:null,activeTopicId:null,activeSessionId:null,startedAt:null};
+const STORAGE_VERSION = 7;
 const VIEW_IDS = ['dashboard','agenda','tasks','pomodoro','subjects','mood'];
 const PMMG_EDITAL_URL = 'https://pmminas.com/wp-content/uploads/2024/05/EDITAL-VERTICALIZADO-CFSD-PMMG-2025-@pmminas-METODO-OBA-OTAVIO-SOUZA.pdf';
 const TOPIC_STATUS_ORDER = ['not_started','studying','review','done'];
@@ -1731,6 +1743,62 @@ function fmtMin(m){ const h=Math.floor(m/60),mn=m%60; if(!h)return `${mn}m`; if(
 function fmtSec(s){ return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`; }
 function timeToMin(t){ const[h,m]=t.split(':').map(Number); return h*60+m; }
 function minToTime(m){ return `${String(Math.floor(m/60)%24).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`; }
+function parseLocalDate(value){
+  const match = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(!match) return null;
+  const date = new Date(Number(match[1]), Number(match[2])-1, Number(match[3]));
+  return Number.isNaN(date.getTime()) ?null : date;
+}
+function scheduleDateForWeekday(dayOfWeek, base=new Date()){
+  const date = new Date(base);
+  date.setHours(0,0,0,0);
+  const dow = Math.min(6, Math.max(0, parseInt(dayOfWeek,10) || 0));
+  const offset = (dow - date.getDay() + 7) % 7;
+  date.setDate(date.getDate() + offset);
+  return dateKey(date);
+}
+function getScheduleEventDate(eventItem){
+  if(eventItem?.date && parseLocalDate(eventItem.date)) return eventItem.date;
+  return scheduleDateForWeekday(eventItem?.dayOfWeek ?? new Date().getDay());
+}
+function scheduleEventOccursOnDate(eventItem, dateObj){
+  const candidateKey = dateKey(dateObj);
+  const recurrence = eventItem?.recurrence === 'weekly' ?'weekly' : 'once';
+  if(recurrence === 'weekly'){
+    const anchor = parseLocalDate(getScheduleEventDate(eventItem));
+    if(anchor){
+      const candidate = new Date(dateObj);
+      candidate.setHours(0,0,0,0);
+      if(candidate < anchor) return false;
+    }
+    return Number(eventItem.dayOfWeek) === dateObj.getDay();
+  }
+  return getScheduleEventDate(eventItem) === candidateKey;
+}
+function getScheduleNextOccurrence(eventItem, reference=new Date()){
+  const startMin = timeToMin(eventItem.startTime || '08:00');
+  if((eventItem?.recurrence || 'once') !== 'weekly'){
+    const date = parseLocalDate(getScheduleEventDate(eventItem));
+    if(!date) return null;
+    date.setHours(Math.floor(startMin/60), startMin%60, 0, 0);
+    return date >= reference ?date : null;
+  }
+  const anchor = parseLocalDate(getScheduleEventDate(eventItem));
+  const next = new Date(reference);
+  next.setSeconds(0,0);
+  const targetDow = Math.min(6, Math.max(0, parseInt(eventItem.dayOfWeek,10) || 0));
+  let offset = (targetDow - next.getDay() + 7) % 7;
+  const currentMin = next.getHours()*60 + next.getMinutes();
+  if(offset === 0 && startMin < currentMin) offset = 7;
+  next.setDate(next.getDate() + offset);
+  next.setHours(Math.floor(startMin/60), startMin%60, 0, 0);
+  if(anchor && next < anchor){
+    const adjusted = new Date(anchor);
+    adjusted.setHours(Math.floor(startMin/60), startMin%60, 0, 0);
+    return adjusted;
+  }
+  return next;
+}
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function relDate(str){ if(!str)return ''; const d=new Date(str),t=new Date(),dk=dateKey(d),tk=dateKey(t); if(dk===tk)return `Hoje, ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`; const y=new Date(t); y.setDate(t.getDate()-1); if(dk===dateKey(y))return `Ontem, ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`; return `${d.getDate()} ${MONTH_ABBR[d.getMonth()].toLowerCase()}, ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`; }
 const FOCUSABLE_SEL = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
@@ -1894,10 +1962,18 @@ function sanitizeTask(input){
 }
 function sanitizeScheduleEvent(input){
   const safe = input && typeof input === 'object' ?input : {};
+  const recurrence = safe.recurrence === 'weekly' ?'weekly' : 'once';
+  const rawDow = Math.min(6, Math.max(0, parseInt(safe.dayOfWeek, 10) || 0));
+  const date = safe.date && parseLocalDate(safe.date)
+    ? dateKey(parseLocalDate(safe.date))
+    : scheduleDateForWeekday(rawDow);
+  const dateObj = parseLocalDate(date);
   return {
     id: sanitizeText(safe.id, uid()),
     subjectId: sanitizeText(safe.subjectId, ''),
-    dayOfWeek: Math.min(6, Math.max(0, parseInt(safe.dayOfWeek, 10) || 0)),
+    date,
+    recurrence,
+    dayOfWeek: dateObj ?dateObj.getDay() : rawDow,
     startTime: /^\d{2}:\d{2}$/.test(String(safe.startTime || '')) ?safe.startTime : '08:00',
     durationMinutes: Math.max(15, parseInt(safe.durationMinutes, 10) || 90),
     label: sanitizeText(safe.label || '', ''),
@@ -1926,8 +2002,14 @@ function sanitizeNote(input){
   const subjectName = sanitizeText(safe.subjectName || '', '');
   const contentName = sanitizeText(safe.contentName || '', '');
   const sessionLabel = sanitizeText(safe.sessionLabel || '', '');
+  const id = sanitizeText(safe.id || safe.sessionId || 'session-annotation', 'session-annotation');
   return {
-    id: sanitizeText(safe.id, 'session-annotation'),
+    id,
+    sessionId: sanitizeText(safe.sessionId || id, id),
+    subjectId: safe.subjectId ?sanitizeText(safe.subjectId, null) : null,
+    topicId: safe.topicId ?sanitizeText(safe.topicId, null) : null,
+    startedAt: safe.startedAt ?sanitizeText(safe.startedAt, null) : null,
+    endedAt: safe.endedAt ?sanitizeText(safe.endedAt, null) : null,
     subjectName,
     contentName,
     sessionLabel,
@@ -1951,20 +2033,81 @@ function getInsightIconName(icon){
 function getSessionAnnotationDefaults(){
   const target = getNextStudyTarget();
   const now = new Date();
+  const baseDate = Pomo.startedAt ?new Date(Pomo.startedAt) : now;
   const activeSubject = AppDB.getSubjects().find(subject=>subject.id===Pomo.activeSubjectId) || target?.subject || AppDB.getSubjects()[0] || null;
   const activeTopic = (Pomo.activeTopicId && activeSubject?.topics?.find(topic=>topic.id===Pomo.activeTopicId))
     || activeSubject?.topics?.find(topic=>topic.status==='studying')
     || activeSubject?.topics?.find(topic=>topic.status==='review')
     || activeSubject?.topics?.[0]
     || null;
-  const start = now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-  const endDate = new Date(now.getTime() + ((Pomo.focusMin || 50) * 60000));
+  const start = baseDate.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  const endDate = new Date(baseDate.getTime() + ((Pomo.focusMin || 50) * 60000));
   const end = endDate.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
   return {
     subjectName: activeSubject?.name || 'Matéria não definida',
     contentName: activeTopic ?`${activeTopic.title}${activeTopic.code ?` (${activeTopic.code})` : ''}` : (target?.title || 'Conteúdo em definição'),
     sessionLabel: `Hoje, ${start} - ${end}`,
   };
+}
+function getSessionAnnotationContext(){
+  const subjects = AppDB.getSubjects();
+  const target = getHeroPomodoroTarget ? getHeroPomodoroTarget() : getNextStudyTarget();
+  const activeSubject = subjects.find(subject=>subject.id===Pomo.activeSubjectId) || target?.subject || subjects[0] || null;
+  const activeTopic = (Pomo.activeTopicId && activeSubject?.topics?.find(topic=>topic.id===Pomo.activeTopicId))
+    || target?.topic
+    || activeSubject?.topics?.find(topic=>topic.status==='studying')
+    || activeSubject?.topics?.find(topic=>topic.status==='review')
+    || activeSubject?.topics?.[0]
+    || null;
+  const activeSessionId = Pomo.activeSessionId || null;
+  const latestSession = AppDB.getSessions()
+    .filter(session=>session.type==='focus' && session.id)
+    .sort((a,b)=>new Date(b.startedAt)-new Date(a.startedAt))[0] || null;
+  const sessionId = activeSessionId || latestSession?.id || `draft-${todayKey()}-${activeSubject?.id || 'sem-materia'}-${activeTopic?.id || 'sem-conteudo'}`;
+  return {
+    sessionId,
+    subjectId: activeSubject?.id || latestSession?.subjectId || null,
+    topicId: activeTopic?.id || latestSession?.topicId || null,
+    startedAt: Pomo.startedAt || latestSession?.startedAt || new Date().toISOString(),
+    endedAt: latestSession?.id === sessionId ? latestSession.endedAt || null : null,
+  };
+}
+function getCurrentSessionAnnotation(){
+  const ctx = getSessionAnnotationContext();
+  const fallback = getSessionAnnotationDefaults();
+  const existing = AppDB.getSessionNotes().find(note=>note.sessionId===ctx.sessionId || note.id===ctx.sessionId);
+  return sanitizeNote({
+    ...ctx,
+    ...existing,
+    id: ctx.sessionId,
+    sessionId: ctx.sessionId,
+    subjectId: ctx.subjectId,
+    topicId: ctx.topicId,
+    startedAt: ctx.startedAt,
+    endedAt: ctx.endedAt,
+    subjectName: existing?.subjectName || fallback.subjectName,
+    contentName: existing?.contentName || fallback.contentName,
+    sessionLabel: existing?.sessionLabel || fallback.sessionLabel,
+  });
+}
+function saveCurrentSessionAnnotation(note){
+  const ctx = getSessionAnnotationContext();
+  const fallback = getSessionAnnotationDefaults();
+  const next = sanitizeNote({
+    ...note,
+    id: ctx.sessionId,
+    sessionId: ctx.sessionId,
+    subjectId: ctx.subjectId,
+    topicId: ctx.topicId,
+    startedAt: ctx.startedAt,
+    endedAt: ctx.endedAt,
+    subjectName: note.subjectName || fallback.subjectName,
+    contentName: note.contentName || fallback.contentName,
+    sessionLabel: note.sessionLabel || fallback.sessionLabel,
+    updatedAt: note.updatedAt || new Date().toISOString(),
+  });
+  AppDB.saveSessionNote(next);
+  return next;
 }
 function getSessionAnnotationAudioTotalSec(note){
   const text = [note.summary, ...(note.insights || []).map(item=>item.text)].join(' ').trim();
@@ -2009,12 +2152,11 @@ function setNoteAutosaveStatus(message=''){
   }
 }
 function queueSessionAnnotationSave(patch){
-  const next = sanitizeNote({...AppDB.getNote(), ...patch, updatedAt:new Date().toISOString()});
-  AppDB.saveNote(next);
+  const next = saveCurrentSessionAnnotation({...getCurrentSessionAnnotation(), ...patch, updatedAt:new Date().toISOString()});
   clearTimeout(NoteUIState.autosaveTimer);
   setNoteAutosaveStatus('Salvando...');
   NoteUIState.autosaveTimer = setTimeout(()=>{
-    AppDB.saveNote(next);
+    saveCurrentSessionAnnotation(next);
     renderNote();
     refreshWorkspaceView();
     setNoteAutosaveStatus('Salvo agora');
@@ -2097,6 +2239,10 @@ const AppDB = {
     return Array.isArray(raw) ?raw.map(sanitizeTask) : [];
   },
   getNote()     { return sanitizeNote(this._get('sf_note',{id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],updatedAt:null})); },
+  getSessionNotes() {
+    const raw = this._get('sf_session_notes',[]);
+    return Array.isArray(raw) ?raw.map(sanitizeNote) : [];
+  },
   getMoods()    { return this._get('sf_moods',{}); },
   getPomoState(){ return this._get('sf_pomo_state',{...DEFAULT_POMO}) || {...DEFAULT_POMO}; },
   getExamDate(){ return this._get('sf_exam_date',null); },
@@ -2108,6 +2254,13 @@ const AppDB = {
   saveSchedule(v){ this._set('sf_schedule',(Array.isArray(v)?v:[]).map(sanitizeScheduleEvent)); },
   saveTasks(v)   { this._set('sf_tasks',(Array.isArray(v)?v:[]).map(sanitizeTask)); },
   saveNote(v)    { this._set('sf_note',sanitizeNote(v)); },
+  saveSessionNotes(v){ this._set('sf_session_notes',(Array.isArray(v)?v:[]).map(sanitizeNote)); },
+  saveSessionNote(v){
+    const note = sanitizeNote(v);
+    const notes = this.getSessionNotes().filter(item=>item.sessionId!==note.sessionId && item.id!==note.id);
+    notes.push(note);
+    this.saveSessionNotes(notes.slice(-250));
+  },
   saveMood(k,v)  { const m=this.getMoods(); if(!v)delete m[k]; else m[k]=v; this._set('sf_moods',m); },
   savePomoState(v){ this._set('sf_pomo_state',v); },
   saveExamDate(v){ this._set('sf_exam_date',v); },
@@ -2213,7 +2366,23 @@ function migrateAppData(){
   const current = AppDB.getDataVersion();
   if(current >= STORAGE_VERSION) return;
   syncStorageToOfficialEdital();
-  AppDB.saveNote(AppDB.getNote());
+  const legacyNote = AppDB.getNote();
+  const sessionNotes = AppDB.getSessionNotes();
+  const hasLegacyContent = !!(legacyNote.summary || (legacyNote.insights || []).length);
+  if(hasLegacyContent && !sessionNotes.some(note=>note.sessionId==='legacy-session-annotation')){
+    AppDB.saveSessionNotes([
+      ...sessionNotes,
+      sanitizeNote({
+        ...legacyNote,
+        id:'legacy-session-annotation',
+        sessionId:'legacy-session-annotation',
+        sessionLabel: legacyNote.sessionLabel || 'Anotação importada',
+      })
+    ]);
+  } else {
+    AppDB.saveSessionNotes(sessionNotes);
+  }
+  AppDB.saveNote(legacyNote);
   if(!Array.isArray(AppDB._get('sf_events', []))) AppDB._set('sf_events', []);
   AppDB.saveDataVersion(STORAGE_VERSION);
 }
@@ -2225,6 +2394,7 @@ function exportAppData(){
     sf_schedule: AppDB.getSchedule(),
     sf_sessions: AppDB.getSessions(),
     sf_note: AppDB.getNote(),
+    sf_session_notes: AppDB.getSessionNotes(),
     sf_moods: AppDB.getMoods(),
     sf_pomo_state: AppDB.getPomoState(),
     sf_exam_date: AppDB.getExamDate(),
@@ -2251,6 +2421,9 @@ function importAppData(file){
       AppDB.saveSchedule(Array.isArray(parsed.sf_schedule) ?parsed.sf_schedule : []);
       AppDB.saveSessions(Array.isArray(parsed.sf_sessions) ?parsed.sf_sessions : []);
       AppDB.saveNote(parsed.sf_note || {id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],updatedAt:null});
+      const importedSessionNotes = Array.isArray(parsed.sf_session_notes) ?parsed.sf_session_notes : [];
+      const importedLegacyNote = sanitizeNote(parsed.sf_note || {id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],updatedAt:null});
+      AppDB.saveSessionNotes(importedSessionNotes.length ?importedSessionNotes : (importedLegacyNote.summary || importedLegacyNote.insights.length ?[{...importedLegacyNote,id:'legacy-session-annotation',sessionId:'legacy-session-annotation'}] : []));
       AppDB._set('sf_moods', parsed.sf_moods && typeof parsed.sf_moods === 'object' ?parsed.sf_moods : {});
       AppDB.savePomoState(parsed.sf_pomo_state || {...DEFAULT_POMO});
       AppDB.saveExamDate(parsed.sf_exam_date || null);
@@ -2280,6 +2453,7 @@ function seedIfEmpty(){
   AppDB.saveTasks([]);
   AppDB.saveSessions([]);
   AppDB.saveNote({id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],updatedAt:null});
+  AppDB.saveSessionNotes([]);
   // Limpando antigas flags de seed (mocked data migration)
   localStorage.removeItem('sf_seeded_pmmg_v1');
   localStorage.removeItem('sf_seeded');
@@ -2374,7 +2548,7 @@ function updateDashboardState(){
 }
 
 const Pomo = {
-  timer:null, leftSec:0, totalSec:0, isRunning:false, startedAt:null,
+  timer:null, leftSec:0, totalSec:0, isRunning:false, startedAt:null, activeSessionId:null,
   phase:'focus', sessionCount:0, activeSubjectId:null, activeTopicId:null,
   focusMin:25, breakMin:5, longBreakMin:15, longBreakAfter:4,
 
@@ -2384,14 +2558,15 @@ const Pomo = {
     this.phase=s.phase||'focus'; this.sessionCount=s.sessionCount||0;
     this.activeSubjectId=s.activeSubjectId || (subjects[0]?.id || null);
     this.activeTopicId=s.activeTopicId || null;
+    this.activeSessionId=s.activeSessionId || null;
     this.focusMin=s.focusDurationMinutes||25; this.breakMin=s.breakDurationMinutes||5;
     this.longBreakMin=s.longBreakDurationMinutes||15; this.longBreakAfter=s.longBreakAfter||4;
     this.totalSec=this._phaseDur()*60; this.leftSec=this.totalSec;
-    this.isRunning=false; this.startedAt=null;
+    this.isRunning=false; this.startedAt=s.startedAt || null;
   },
   _phaseDur(){ if(this.phase==='focus')return this.focusMin; if(this.phase==='longBreak')return this.longBreakMin; return this.breakMin; },
   _persist(){
-    AppDB.savePomoState({phase:this.phase,sessionCount:this.sessionCount,focusDurationMinutes:this.focusMin,breakDurationMinutes:this.breakMin,longBreakDurationMinutes:this.longBreakMin,longBreakAfter:this.longBreakAfter,activeSubjectId:this.activeSubjectId,activeTopicId:this.activeTopicId});
+    AppDB.savePomoState({phase:this.phase,sessionCount:this.sessionCount,focusDurationMinutes:this.focusMin,breakDurationMinutes:this.breakMin,longBreakDurationMinutes:this.longBreakMin,longBreakAfter:this.longBreakAfter,activeSubjectId:this.activeSubjectId,activeTopicId:this.activeTopicId,activeSessionId:this.activeSessionId,startedAt:this.startedAt});
   },
   start(subjId,durMin,topicId=null){
     clearInterval(this.timer);
@@ -2401,27 +2576,32 @@ const Pomo = {
     if(durMin){ this.focusMin=durMin; this.totalSec=durMin*60; this.leftSec=this.totalSec; }
     DashboardFeedback = null;
     this.startedAt=new Date().toISOString();
+    this.activeSessionId=uid();
     if(this.phase==='focus') Analytics.track(EVENT_NAMES.focusStart,{context:'pomodoro',subject_id:this.activeSubjectId});
     this.isRunning=true; this._persist();
+    saveCurrentSessionAnnotation({...getCurrentSessionAnnotation(), summary:'', insights:[], updatedAt:new Date().toISOString()});
     this.timer=setInterval(()=>this._tick(),1000);
     renderPomo();
+    renderNextSession();
     renderNote();
     if(getActiveView()==='pomodoro') refreshWorkspaceView();
   },
-  pause(){ clearInterval(this.timer); this.isRunning=false; this._persist(); renderPomo(); renderNote(); if(getActiveView()==='pomodoro') refreshWorkspaceView(); },
+  pause(){ clearInterval(this.timer); this.isRunning=false; this._persist(); renderPomo(); renderNextSession(); renderNote(); if(getActiveView()==='pomodoro') refreshWorkspaceView(); },
   resume(){
     if(this.isRunning)return;
     this.isRunning=true;
     this.timer=setInterval(()=>this._tick(),1000);
     renderPomo();
+    renderNextSession();
     renderNote();
     if(getActiveView()==='pomodoro') refreshWorkspaceView();
   },
   reset(){
-    clearInterval(this.timer); this.isRunning=false; this.startedAt=null;
+    clearInterval(this.timer); this.isRunning=false; this.startedAt=null; this.activeSessionId=null;
     this.phase='focus'; this.sessionCount=0;
     this.leftSec=this.focusMin*60; this.totalSec=this.leftSec;
     this._persist(); renderPomo();
+    renderNextSession();
     renderNote();
     if(getActiveView()==='pomodoro') refreshWorkspaceView();
   },
@@ -2434,6 +2614,7 @@ const Pomo = {
       return;
     }
     renderPomo();
+    renderNextSession();
   },
   _complete(early = false){
     const completedPhase = this.phase;
@@ -2443,14 +2624,20 @@ const Pomo = {
       const sessions=AppDB.getSessions();
       const elapsedMin = Math.round((this.totalSec - this.leftSec) / 60);
       dur = elapsedMin > 0 ?elapsedMin : 1;
-      sessions.push({id:uid(),subjectId:this.activeSubjectId,topicId:this.activeTopicId,startedAt:this.startedAt,endedAt:new Date().toISOString(),durationMinutes:dur,type:this.phase==='focus'?'focus':'break'});
+      const completedSessionId = this.activeSessionId || uid();
+      const completedAt = new Date().toISOString();
+      sessions.push({id:completedSessionId,subjectId:this.activeSubjectId,topicId:this.activeTopicId,startedAt:this.startedAt,endedAt:completedAt,durationMinutes:dur,type:this.phase==='focus'?'focus':'break'});
+      if(this.phase==='focus'){
+        const note = getCurrentSessionAnnotation();
+        saveCurrentSessionAnnotation({...note, id:completedSessionId, sessionId:completedSessionId, endedAt:completedAt, updatedAt:new Date().toISOString()});
+      }
       if(this.phase==='focus') Analytics.track(EVENT_NAMES.focusComplete,{context:'pomodoro',subject_id:this.activeSubjectId});
       AppDB.saveSessions(sessions);
     }
     if(completedPhase === 'focus') setDashboardSessionFeedback(dur || this.focusMin);
     if(this.phase==='focus'){ this.sessionCount++; this.phase=this.sessionCount%this.longBreakAfter===0?'longBreak':'break'; }
     else { this.phase='focus'; }
-    this.totalSec=this._phaseDur()*60; this.leftSec=this.totalSec; this.startedAt=null;
+    this.totalSec=this._phaseDur()*60; this.leftSec=this.totalSec; this.startedAt=null; this.activeSessionId=null;
     this._persist();
     renderPomo(); renderTodayHours(); renderStreak(); renderWeeklyAnalysis(); renderSubjectGrid(); renderGoals(); renderTasks(); renderNote();
     renderNextSession();
@@ -2478,12 +2665,13 @@ function renderSchedule(){
       <span class="num">${d.getDate()}</span>
     </div>`;
   }).join('');
-  const items=events.map(ev=>{
-    const wi=ev.dayOfWeek===0?6:ev.dayOfWeek-1;
-    const d=new Date(start); d.setDate(start.getDate()+wi);
+  const items=events.flatMap(ev=>{
     const subj=subjects.find(s=>s.id===ev.subjectId);
-    return{...ev,date:d,subj};
-  }).sort((a,b)=>(a.date-b.date)||timeToMin(a.startTime)-timeToMin(b.startTime));
+    if(!subj) return [];
+    return weekDays
+      .filter(day=>scheduleEventOccursOnDate(ev, day))
+      .map(day=>({...ev,occurrenceDate:day,subj}));
+  }).sort((a,b)=>(a.occurrenceDate-b.occurrenceDate)||timeToMin(a.startTime)-timeToMin(b.startTime));
   const sl=document.getElementById('scheduleList');
   if(!items.length){
     sl.innerHTML=`<div class="schedule-week-strip">${strip}</div>
@@ -2497,13 +2685,14 @@ function renderSchedule(){
   }
   const eventHtml=items.map(ev=>{
     if(!ev.subj)return '';
-    const isToday=dateKey(ev.date)===tk;
+    const isToday=dateKey(ev.occurrenceDate)===tk;
+    const recurrenceLabel=ev.recurrence==='weekly' ?'Toda semana' : 'Sessão única';
     return `<div class="sched-item">
       <div class="sched-dot" style="background:var(${ev.subj.colorVar});box-shadow:0 0 6px var(${ev.subj.colorVar})"></div>
-      <div class="sched-date"><div class="mo">${MONTH_ABBR[ev.date.getMonth()]}</div><div class="dy">${ev.date.getDate()}</div></div>
+      <div class="sched-date"><div class="mo">${MONTH_ABBR[ev.occurrenceDate.getMonth()]}</div><div class="dy">${ev.occurrenceDate.getDate()}</div></div>
       <div class="sched-info">
         <div class="sched-subject">${ev.subj.icon} ${esc(ev.subj.name)}${ev.label ?`  -  ${esc(ev.label)}` : ''}${isToday ?'<span class="today-chip">Hoje</span>' : ''}</div>
-        <div class="sched-time"><i data-lucide="clock" style="width:11px;height:11px"></i>${ev.startTime}  -  ${minToTime(timeToMin(ev.startTime)+ev.durationMinutes)}  -  ${ev.durationMinutes}min</div>
+        <div class="sched-time"><i data-lucide="clock" style="width:11px;height:11px"></i>${ev.startTime}  -  ${minToTime(timeToMin(ev.startTime)+ev.durationMinutes)}  -  ${ev.durationMinutes}min  -  ${recurrenceLabel}</div>
       </div>
       <button class="sched-delete nav-btn" data-id="${ev.id}" title="Remover"><i data-lucide="x"></i></button>
     </div>`;
@@ -2554,42 +2743,156 @@ function renderCountdown(){
   else lbl.textContent=`${diff} dia${diff!==1?'s':''} p/ concurso`;
 }
 
-function getNextStudyTarget(){
+function formatScheduleOccurrence(when){
+  if(!when)return 'Próxima sessão da agenda.';
+  const day = dateKey(when)===todayKey() ?'hoje' : when.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit'});
+  const time = when.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  return `Agendada para ${day}, às ${time}.`;
+}
+function topicDetail(topic, fallback='Conteúdo em definição'){
+  return topic ?`${topic.code} ${topic.title}` : fallback;
+}
+function topicDueTime(topic){
+  const due = topic?.reviewDue ?new Date(topic.reviewDue).getTime() : 0;
+  return Number.isNaN(due) ?0 : due;
+}
+function isReviewCandidate(topic, now=new Date()){
+  if(!topic || topic.status!=='review') return false;
+  if(!topic.reviewDue) return true;
+  const due = new Date(topic.reviewDue);
+  return Number.isNaN(due.getTime()) || due <= now;
+}
+function allSubjectTopics(subjects){
+  return subjects.flatMap(subject=>(Array.isArray(subject.topics) ?subject.topics : []).map(topic=>({subject,topic})));
+}
+function pickSubjectTopic(subject, preferredTopicId=null){
+  if(!subject || !Array.isArray(subject.topics) || !subject.topics.length) return null;
+  return subject.topics.find(topic=>topic.id===preferredTopicId)
+    || subject.topics.find(topic=>isReviewCandidate(topic))
+    || subject.topics.find(topic=>topic.status==='review')
+    || subject.topics.find(topic=>topic.status==='studying')
+    || subject.topics.find(topic=>topic.status==='not_started')
+    || subject.topics[0];
+}
+function buildStudyRecommendation(payload){
+  return {
+    confidenceLabel:'Recomendado',
+    ctaLabel:`Iniciar sessão de ${Pomo.focusMin || 25}min`,
+    ...payload,
+  };
+}
+function getRecommendedStudyAction(){
   const subjects=AppDB.getSubjects();
   if(!subjects.length)return null;
+  const activeSubject=subjects.find(subject=>subject.id===Pomo.activeSubjectId);
+  if(activeSubject && (Pomo.isRunning || Pomo.leftSec < Pomo.totalSec)){
+    const topic=pickSubjectTopic(activeSubject,Pomo.activeTopicId);
+    return buildStudyRecommendation({
+      type:'active',
+      source:'pomodoro',
+      subject:activeSubject,
+      topic,
+      reason:'Você já está em foco. Controle a sessão por aqui.',
+      confidenceLabel:Pomo.isRunning ?'Em andamento' : 'Pausado',
+      ctaLabel:Pomo.isRunning ?`Pausar sessão de ${Pomo.focusMin || 25}min` : `Retomar sessão de ${Pomo.focusMin || 25}min`,
+    });
+  }
   const schedule=AppDB.getSchedule();
   const tasks=AppDB.getTasks();
   const now=new Date();
-  const currentMin=now.getHours()*60+now.getMinutes();
-  const todayDow=now.getDay();
   const scheduled=schedule.map(ev=>{
-    const offset=(ev.dayOfWeek-todayDow+7)%7;
-    const when=new Date(now);
-    const start=timeToMin(ev.startTime);
-    when.setDate(now.getDate()+offset);
-    when.setHours(Math.floor(start/60), start%60,0,0);
-    if(offset===0 && start<currentMin) when.setDate(when.getDate()+7);
+    const when=getScheduleNextOccurrence(ev, now);
     return {...ev,when,subj:subjects.find(s=>s.id===ev.subjectId)};
-  }).filter(ev=>ev.subj).sort((a,b)=>a.when-b.when)[0];
-  if(scheduled)return {type:'scheduled',subject:scheduled.subj,event:scheduled};
+  }).filter(ev=>ev.subj && ev.when).sort((a,b)=>a.when-b.when)[0];
+  if(scheduled){
+    const topic=pickSubjectTopic(scheduled.subj, scheduled.topicId || null);
+    return buildStudyRecommendation({
+      type:'scheduled',
+      source:'agenda',
+      subject:scheduled.subj,
+      topic,
+      event:scheduled,
+      reason:formatScheduleOccurrence(scheduled.when),
+      confidenceLabel:'Agenda',
+    });
+  }
+  const reviewTarget=allSubjectTopics(subjects)
+    .filter(({topic})=>isReviewCandidate(topic, now))
+    .sort((a,b)=>topicDueTime(a.topic)-topicDueTime(b.topic))[0];
+  if(reviewTarget){
+    return buildStudyRecommendation({
+      type:'review',
+      source:'review',
+      subject:reviewTarget.subject,
+      topic:reviewTarget.topic,
+      reason:reviewTarget.topic.reviewDue ?'Revisão pendente para hoje.' : 'Conteúdo marcado para revisão.',
+      confidenceLabel:'Revisão',
+    });
+  }
   const openTask=tasks
     .filter(task=>!task.done && subjects.some(subject=>subject.id===task.subjectId))
     .sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt))[0];
   if(openTask){
     const subject=subjects.find(subj=>subj.id===openTask.subjectId);
-    return {type:'task',subject,task:openTask};
+    return buildStudyRecommendation({
+      type:'task',
+      source:'task',
+      subject,
+      topic:pickSubjectTopic(subject, openTask.topicId || null),
+      task:openTask,
+      reason:`Tarefa aberta: ${openTask.title}.`,
+      confidenceLabel:'Tarefa aberta',
+    });
   }
   const sessions=AppDB.getSessions().filter(x=>x.type==='focus'&&x.subjectId).sort((a,b)=>new Date(b.startedAt)-new Date(a.startedAt));
   const lastSession = sessions[0] || null;
   const last=lastSession ?subjects.find(subj=>subj.id===lastSession.subjectId) : null;
-  if(last)return {type:'resume',subject:last};
+  if(last){
+    return buildStudyRecommendation({
+      type:'resume',
+      source:'continuity',
+      subject:last,
+      topic:pickSubjectTopic(last, lastSession.topicId || null),
+      session:lastSession,
+      reason:'Continue de onde parou na última sessão registrada.',
+      confidenceLabel:'Continuidade',
+    });
+  }
+  const studyingTarget=allSubjectTopics(subjects)
+    .filter(({topic})=>topic.status==='studying')
+    .sort((a,b)=>new Date(b.topic.lastStudiedAt || 0)-new Date(a.topic.lastStudiedAt || 0))[0];
+  if(studyingTarget){
+    return buildStudyRecommendation({
+      type:'studying',
+      source:'continuity',
+      subject:studyingTarget.subject,
+      topic:studyingTarget.topic,
+      reason:'Conteúdo já iniciado, bom para manter continuidade.',
+      confidenceLabel:'Continuidade',
+    });
+  }
   const minMap=AppStats.monthlyMinBySubject(AppDB.getSessions());
   const nextSubject=[...subjects].sort((a,b)=>(minMap[a.id]||0)-(minMap[b.id]||0))[0] || subjects[0];
-  return {type:'first',subject:nextSubject};
+  return buildStudyRecommendation({
+    type:'low-progress',
+    source:'progress',
+    subject:nextSubject,
+    topic:pickSubjectTopic(nextSubject),
+    reason:'Conteúdo com menor avanço no mês.',
+    confidenceLabel:'Baixo progresso',
+  });
+}
+
+function getNextStudyTarget(){
+  return getRecommendedStudyAction();
+}
+
+function getHeroPomodoroTarget(){
+  return getRecommendedStudyAction();
 }
 
 function renderNextSession(){
-  const target=getNextStudyTarget();
+  const target=getHeroPomodoroTarget();
   const kicker=document.getElementById('next-session-kicker');
   const title=document.getElementById('next-session-title');
   const detail=document.getElementById('next-session-detail');
@@ -2598,7 +2901,10 @@ function renderNextSession(){
   const chip=document.getElementById('next-session-chip');
   if(!title||!meta||!btn)return;
   if(kicker) kicker.textContent='Próxima ação recomendada';
-  if(chip) chip.textContent=`Foque por ${Pomo.focusMin || 25}min e revise depois.`;
+  const focusMin = Pomo.focusMin || Math.max(1, Math.round((Pomo.totalSec || 0) / 60)) || 25;
+  if(chip) chip.textContent=Pomo.isRunning || Pomo.leftSec < Pomo.totalSec
+    ?`${Pomo.isRunning ?'Em andamento' : 'Pausado'} • ${fmtSec(Math.max(Pomo.leftSec,0))} restantes`
+    : (target?.confidenceLabel || `Foque por ${focusMin}min e revise depois.`);
   if(!target){
     title.textContent='Defina sua primeira missão';
     if(detail) detail.textContent='Matérias • Planejamento inicial';
@@ -2607,26 +2913,31 @@ function renderNextSession(){
   } else {
     btn.disabled=false;
     btn.dataset.subjectId=target.subject.id;
+    btn.dataset.topicId=target.topic?.id || '';
     const btnLabel=btn.querySelector('span');
-    if(btnLabel) btnLabel.textContent=`Iniciar sessão de ${Pomo.focusMin || 25}min`;
-    if(target.type==='scheduled'){
-      title.textContent=target.subject.name;
-      if(detail) detail.textContent=`${target.event.label || 'Sessão agendada'} • ${target.event.durationMinutes}min`;
-      meta.innerHTML='<i data-lucide="calendar-clock"></i><span>Ideal para o seu momento de evolução.</span>';
-    } else if(target.type==='task'){
-      title.textContent=target.subject.name;
-      if(detail) detail.textContent=`${target.task.title} • Revisão ativa`;
-      meta.innerHTML='<i data-lucide="list-checks"></i><span>Uma missão curta para transformar intenção em avanço.</span>';
-    } else if(target.type==='resume'){
-      title.textContent=target.subject.name;
-      if(detail) detail.textContent='Retomar ritmo • Revisão 2';
-      meta.innerHTML='<i data-lucide="rotate-ccw"></i><span>Ideal para manter continuidade sem recomeçar do zero.</span>';
+    const icon=btn.querySelector('i');
+    if(Pomo.isRunning){
+      if(btnLabel) btnLabel.textContent=`Pausar sessão de ${focusMin}min`;
+      if(icon) icon.setAttribute('data-lucide','pause');
+    } else if(Pomo.leftSec < Pomo.totalSec){
+      if(btnLabel) btnLabel.textContent=`Retomar sessão de ${focusMin}min`;
+      if(icon) icon.setAttribute('data-lucide','play');
     } else {
-      title.textContent=target.subject.name;
-      if(detail) detail.textContent='Base do ciclo • Revisão 1';
-      meta.innerHTML='<i data-lucide="sparkles"></i><span>Ideal para o seu momento de evolução.</span>';
+      if(btnLabel) btnLabel.textContent=`Iniciar sessão de ${focusMin}min`;
+      if(icon) icon.setAttribute('data-lucide','play');
     }
+    title.textContent=target.subject.name;
+    const iconName = ({pomodoro:'timer',agenda:'calendar-clock',review:'rotate-ccw',task:'list-checks',continuity:'route',progress:'trending-up'})[target.source] || 'sparkles';
+    if(detail) detail.textContent=target.topic
+      ? topicDetail(target.topic)
+      : 'Defina conteúdos desta matéria';
+    meta.innerHTML=`<i data-lucide="${iconName}"></i><span>${esc(target.reason || 'Recomendação baseada no seu progresso atual.')}</span>`;
   }
+  title.title=title.textContent || '';
+  if(detail) detail.title=detail.textContent || '';
+  if(chip) chip.title=chip.textContent || '';
+  const metaText=meta.querySelector('span');
+  if(metaText) metaText.title=metaText.textContent || '';
   const swapBtn=document.getElementById('btn-next-task-create');
   if(swapBtn) swapBtn.querySelector('span').textContent='Trocar tarefa';
   lucide.createIcons({nodes:[document.getElementById('next-session-card')]});
@@ -2683,14 +2994,8 @@ function renderNoteInsights(note){
 }
 
 function renderNote(){
-  const baseNote = AppDB.getNote();
   const fallback = getSessionAnnotationDefaults();
-  const note = sanitizeNote({
-    ...baseNote,
-    subjectName: baseNote.subjectName || fallback.subjectName,
-    contentName: baseNote.contentName || fallback.contentName,
-    sessionLabel: baseNote.sessionLabel || fallback.sessionLabel,
-  });
+  const note = getCurrentSessionAnnotation();
   const subjectEl = document.getElementById('note-meta-subject');
   const contentEl = document.getElementById('note-meta-content');
   const sessionEl = document.getElementById('note-meta-session');
@@ -2744,7 +3049,7 @@ function renderPomo(){
   const chip=document.getElementById('pomo-subject-chip');
   if(Pomo.activeSubjectId&&Pomo.isRunning){
     const subj=AppDB.getSubjects().find(s=>s.id===Pomo.activeSubjectId);
-    const topic=subjá.topics?.find(item=>item.id===Pomo.activeTopicId);
+    const topic=subj?.topics?.find(item=>item.id===Pomo.activeTopicId);
     if(subj){chip.innerHTML=`${subj.icon} ${esc(subj.name)}${topic ?` · ${esc(topic.code)}` : ''}`;chip.classList.add('visible');}
   } else { chip.classList.remove('visible'); }
   const btnTxt=document.getElementById('pomoBtnTxt');
@@ -2957,8 +3262,8 @@ function buildWorkspaceShell(viewId, kicker, title, copy, actions, side, body){
     <div class="workspace-hero">
       <div class="workspace-header-card">
         <div class="workspace-kicker"><i data-lucide="${VIEW_CONFIG[viewId].icon || 'sparkles'}"></i><span>${kicker}</span></div>
-        <h2 class="workspace-title-xl">${title}</h2>
-        <p class="workspace-copy">${copy}</p>
+        <h2 class="workspace-title-xl" title="${esc(title)}">${title}</h2>
+        <p class="workspace-copy" title="${esc(copy)}">${copy}</p>
         <div class="workspace-actions">${actions}</div>
       </div>
       <aside class="workspace-side-card">${side}</aside>
@@ -2977,9 +3282,6 @@ function buildAgendaWorkspace(){
   const subjects = AppDB.getSubjects();
   const actions = `${workspaceActionButton('agenda-add','Nova sess\u00E3o','plus','primary')}${workspaceActionButton('view-dashboard','Voltar ao dashboard','layout-dashboard')}`;
   
-  const side = `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Atividade Mensal</div><div class="workspace-mini-value" style="font-size:1.8rem"><i data-lucide="calendar"></i></div><div class="workspace-mini-copy">Seu cronograma no m\u00EAs atual.</div></div><span class="workspace-pill">Vis\u00E3o Geral</span></div>
-                <div class="workspace-mini-stat"><div><div class="workspace-mini-label">Ritmo da semana</div><div class="workspace-mini-value">${events.length}</div><div class="workspace-mini-copy">sessão${events.length===1?'':'ões'} no escopo semanal.</div></div><span class="workspace-pill">Recorrente</span></div>`;
-  
   const now = new Date();
   const monthBase = new Date(now.getFullYear(), now.getMonth() + (WorkspaceState.agendaMonthOffset || 0), 1);
   const year = monthBase.getFullYear();
@@ -2988,13 +3290,15 @@ function buildAgendaWorkspace(){
   const monthName = monthNames[month];
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  
-  const eventsByDow = {};
-  for(let i=0; i<7; i++) eventsByDow[i] = [];
-  events.forEach(ev => {
-    const subj = subjects.find(s=>s.id===ev.subjectId);
-    if(subj) eventsByDow[ev.dayOfWeek].push({...ev, subj});
-  });
+  const monthOccurrences = events.reduce((total,eventItem)=>{
+    for(let d=1; d<=daysInMonth; d++){
+      if(scheduleEventOccursOnDate(eventItem, new Date(year, month, d))) total++;
+    }
+    return total;
+  },0);
+  const weeklyEvents = events.filter(eventItem=>eventItem.recurrence==='weekly').length;
+  const side = `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Atividade Mensal</div><div class="workspace-mini-value">${monthOccurrences}</div><div class="workspace-mini-copy">sessão${monthOccurrences===1?'':'ões'} neste mês.</div></div><span class="workspace-pill">Agenda real</span></div>
+                <div class="workspace-mini-stat"><div><div class="workspace-mini-label">Recorrências</div><div class="workspace-mini-value">${weeklyEvents}</div><div class="workspace-mini-copy">sessão${weeklyEvents===1?'':'ões'} repetindo semanalmente.</div></div><span class="workspace-pill">Semanal</span></div>`;
 
   const dayHeaders = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'S\u00E1b'].map(d => `<div class="calendar-header-cell">${d}</div>`).join('');
   let gridHtml = dayHeaders;
@@ -3007,11 +3311,14 @@ function buildAgendaWorkspace(){
     const isToday = now.getFullYear() === year && now.getMonth() === month && now.getDate() === d;
     const dateObj = new Date(year, month, d);
     const dow = dateObj.getDay();
-    const dayEvents = eventsByDow[dow].sort((a,b)=>timeToMin(a.startTime)-timeToMin(b.startTime));
+    const dayEvents = events
+      .map(ev=>({...ev, subj:subjects.find(s=>s.id===ev.subjectId)}))
+      .filter(ev=>ev.subj && scheduleEventOccursOnDate(ev, dateObj))
+      .sort((a,b)=>timeToMin(a.startTime)-timeToMin(b.startTime));
     
     let eventsHtml = dayEvents.map(ev => 
       `<button class="calendar-event" type="button" data-action="agenda-edit" data-id="${ev.id}" style="background:${ev.subj.bg};border-left:3px solid var(${ev.subj.colorVar})">
-         ${ev.subj.icon} <span style="font-weight:bold;margin-right:2px;">${ev.startTime}</span> <span>${esc(ev.subj.name)}</span>
+         ${ev.subj.icon} <span style="font-weight:bold;margin-right:2px;">${ev.startTime}</span> <span>${esc(ev.subj.name)}</span>${ev.recurrence==='weekly' ?' <span title="Recorrente">↻</span>' : ''}
        </button>`
     ).join('');
 
@@ -3182,9 +3489,9 @@ function buildSubjectsHeroCard(){
   return `<section class="subjects-hero-card" aria-label="Matérias e conteúdos">
     <div class="subjects-hero-copy">
       <div class="subjects-hero-kicker"><i data-lucide="book-open"></i><span>Matérias e conteúdos</span></div>
-      <h2 class="subjects-hero-title">${esc(hero.title)}</h2>
-      <div class="subjects-hero-detail">${esc(hero.detail)}</div>
-      <div class="subjects-hero-meta"><i data-lucide="sparkles"></i><span>${esc(hero.meta)}</span></div>
+      <h2 class="subjects-hero-title" title="${esc(hero.title)}">${esc(hero.title)}</h2>
+      <div class="subjects-hero-detail" title="${esc(hero.detail)}">${esc(hero.detail)}</div>
+      <div class="subjects-hero-meta"><i data-lucide="sparkles"></i><span title="${esc(hero.meta)}">${esc(hero.meta)}</span></div>
       <div class="subjects-hero-actions">
         <button class="btn-glass primary" type="button" data-action="subjects-manage"><i data-lucide="settings-2"></i><span>${esc(hero.cta)}</span></button>
         <button class="btn-glass secondary" type="button" data-action="subjects-add"><i data-lucide="plus"></i><span>${esc(hero.secondary)}</span></button>
@@ -3554,7 +3861,7 @@ function deleteTask(id){
   AppDB.saveTasks(AppDB.getTasks().filter(t=>t.id!==id)); renderSubjectGrid(); renderTasks(); renderNextSession(); refreshWorkspaceView();
 }
 function saveNote(payload, legacyChecklist){
-  const current = AppDB.getNote();
+  const current = getCurrentSessionAnnotation();
   const next = typeof payload === 'object' && payload !== null
     ?
     sanitizeNote({...current, ...payload, updatedAt:new Date().toISOString()})
@@ -3564,23 +3871,23 @@ function saveNote(payload, legacyChecklist){
         insights: Array.isArray(legacyChecklist) ?legacyChecklist.map(item=>({id:item.id, icon:item.done ?'target' : 'star', text:item.label})) : current.insights,
         updatedAt:new Date().toISOString(),
       });
-  AppDB.saveNote(next);
+  saveCurrentSessionAnnotation(next);
   renderNote();
   refreshWorkspaceView();
 }
 function removeSessionInsight(insightId){
   if(!insightId) return;
-  const note = AppDB.getNote();
+  const note = getCurrentSessionAnnotation();
   note.insights = (note.insights || []).filter(item=>item.id!==insightId);
   note.updatedAt = new Date().toISOString();
-  AppDB.saveNote(note);
+  saveCurrentSessionAnnotation(note);
   renderNote();
   refreshWorkspaceView();
 }
 function upsertSessionInsight(text, icon='star', insightId=null){
   const clean = sanitizeText(text, '');
   if(!clean) return false;
-  const note = AppDB.getNote();
+  const note = getCurrentSessionAnnotation();
   const insights = Array.isArray(note.insights) ?[...note.insights] : [];
   if(insightId){
     const existing = insights.find(item=>item.id===insightId);
@@ -3593,7 +3900,7 @@ function upsertSessionInsight(text, icon='star', insightId=null){
   }
   note.insights = insights.slice(0,6);
   note.updatedAt = new Date().toISOString();
-  AppDB.saveNote(note);
+  saveCurrentSessionAnnotation(note);
   renderNote();
   refreshWorkspaceView();
   return true;
@@ -3637,6 +3944,7 @@ function deleteSubject(id){
   AppDB.saveSubjects(AppDB.getSubjects().filter(s=>s.id!==id));
   AppDB.saveTasks(AppDB.getTasks().filter(t=>t.subjectId!==id));
   AppDB.saveSchedule(AppDB.getSchedule().filter(e=>e.subjectId!==id));
+  AppDB.saveSessionNotes(AppDB.getSessionNotes().filter(note=>note.subjectId!==id));
   if(Pomo.activeSubjectId===id){
     Pomo.activeSubjectId = AppDB.getSubjects()[0]?.id || null;
     Pomo._persist();
@@ -3779,13 +4087,14 @@ function openPomoModal(options={}){
 
 let _editingScheduleId = null;
 function openScheduleModal(options={}){
-  const {eventId=null,prefillDayOfWeek=null,prefillTime='08:00'} = options;
+  const {eventId=null,prefillDate=null,prefillDayOfWeek=null,prefillTime='08:00'} = options;
   const subjects=AppDB.getSubjects();
   if(!subjects.length){ toast('Adicione uma matéria antes de criar uma sessão.'); return; }
   const sel=document.getElementById('sched-form-subject');
   const titleEl=document.getElementById('modal-schedule-title');
   const saveBtn=document.getElementById('btn-sched-save');
-  const daySel=document.getElementById('sched-form-day');
+  const dateInput=document.getElementById('sched-form-date');
+  const repeatInput=document.getElementById('sched-form-repeat');
   const timeInput=document.getElementById('sched-form-time');
   const durInput=document.getElementById('sched-form-dur');
   const labelInput=document.getElementById('sched-form-label');
@@ -3797,7 +4106,8 @@ function openScheduleModal(options={}){
     if(titleEl) titleEl.textContent='Editar sessão';
     if(saveBtn) saveBtn.textContent='Atualizar';
     sel.value=event.subjectId;
-    daySel.value=String(event.dayOfWeek);
+    dateInput.value=getScheduleEventDate(event);
+    repeatInput.value=event.recurrence || 'once';
     timeInput.value=event.startTime;
     durInput.value=String(event.durationMinutes);
     labelInput.value=event.label || '';
@@ -3805,7 +4115,11 @@ function openScheduleModal(options={}){
     if(titleEl) titleEl.textContent='Nova aula / evento';
     if(saveBtn) saveBtn.textContent='Salvar';
     sel.selectedIndex=0;
-    daySel.value=String(Number.isInteger(prefillDayOfWeek) ?prefillDayOfWeek : 1);
+    const fallbackDate = prefillDate && parseLocalDate(prefillDate)
+      ? prefillDate
+      : scheduleDateForWeekday(Number.isInteger(prefillDayOfWeek) ?prefillDayOfWeek : new Date().getDay());
+    dateInput.value=fallbackDate;
+    repeatInput.value='once';
     timeInput.value=prefillTime;
     durInput.value='90';
     labelInput.value='';
@@ -3837,8 +4151,7 @@ function renderNoteFormInsights(note){
   lucide.createIcons({nodes:[list]});
 }
 function openNoteModal(options={}){
-  const note=sanitizeNote({...AppDB.getNote(), ...getSessionAnnotationDefaults()});
-  document.getElementById('note-form-summary').value=note.summary||'';
+  const note=getCurrentSessionAnnotation();
   renderNoteFormInsights(note);
   document.getElementById('note-form-new-insight').value='';
   NoteUIState.formIcon = 'star';
@@ -3974,14 +4287,16 @@ function buildSearchResults(query){
 
   schedule.forEach(eventItem=>{
     const subject = subjects.find(s=>s.id===eventItem.subjectId);
-    const day = DAY_ABBR[eventItem.dayOfWeek] || 'Dia';
-    const hay = normSearch(`${eventItem.label || ''} ${subject?.name || ''} ${day} ${eventItem.startTime} agenda sessão sessão`);
+    const eventDate = parseLocalDate(getScheduleEventDate(eventItem));
+    const day = eventDate ?eventDate.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}) : (DAY_ABBR[eventItem.dayOfWeek] || 'Dia');
+    const recurrenceLabel = eventItem.recurrence==='weekly' ?'semanal' : 'sessão única';
+    const hay = normSearch(`${eventItem.label || ''} ${subject?.name || ''} ${day} ${eventItem.startTime} ${recurrenceLabel} agenda sessão sessão`);
     if(hay.includes(q)){
       out.push({
         type:'agenda',
         id:eventItem.id,
-        title:eventItem.label ?`${eventItem.label} ? ${subject ?`${subject.icon} ${subject.name}` : 'Sessão'}` : `${subject ?`${subject.icon} ${subject.name}` : 'Sessão'} ? ${eventItem.startTime}`,
-        meta:`${day} às ${eventItem.startTime} ? ${eventItem.durationMinutes}min`,
+        title:eventItem.label ?`${eventItem.label} • ${subject ?`${subject.icon} ${subject.name}` : 'Sessão'}` : `${subject ?`${subject.icon} ${subject.name}` : 'Sessão'} • ${eventItem.startTime}`,
+        meta:`${day} às ${eventItem.startTime} • ${eventItem.durationMinutes}min • ${recurrenceLabel}`,
         tag:'Agenda'
       });
     }
@@ -4138,7 +4453,7 @@ function handleWorkspaceAction(action, button){
       return;
     case 'agenda-day-add':
       Analytics.track(EVENT_NAMES.workspaceAction,{context:'agenda'});
-      openScheduleModal({prefillDayOfWeek: parseInt(button.dataset.dow, 10)});
+      openScheduleModal({prefillDate: dateKey(new Date(parseInt(button.dataset.year,10), parseInt(button.dataset.month,10), parseInt(button.dataset.day,10))), prefillDayOfWeek: parseInt(button.dataset.dow, 10)});
       return;
     case 'agenda-edit':
       Analytics.track(EVENT_NAMES.workspaceAction,{context:'agenda'});
@@ -4365,9 +4680,26 @@ function initEventBindings(){
   });
 
   on('btn-next-session-start','click',()=>{
-    const sid=byId('btn-next-session-start').dataset.subjectId || AppDB.getSubjects()[0].id;
+    if(Pomo.isRunning){
+      Pomo.pause();
+      return;
+    }
+    if(Pomo.leftSec<Pomo.totalSec){
+      Pomo.resume();
+      setActiveView('pomodoro');
+      return;
+    }
+    const target=getHeroPomodoroTarget();
+    const sid=target?.subject?.id || byId('btn-next-session-start').dataset.subjectId || AppDB.getSubjects()[0]?.id;
     if(!sid){ setActiveView('subjects'); toast('Crie uma matéria para iniciar o foco.'); return; }
-    openPomoModal({subjectId:sid, forceExplicitTopicChoice:true});
+    const topicId=target?.topic?.id || byId('btn-next-session-start').dataset.topicId || null;
+    if(target?.subject && !topicId){
+      setActiveView('subjects');
+      toast('Defina conteúdos para esta matéria antes de iniciar.');
+      return;
+    }
+    Pomo.start(sid,Pomo.focusMin,topicId);
+    setActiveView('pomodoro');
   });
   on('btn-next-task-create','click',()=>{
     setActiveView('tasks');
@@ -4389,16 +4721,19 @@ function initEventBindings(){
   on('btn-schedule-add','click',()=>openScheduleModal());
   on('btn-sched-save','click',()=>{
     const subjectId=byId('sched-form-subject').value;
-    const dayOfWeek=parseInt(byId('sched-form-day').value,10);
+    const date=byId('sched-form-date').value || todayKey();
+    const dateObj=parseLocalDate(date) || new Date();
+    const dayOfWeek=dateObj.getDay();
+    const recurrence=byId('sched-form-repeat').value === 'weekly' ?'weekly' : 'once';
     const startTime=byId('sched-form-time').value;
     const durationMinutes=parseInt(byId('sched-form-dur').value,10)||90;
     const label=byId('sched-form-label').value.trim() || '';
     if(!subjectId)return;
     if(_editingScheduleId){
-      const updated = updateScheduleEvent(_editingScheduleId,{subjectId,dayOfWeek,startTime,durationMinutes,label});
+      const updated = updateScheduleEvent(_editingScheduleId,{subjectId,date,recurrence,dayOfWeek,startTime,durationMinutes,label});
       if(!updated) toast('Não foi possível atualizar a sessão.');
     } else {
-      addScheduleEvent({subjectId,dayOfWeek,startTime,durationMinutes,label});
+      addScheduleEvent({subjectId,date,recurrence,dayOfWeek,startTime,durationMinutes,label});
     }
     _editingScheduleId = null;
     Modal.close('modal-schedule');
@@ -4449,7 +4784,7 @@ function initEventBindings(){
     if(!text) return;
     const saved = upsertSessionInsight(text, NoteUIState.formIcon, editId);
     if(!saved) return;
-    const refreshed = AppDB.getNote();
+    const refreshed = getCurrentSessionAnnotation();
     renderNoteFormInsights(refreshed);
     input.value = '';
     input.dataset.editId = '';
@@ -4460,17 +4795,13 @@ function initEventBindings(){
   });
   on('note-form-new-insight','keydown',e=>{ if(e.key==='Enter')document.getElementById('btn-note-add-insight').click(); });
   on('btn-note-save','click',()=>{
-    const note = AppDB.getNote();
-    note.summary = document.getElementById('note-form-summary').value.trim();
-    note.updatedAt = new Date().toISOString();
-    saveNote(note);
     Modal.close('modal-note');
   });
   on('note-form-insights','click',event=>{
     const button = event.target.closest('[data-action="remove-note-form-insight"]');
     if(!button) return;
     removeSessionInsight(button.dataset.id);
-    renderNoteFormInsights(AppDB.getNote());
+    renderNoteFormInsights(getCurrentSessionAnnotation());
   });
 
   // Subjects
@@ -4544,7 +4875,7 @@ function initEventBindings(){
 
   // Session annotation audio / TTS
   on('note-audio-toggle','click',()=>{
-    const note = AppDB.getNote();
+    const note = getCurrentSessionAnnotation();
     const totalSec = getSessionAnnotationAudioTotalSec(note);
     NoteUIState.audio.totalSec = totalSec;
     if(NoteUIState.audio.isPlaying){
@@ -4572,7 +4903,7 @@ function initEventBindings(){
       toast('Seu navegador n\u00e3o suporta leitura por voz.');
       return;
     }
-    const speech = buildSessionAnnotationSpeech(AppDB.getNote());
+    const speech = buildSessionAnnotationSpeech(getCurrentSessionAnnotation());
     if(!speech){
       toast('Escreva um resumo antes de usar o TTS.');
       return;
@@ -4751,11 +5082,16 @@ safeCall(()=>setActiveView(getActiveView(), {track:false,focus:false}), 'startup
 setTimeout(()=>safeCall(()=>renderWeeklyAnalysis(), 'startup:renderWeeklyAnalysis'),200);
 // Register Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js?v=16',{updateViaCache:'none'}).catch(e=>console.warn('[PWA] SW:',e));
+  navigator.serviceWorker.register('./sw.js?v=23',{updateViaCache:'none'}).catch(e=>console.warn('[PWA] SW:',e));
 }
 </script>
 </body>
 </html>
+
+
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-const CACHE = 'studyflow-v16';
+﻿const CACHE = 'studyflow-v23';
 const PRECACHE = [
   './',
   './index.html',
@@ -63,5 +63,10 @@ self.addEventListener('fetch', event => {
     event.respondWith(staleWhileRevalidate(event.request));
   }
 });
+
+
+
+
+
 
 
