@@ -2207,6 +2207,14 @@ const EVENT_NAMES = {
   viewChange: 'view_change',
   workspaceAction: 'workspace_action',
 };
+const MOOD_ICON_TO_KEY = {
+  'icons/1.png':'otimo',
+  'icons/2.png':'bem',
+  'icons/3.png':'focado',
+  'icons/4.png':'cansado',
+  'icons/5.png':'frustrado',
+};
+const MOOD_KEY_TO_ICON = Object.fromEntries(Object.entries(MOOD_ICON_TO_KEY).map(([icon,key])=>[key,icon]));
 
 function openPMMGEdital(){
   window.open(PMMG_EDITAL_URL, '_blank', 'noopener,noreferrer');
@@ -2930,8 +2938,21 @@ const DataStoreSupabase = {
     const session = DataStoreLocal.getRaw(STORAGE_KEYS.supabaseSession, null);
     return sanitizeText(session?.access_token || '', '');
   },
+  getUserId(){
+    const session = DataStoreLocal.getRaw(STORAGE_KEYS.supabaseSession, null);
+    return sanitizeText(session?.user?.id || '', '');
+  },
   isReady(){
     return this.isConfigured() && !!this.getAccessToken();
+  },
+  fail(reason='supabase-auth-required'){
+    return {ok:false,reason};
+  },
+  reportWriteFailure(result, label='dados'){
+    if(!result || result.ok) return result;
+    console.warn(`[StudyFlow] Falha ao sincronizar ${label}:`, result.reason || result.status || result);
+    toast(`Não foi possível sincronizar ${label} agora. Os dados ficaram salvos neste navegador.`);
+    return result;
   },
   async request(path, options={}){
     const config = this.getConfig();
@@ -3013,6 +3034,379 @@ const DataStoreSupabase = {
       });
       if(!result.ok) return result;
       return {ok:true,data:this.map((Array.isArray(result.data) ?result.data[0] : null) || {id:userId,full_name:safe.fullName,display_name:safe.displayName,study_goal:safe.studyGoal})};
+    },
+  },
+  progress: {
+    map(row){
+      return {
+        topicId: sanitizeText(row?.topic_id || '', ''),
+        status: TOPIC_STATUS_META[row?.status] ?row.status : 'not_started',
+        progress: Number.isFinite(Number(row?.progress)) ?Number(row.progress) : undefined,
+        lastStudiedAt: row?.last_studied_at || null,
+        reviewDue: row?.review_due_at || null,
+        completedAt: row?.completed_at || null,
+      };
+    },
+    apply(subjects, rows){
+      const byTopic = new Map((Array.isArray(rows) ?rows : []).map(row=>[row.topicId, row]));
+      return (Array.isArray(subjects) ?subjects : []).map(subject=>sanitizeSubject({
+        ...subject,
+        topics:(subject.topics || []).map(topic=>sanitizeTopic({...topic, ...(byTopic.get(topic.id) || {})})),
+      }));
+    },
+    async list(){
+      if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
+      const result = await DataStoreSupabase.request('user_topic_progress?select=topic_id,status,progress,last_studied_at,review_due_at,completed_at&order=updated_at.desc');
+      if(!result.ok) return result;
+      return {ok:true,data:(Array.isArray(result.data) ?result.data : []).map(this.map)};
+    },
+    async replaceFromSubjects(subjects){
+      if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
+      const userId = DataStoreSupabase.getUserId();
+      if(!userId) return DataStoreSupabase.fail();
+      const rows = (Array.isArray(subjects) ?subjects : [])
+        .flatMap(subject=>(subject.topics || []).map(topic=>sanitizeTopic(topic)))
+        .filter(topic=>topic.status !== 'not_started' || topic.lastStudiedAt || topic.reviewDue || topic.completedAt)
+        .map(topic=>({
+          user_id:userId,
+          topic_id:topic.id,
+          status:topic.status,
+          progress:Number.isFinite(Number(topic.progress)) ?Number(topic.progress) : null,
+          last_studied_at:topic.lastStudiedAt || null,
+          review_due_at:topic.reviewDue || null,
+          completed_at:topic.completedAt || null,
+        }));
+      const clear = await DataStoreSupabase.request(`user_topic_progress?user_id=eq.${encodeURIComponent(userId)}`, {method:'DELETE'});
+      if(!clear.ok) return clear;
+      if(!rows.length) return {ok:true,data:[]};
+      const result = await DataStoreSupabase.request('user_topic_progress', {
+        method:'POST',
+        headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
+        body:JSON.stringify(rows),
+      });
+      return result.ok ?{ok:true,data:rows} : result;
+    },
+  },
+  tasks: {
+    map(row){
+      return sanitizeTask({
+        id: row?.id,
+        subjectId: row?.subject_id,
+        topicId: row?.topic_id || null,
+        title: row?.title,
+        done: !!row?.done,
+        createdAt: row?.created_at,
+        completedAt: row?.completed_at || null,
+      });
+    },
+    toRow(task){
+      const userId = DataStoreSupabase.getUserId();
+      const safe = sanitizeTask(task);
+      return {
+        id:safe.id,
+        user_id:userId,
+        subject_id:safe.subjectId,
+        topic_id:safe.topicId,
+        title:safe.title,
+        done:safe.done,
+        created_at:safe.createdAt,
+        completed_at:safe.completedAt,
+      };
+    },
+    async list(){
+      if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
+      const result = await DataStoreSupabase.request('tasks?select=id,subject_id,topic_id,title,done,created_at,completed_at&order=created_at.asc');
+      if(!result.ok) return result;
+      return {ok:true,data:(Array.isArray(result.data) ?result.data : []).map(this.map)};
+    },
+    async replaceAll(tasks){
+      if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
+      const userId = DataStoreSupabase.getUserId();
+      if(!userId) return DataStoreSupabase.fail();
+      const safe = (Array.isArray(tasks) ?tasks : []).map(sanitizeTask);
+      const ids = safe.map(task=>task.id).filter(Boolean);
+      const deletePath = ids.length
+        ?`tasks?user_id=eq.${encodeURIComponent(userId)}&id=not.in.(${ids.map(encodeURIComponent).join(',')})`
+        :`tasks?user_id=eq.${encodeURIComponent(userId)}`;
+      const deleted = await DataStoreSupabase.request(deletePath, {method:'DELETE'});
+      if(!deleted.ok) return deleted;
+      if(!safe.length) return {ok:true,data:[]};
+      const result = await DataStoreSupabase.request('tasks', {
+        method:'POST',
+        headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
+        body:JSON.stringify(safe.map(task=>this.toRow(task))),
+      });
+      return result.ok ?{ok:true,data:safe} : result;
+    },
+    create(task){ return this.replaceAll([...DataStoreLocal.tasks.getAll(), sanitizeTask(task)]); },
+    update(task){ return this.replaceAll(DataStoreLocal.tasks.getAll().map(item=>item.id===task.id ?sanitizeTask(task) : item)); },
+    delete(id){ return this.replaceAll(DataStoreLocal.tasks.getAll().filter(item=>item.id!==id)); },
+  },
+  schedule: {
+    map(row){
+      return sanitizeScheduleEvent({
+        id: row?.id,
+        subjectId: row?.subject_id,
+        topicId: row?.topic_id || null,
+        date: row?.event_date,
+        recurrence: row?.recurrence,
+        dayOfWeek: row?.day_of_week,
+        startTime: String(row?.start_time || '08:00').slice(0,5),
+        durationMinutes: row?.duration_minutes,
+        label: row?.label || '',
+      });
+    },
+    toRow(eventItem){
+      const userId = DataStoreSupabase.getUserId();
+      const safe = sanitizeScheduleEvent(eventItem);
+      return {
+        id:safe.id,
+        user_id:userId,
+        subject_id:safe.subjectId,
+        topic_id:safe.topicId,
+        event_date:safe.date,
+        recurrence:safe.recurrence,
+        day_of_week:safe.dayOfWeek,
+        start_time:safe.startTime,
+        duration_minutes:safe.durationMinutes,
+        label:safe.label || null,
+      };
+    },
+    async list(){
+      if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
+      const result = await DataStoreSupabase.request('schedule_events?select=id,subject_id,topic_id,event_date,recurrence,day_of_week,start_time,duration_minutes,label&order=event_date.asc,start_time.asc');
+      if(!result.ok) return result;
+      return {ok:true,data:(Array.isArray(result.data) ?result.data : []).map(this.map)};
+    },
+    async replaceAll(events){
+      if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
+      const userId = DataStoreSupabase.getUserId();
+      if(!userId) return DataStoreSupabase.fail();
+      const safe = (Array.isArray(events) ?events : []).map(sanitizeScheduleEvent);
+      const ids = safe.map(eventItem=>eventItem.id).filter(Boolean);
+      const deletePath = ids.length
+        ?`schedule_events?user_id=eq.${encodeURIComponent(userId)}&id=not.in.(${ids.map(encodeURIComponent).join(',')})`
+        :`schedule_events?user_id=eq.${encodeURIComponent(userId)}`;
+      const deleted = await DataStoreSupabase.request(deletePath, {method:'DELETE'});
+      if(!deleted.ok) return deleted;
+      if(!safe.length) return {ok:true,data:[]};
+      const result = await DataStoreSupabase.request('schedule_events', {
+        method:'POST',
+        headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
+        body:JSON.stringify(safe.map(eventItem=>this.toRow(eventItem))),
+      });
+      return result.ok ?{ok:true,data:safe} : result;
+    },
+  },
+  sessions: {
+    map(row){
+      return sanitizeStudySession({
+        id: row?.id,
+        subjectId: row?.subject_id || null,
+        topicId: row?.topic_id || null,
+        startedAt: row?.started_at,
+        endedAt: row?.ended_at || null,
+        durationMinutes: row?.duration_minutes,
+        type: row?.type,
+      });
+    },
+    toRow(session){
+      const userId = DataStoreSupabase.getUserId();
+      const safe = sanitizeStudySession(session);
+      return {
+        id:safe.id,
+        user_id:userId,
+        subject_id:safe.subjectId,
+        topic_id:safe.topicId,
+        started_at:safe.startedAt,
+        ended_at:safe.endedAt,
+        duration_minutes:safe.durationMinutes,
+        type:safe.type,
+      };
+    },
+    async list(){
+      if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
+      const result = await DataStoreSupabase.request('study_sessions?select=id,subject_id,topic_id,started_at,ended_at,duration_minutes,type&order=started_at.asc');
+      if(!result.ok) return result;
+      return {ok:true,data:(Array.isArray(result.data) ?result.data : []).map(this.map)};
+    },
+    async replaceAll(sessions){
+      if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
+      const userId = DataStoreSupabase.getUserId();
+      if(!userId) return DataStoreSupabase.fail();
+      const safe = (Array.isArray(sessions) ?sessions : []).map(sanitizeStudySession);
+      const ids = safe.map(session=>session.id).filter(Boolean);
+      const deletePath = ids.length
+        ?`study_sessions?user_id=eq.${encodeURIComponent(userId)}&id=not.in.(${ids.map(encodeURIComponent).join(',')})`
+        :`study_sessions?user_id=eq.${encodeURIComponent(userId)}`;
+      const deleted = await DataStoreSupabase.request(deletePath, {method:'DELETE'});
+      if(!deleted.ok) return deleted;
+      if(!safe.length) return {ok:true,data:[]};
+      const result = await DataStoreSupabase.request('study_sessions', {
+        method:'POST',
+        headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
+        body:JSON.stringify(safe.map(session=>this.toRow(session))),
+      });
+      return result.ok ?{ok:true,data:safe} : result;
+    },
+  },
+  notes: {
+    map(row){
+      return sanitizeNote({
+        id: row?.id,
+        sessionId: row?.session_id || row?.id,
+        subjectId: row?.subject_id || null,
+        topicId: row?.topic_id || null,
+        subjectName: row?.subject_name || '',
+        contentName: row?.content_name || '',
+        sessionLabel: row?.session_label || '',
+        audioUrl: row?.audio_url || null,
+        summary: row?.summary || '',
+        insights: Array.isArray(row?.insights) ?row.insights : [],
+        startedAt: row?.started_at || null,
+        endedAt: row?.ended_at || null,
+        updatedAt: row?.updated_at || null,
+      });
+    },
+    toRow(note){
+      const userId = DataStoreSupabase.getUserId();
+      const safe = sanitizeNote(note);
+      const knownSessions = new Set(DataStoreLocal.sessions.getAll().map(session=>session.id));
+      const sessionId = knownSessions.has(safe.sessionId) ?safe.sessionId : null;
+      return {
+        id:safe.id,
+        user_id:userId,
+        session_id:sessionId,
+        subject_id:safe.subjectId,
+        topic_id:safe.topicId,
+        subject_name:safe.subjectName || null,
+        content_name:safe.contentName || null,
+        session_label:safe.sessionLabel || null,
+        audio_url:safe.audioUrl || null,
+        summary:safe.summary || '',
+        insights:safe.insights || [],
+        started_at:safe.startedAt || null,
+        ended_at:safe.endedAt || null,
+      };
+    },
+    async list(){
+      if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
+      const result = await DataStoreSupabase.request('session_notes?select=id,session_id,subject_id,topic_id,subject_name,content_name,session_label,audio_url,summary,insights,started_at,ended_at,updated_at&order=updated_at.asc');
+      if(!result.ok) return result;
+      return {ok:true,data:(Array.isArray(result.data) ?result.data : []).map(this.map)};
+    },
+    async replaceAll(notes){
+      if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
+      const userId = DataStoreSupabase.getUserId();
+      if(!userId) return DataStoreSupabase.fail();
+      const safe = (Array.isArray(notes) ?notes : []).map(sanitizeNote);
+      const ids = safe.map(note=>note.id).filter(Boolean);
+      const deletePath = ids.length
+        ?`session_notes?user_id=eq.${encodeURIComponent(userId)}&id=not.in.(${ids.map(encodeURIComponent).join(',')})`
+        :`session_notes?user_id=eq.${encodeURIComponent(userId)}`;
+      const deleted = await DataStoreSupabase.request(deletePath, {method:'DELETE'});
+      if(!deleted.ok) return deleted;
+      if(!safe.length) return {ok:true,data:[]};
+      const result = await DataStoreSupabase.request('session_notes', {
+        method:'POST',
+        headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
+        body:JSON.stringify(safe.map(note=>this.toRow(note))),
+      });
+      return result.ok ?{ok:true,data:safe} : result;
+    },
+  },
+  moods: {
+    mapRows(rows){
+      return (Array.isArray(rows) ?rows : []).reduce((acc,row)=>{
+        const icon = MOOD_KEY_TO_ICON[row?.mood] || null;
+        if(icon && row?.entry_date) acc[row.entry_date] = icon;
+        return acc;
+      }, {});
+    },
+    toRows(moods){
+      const userId = DataStoreSupabase.getUserId();
+      return Object.entries(moods && typeof moods === 'object' ?moods : {})
+        .map(([entryDate,icon])=>({user_id:userId,entry_date:entryDate,mood:MOOD_ICON_TO_KEY[icon] || icon}))
+        .filter(row=>row.user_id && /^\d{4}-\d{2}-\d{2}$/.test(row.entry_date) && MOOD_KEY_TO_ICON[row.mood]);
+    },
+    async list(){
+      if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
+      const result = await DataStoreSupabase.request('mood_entries?select=entry_date,mood&order=entry_date.asc');
+      if(!result.ok) return result;
+      return {ok:true,data:this.mapRows(result.data)};
+    },
+    async replaceAll(moods){
+      if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
+      const userId = DataStoreSupabase.getUserId();
+      if(!userId) return DataStoreSupabase.fail();
+      const rows = this.toRows(moods);
+      const deleted = await DataStoreSupabase.request(`mood_entries?user_id=eq.${encodeURIComponent(userId)}`, {method:'DELETE'});
+      if(!deleted.ok) return deleted;
+      if(!rows.length) return {ok:true,data:{}};
+      const result = await DataStoreSupabase.request('mood_entries', {
+        method:'POST',
+        headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
+        body:JSON.stringify(rows),
+      });
+      return result.ok ?{ok:true,data:moods} : result;
+    },
+  },
+  pomodoro: {
+    map(row){
+      if(!row) return {...DEFAULT_POMO};
+      return {
+        phase: row.phase === 'break' ?'break' : 'focus',
+        sessionCount: Math.max(0, parseInt(row.session_count, 10) || 0),
+        focusDurationMinutes: Math.max(1, parseInt(row.focus_duration_minutes, 10) || DEFAULT_POMO.focusDurationMinutes),
+        breakDurationMinutes: Math.max(1, parseInt(row.break_duration_minutes, 10) || DEFAULT_POMO.breakDurationMinutes),
+        longBreakDurationMinutes: Math.max(1, parseInt(row.long_break_duration_minutes, 10) || DEFAULT_POMO.longBreakDurationMinutes),
+        longBreakAfter: Math.max(1, parseInt(row.long_break_after, 10) || DEFAULT_POMO.longBreakAfter),
+        activeSubjectId: row.active_subject_id || null,
+        activeTopicId: row.active_topic_id || null,
+        activeSessionId: row.active_session_id || null,
+        startedAt: row.started_at || null,
+        leftSec: Number.isFinite(Number(row.left_seconds)) ?Number(row.left_seconds) : null,
+        totalSec: Number.isFinite(Number(row.total_seconds)) ?Number(row.total_seconds) : null,
+        isRunning: !!row.is_running,
+        lastTickAt: row.last_tick_at || null,
+      };
+    },
+    toRow(state){
+      const userId = DataStoreSupabase.getUserId();
+      const safe = {...DEFAULT_POMO, ...(state && typeof state === 'object' ?state : {})};
+      const knownSessions = new Set(DataStoreLocal.sessions.getAll().map(session=>session.id));
+      return {
+        user_id:userId,
+        phase: safe.phase === 'break' ?'break' : 'focus',
+        session_count: Math.max(0, parseInt(safe.sessionCount, 10) || 0),
+        focus_duration_minutes: Math.max(1, parseInt(safe.focusDurationMinutes, 10) || DEFAULT_POMO.focusDurationMinutes),
+        break_duration_minutes: Math.max(1, parseInt(safe.breakDurationMinutes, 10) || DEFAULT_POMO.breakDurationMinutes),
+        long_break_duration_minutes: Math.max(1, parseInt(safe.longBreakDurationMinutes, 10) || DEFAULT_POMO.longBreakDurationMinutes),
+        long_break_after: Math.max(1, parseInt(safe.longBreakAfter, 10) || DEFAULT_POMO.longBreakAfter),
+        active_subject_id:safe.activeSubjectId || null,
+        active_topic_id:safe.activeTopicId || null,
+        active_session_id:knownSessions.has(safe.activeSessionId) ?safe.activeSessionId : null,
+        started_at:safe.startedAt || null,
+        left_seconds:Number.isFinite(Number(safe.leftSec)) ?Number(safe.leftSec) : null,
+        total_seconds:Number.isFinite(Number(safe.totalSec)) ?Number(safe.totalSec) : null,
+        is_running:!!safe.isRunning,
+        last_tick_at:safe.lastTickAt || null,
+      };
+    },
+    async get(){
+      if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
+      const result = await DataStoreSupabase.request('pomodoro_states?select=phase,session_count,focus_duration_minutes,break_duration_minutes,long_break_duration_minutes,long_break_after,active_subject_id,active_topic_id,active_session_id,started_at,left_seconds,total_seconds,is_running,last_tick_at&limit=1');
+      if(!result.ok) return result;
+      return {ok:true,data:this.map((Array.isArray(result.data) ?result.data[0] : null) || null)};
+    },
+    async upsert(state){
+      if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
+      const result = await DataStoreSupabase.request('pomodoro_states', {
+        method:'POST',
+        headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
+        body:JSON.stringify(this.toRow(state)),
+      });
+      return result.ok ?{ok:true,data:state} : result;
     },
   },
 };
@@ -3103,16 +3497,16 @@ const AuthController = {
     return false;
   },
   resetLocalStudyDataForAccount(){
-    AppDB.saveSubjects([]);
-    AppDB.saveSchedule([]);
-    AppDB.saveTasks([]);
-    AppDB.saveSessions([]);
-    AppDB.saveNote(DEFAULT_NOTE);
-    AppDB.saveSessionNotes([]);
+    DataStoreLocal.subjects.saveAll([]);
+    DataStoreLocal.schedule.saveAll([]);
+    DataStoreLocal.tasks.saveAll([]);
+    DataStoreLocal.sessions.saveAll([]);
+    DataStoreLocal.notes.saveCurrent(DEFAULT_NOTE);
+    DataStoreLocal.notes.saveAll([]);
     DataStoreLocal.setRaw(STORAGE_KEYS.moods, {});
-    AppDB.savePomoState({...DEFAULT_POMO});
-    AppDB.saveExamDate(null);
-    AppDB.saveActiveView('dashboard');
+    DataStoreLocal.settings.savePomoState({...DEFAULT_POMO});
+    DataStoreLocal.settings.saveExamDate(null);
+    DataStoreLocal.settings.saveActiveView('dashboard');
   },
   async loadProfile(){
     const result = await DataStoreSupabase.profiles.getCurrent();
@@ -3215,6 +3609,15 @@ const AuthController = {
   init(){
     this.applyGate();
     this.setMode('login');
+    if(this.isAuthenticated()){
+      this.loadProfile()
+        .then(()=>DataStore.sync.pull())
+        .then(()=>{
+          updateWorkspaceHeading(getActiveView());
+          renderAll();
+        })
+        .catch(error=>console.warn('[StudyFlow] Falha ao restaurar sessão Supabase:', error));
+    }
     document.getElementById('auth-tab-login')?.addEventListener('click',()=>this.setMode('login'));
     document.getElementById('auth-tab-signup')?.addEventListener('click',()=>this.setMode('signup'));
     document.querySelectorAll('[data-auth-mode]').forEach(btn=>{
@@ -3247,14 +3650,65 @@ const DataStore = {
   mode: 'local',
   local: DataStoreLocal,
   cloud: DataStoreSupabase,
+  cloudWrite(label, operation){
+    if(!DataStoreSupabase.isReady()) return;
+    Promise.resolve()
+      .then(operation)
+      .then(result=>DataStoreSupabase.reportWriteFailure(result, label))
+      .catch(error=>DataStoreSupabase.reportWriteFailure({ok:false,reason:error?.message || String(error)}, label));
+  },
   sync: {
     async pull(){
       if(!DataStoreSupabase.isReady()) return {ok:true,mode:'local',reason:'supabase-not-ready'};
       const catalog = await DataStoreSupabase.catalog.getSubjects();
       if(catalog.ok && catalog.data.length) DataStoreLocal.subjects.saveAll(catalog.data);
-      return catalog.ok ?{ok:true,mode:'cloud',catalogSubjects:catalog.data.length} : catalog;
+      if(!catalog.ok) return catalog;
+      const progress = await DataStoreSupabase.progress.list();
+      if(progress.ok) DataStoreLocal.subjects.saveAll(DataStoreSupabase.progress.apply(DataStoreLocal.subjects.getAll(), progress.data));
+      const [tasks,schedule,sessions,notes,moods,pomo] = await Promise.all([
+        DataStoreSupabase.tasks.list(),
+        DataStoreSupabase.schedule.list(),
+        DataStoreSupabase.sessions.list(),
+        DataStoreSupabase.notes.list(),
+        DataStoreSupabase.moods.list(),
+        DataStoreSupabase.pomodoro.get(),
+      ]);
+      if(tasks.ok) DataStoreLocal.tasks.saveAll(tasks.data);
+      if(schedule.ok) DataStoreLocal.schedule.saveAll(schedule.data);
+      if(sessions.ok) DataStoreLocal.sessions.saveAll(sessions.data);
+      if(notes.ok){
+        DataStoreLocal.notes.saveAll(notes.data);
+        const current = notes.data.find(note=>note.id === 'session-annotation') || notes.data.at(-1);
+        if(current) DataStoreLocal.notes.saveCurrent(current);
+      }
+      if(moods.ok) DataStoreLocal.setRaw(STORAGE_KEYS.moods, moods.data);
+      if(pomo.ok) DataStoreLocal.settings.savePomoState(pomo.data);
+      return {
+        ok:true,
+        mode:'cloud',
+        catalogSubjects:catalog.data.length,
+        tasks:tasks.ok ?tasks.data.length : null,
+        schedule:schedule.ok ?schedule.data.length : null,
+      };
     },
-    pushPending(){ return Promise.resolve({ok:true,mode:'local',reason:'cloud-sync-not-enabled'}); },
+    async pushPending(){
+      if(!DataStoreSupabase.isReady()) return Promise.resolve({ok:true,mode:'local',reason:'supabase-not-ready'});
+      const results = [];
+      for(const operation of [
+        ()=>DataStoreSupabase.progress.replaceFromSubjects(DataStoreLocal.subjects.getAll()),
+        ()=>DataStoreSupabase.tasks.replaceAll(DataStoreLocal.tasks.getAll()),
+        ()=>DataStoreSupabase.schedule.replaceAll(DataStoreLocal.schedule.getAll()),
+        ()=>DataStoreSupabase.sessions.replaceAll(DataStoreLocal.sessions.getAll()),
+        ()=>DataStoreSupabase.notes.replaceAll(DataStoreLocal.notes.getAll()),
+        ()=>DataStoreSupabase.moods.replaceAll(DataStoreLocal.moods.getAll()),
+        ()=>DataStoreSupabase.pomodoro.upsert(DataStoreLocal.settings.getPomoState()),
+      ]){
+        const result = await operation();
+        results.push(result);
+        if(!result.ok) return {ok:false,mode:'cloud',results};
+      }
+      return {ok:true,mode:'cloud',results};
+    },
     importLocalToCloud(){ return Promise.resolve({ok:false,mode:'local',reason:'supabase-auth-required'}); },
   },
 };
@@ -3288,17 +3742,43 @@ const AppDB = {
   getActiveView(){ return DataStoreLocal.settings.getActiveView(); },
   getDataVersion(){ return DataStoreLocal.settings.getDataVersion(); },
   saveDataVersion(v){ DataStoreLocal.settings.saveDataVersion(v); },
-  saveSubjects(v){ DataStoreLocal.subjects.saveAll(v); },
-  saveSessions(v){ DataStoreLocal.sessions.saveAll(v); },
-  saveSchedule(v){ DataStoreLocal.schedule.saveAll(v); },
-  saveTasks(v)   { DataStoreLocal.tasks.saveAll(v); },
+  saveSubjects(v){
+    DataStoreLocal.subjects.saveAll(v);
+    DataStore.cloudWrite('progresso das matérias', ()=>DataStoreSupabase.progress.replaceFromSubjects(DataStoreLocal.subjects.getAll()));
+  },
+  saveSessions(v){
+    DataStoreLocal.sessions.saveAll(v);
+    DataStore.cloudWrite('sessões de estudo', async ()=>{
+      const sessions = await DataStoreSupabase.sessions.replaceAll(DataStoreLocal.sessions.getAll());
+      if(!sessions.ok) return sessions;
+      return DataStoreSupabase.notes.replaceAll(DataStoreLocal.notes.getAll());
+    });
+  },
+  saveSchedule(v){
+    DataStoreLocal.schedule.saveAll(v);
+    DataStore.cloudWrite('agenda', ()=>DataStoreSupabase.schedule.replaceAll(DataStoreLocal.schedule.getAll()));
+  },
+  saveTasks(v)   {
+    DataStoreLocal.tasks.saveAll(v);
+    DataStore.cloudWrite('tarefas', ()=>DataStoreSupabase.tasks.replaceAll(DataStoreLocal.tasks.getAll()));
+  },
   saveNote(v)    { DataStoreLocal.notes.saveCurrent(v); },
-  saveSessionNotes(v){ DataStoreLocal.notes.saveAll(v); },
+  saveSessionNotes(v){
+    DataStoreLocal.notes.saveAll(v);
+    DataStore.cloudWrite('anotações', ()=>DataStoreSupabase.notes.replaceAll(DataStoreLocal.notes.getAll()));
+  },
   saveSessionNote(v){
     DataStoreLocal.notes.saveOne(v);
+    DataStore.cloudWrite('anotações', ()=>DataStoreSupabase.notes.replaceAll(DataStoreLocal.notes.getAll()));
   },
-  saveMood(k,v)  { DataStoreLocal.moods.save(k,v); },
-  savePomoState(v){ DataStoreLocal.settings.savePomoState(v); },
+  saveMood(k,v)  {
+    DataStoreLocal.moods.save(k,v);
+    DataStore.cloudWrite('humor', ()=>DataStoreSupabase.moods.replaceAll(DataStoreLocal.moods.getAll()));
+  },
+  savePomoState(v){
+    DataStoreLocal.settings.savePomoState(v);
+    DataStore.cloudWrite('pomodoro', ()=>DataStoreSupabase.pomodoro.upsert(DataStoreLocal.settings.getPomoState()));
+  },
   saveExamDate(v){ DataStoreLocal.settings.saveExamDate(v); },
   saveActiveView(v){ DataStoreLocal.settings.saveActiveView(v); },
 };
