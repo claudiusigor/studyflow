@@ -13,6 +13,7 @@ const PRECACHE = [
   './icons/3.png',
   './icons/4.png',
   './icons/5.png',
+  './assets/auth-colonnade-ghost-transparent.png',
 ];
 
 const RUNTIME_CACHE = `${CACHE}-runtime`;

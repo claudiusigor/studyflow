@@ -1501,6 +1501,55 @@
     .auth-google strong{font-size:1.7rem;line-height:1;color:#8f7f74;font-family:Arial,sans-serif;}
     .auth-security{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:46px;color:#9f8f84;font-size:.91rem;font-weight:600;line-height:1.35;text-align:left;}
     .auth-security svg{width:20px;height:20px;flex:0 0 auto;}
+    .onboarding-tour{position:fixed;inset:0;z-index:8600;display:none;align-items:center;justify-content:center;padding:34px;background:rgba(36,26,20,.42);backdrop-filter:blur(5px);color:#30251f;}
+    .onboarding-tour.open{display:flex;}
+    body.onboarding-open{overflow:hidden;}
+    .onboarding-panel{position:relative;width:min(980px,calc(100vw - 54px));min-height:610px;display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.88fr);grid-template-rows:1fr auto;gap:42px;padding:42px 44px 28px;border:1px solid rgba(218,198,181,.82);border-radius:24px;background:linear-gradient(145deg,#fffdf9 0%,#fff8f2 100%);box-shadow:0 34px 96px rgba(36,26,20,.28),0 1px 0 rgba(255,255,255,.95) inset;overflow:hidden;}
+    .onboarding-panel::before{content:'';position:absolute;left:-86px;bottom:-52px;width:min(760px,68%);height:330px;background:url('assets/auth-colonnade-ghost-transparent.png') left bottom/contain no-repeat;opacity:.22;filter:saturate(.92) sepia(.06) contrast(1.02);mask-image:linear-gradient(90deg,#000 0 56%,rgba(0,0,0,.74) 74%,transparent 100%),linear-gradient(0deg,#000 0 84%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,#000 0 56%,rgba(0,0,0,.74) 74%,transparent 100%),linear-gradient(0deg,#000 0 84%,transparent 100%);pointer-events:none;}
+    .onboarding-panel::after{content:'';position:absolute;left:44px;right:44px;bottom:104px;height:1px;background:#eadfd2;}
+    .onboarding-kicker{display:inline-flex;align-items:center;width:max-content;margin-bottom:28px;padding:8px 15px;border:1px solid #f2d8ca;border-radius:999px;background:#fff8f2;color:#ff5a1f;font-size:.78rem;font-weight:800;}
+    .onboarding-title{max-width:520px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.8rem,5.2vw,4.25rem);line-height:.98;letter-spacing:0;color:#30251f;}
+    .onboarding-title span{display:block;color:#f36b3a;}
+    .onboarding-lead{max-width:420px;margin-top:18px;font-size:1.08rem;line-height:1.5;color:#5f5148;}
+    .onboarding-copy{position:relative;max-width:430px;margin-top:36px;font-size:.96rem;line-height:1.62;color:#7d6d62;}
+    .onboarding-copy::before{content:'';position:absolute;left:0;top:-20px;width:42px;height:2px;border-radius:999px;background:#ff5a1f;}
+    .onboarding-visual{display:none;}
+    .onboarding-right{position:relative;z-index:1;align-self:center;display:grid;gap:14px;padding-top:48px;padding-bottom:18px;}
+    .onboarding-top-actions{position:absolute;top:30px;right:32px;display:flex;align-items:center;gap:16px;z-index:2;}
+    .onboarding-skip{border:0;background:transparent;color:#5f5148;font:inherit;font-size:.88rem;font-weight:700;cursor:pointer;}
+    .onboarding-close{width:34px;height:34px;border:1px solid #eadfd2;border-radius:999px;background:#fffaf6;color:#8b7a70;display:grid;place-items:center;cursor:pointer;}
+    .onboarding-card{display:grid;grid-template-columns:76px 1fr;gap:20px;align-items:center;padding:20px 24px;border:1px solid #eadfd2;border-radius:18px;background:rgba(255,253,249,.74);box-shadow:inset 0 1px 0 rgba(255,255,255,.84);}
+    .onboarding-card-icon{width:58px;height:58px;border-radius:17px;display:grid;place-items:center;background:#fff0e8;border:1px solid #f2d8ca;color:#ff5a1f;}
+    .onboarding-card-icon svg{width:28px;height:28px;stroke-width:1.9;}
+    .onboarding-card-title{font-size:1.08rem;font-weight:900;color:#30251f;}
+    .onboarding-card-copy{margin-top:4px;color:#8b7a70;line-height:1.4;font-size:.94rem;}
+    .onboarding-footer{grid-column:1 / -1;grid-row:2;display:flex;align-items:center;justify-content:space-between;padding-top:24px;z-index:2;}
+    .onboarding-steps{display:flex;align-items:center;gap:13px;}
+    .onboarding-step-list{display:flex;align-items:center;gap:13px;}
+    .onboarding-step{width:30px;height:30px;border:1px solid #eadfd2;border-radius:999px;background:#fffdf9;color:#6c5e54;font-size:.82rem;font-weight:800;display:grid;place-items:center;}
+    .onboarding-step.active{background:#ff6a2b;border-color:#ff6a2b;color:#fff;box-shadow:0 0 0 5px rgba(255,90,31,.12);}
+    .onboarding-step-line{width:30px;height:1px;background:#eadfd2;}
+    .onboarding-prev{width:42px;height:42px;border:1px solid #eadfd2;border-radius:14px;background:#fffaf6;color:#5f5148;display:grid;place-items:center;cursor:pointer;}
+    .onboarding-next{min-width:150px;height:54px;border:0;border-radius:14px;background:linear-gradient(135deg,#ff6a2b,#ff8d51);color:#fff;font-weight:900;display:inline-flex;align-items:center;justify-content:center;gap:12px;box-shadow:0 18px 34px rgba(255,90,31,.24);cursor:pointer;}
+    @media(max-width:980px){
+      .onboarding-tour{padding:14px;}
+      .onboarding-panel{width:min(720px,calc(100vw - 24px));min-height:0;max-height:calc(100dvh - 28px);grid-template-columns:1fr;gap:24px;padding:34px 26px 24px;overflow:auto;}
+      .onboarding-panel::after{left:26px;right:26px;bottom:84px;}
+      .onboarding-right{padding-top:0;}
+      .onboarding-footer{position:relative;left:auto;right:auto;bottom:auto;}
+      .onboarding-title{font-size:clamp(2.3rem,10vw,3.2rem);}
+      .onboarding-card{grid-template-columns:58px 1fr;padding:16px;gap:14px;}
+      .onboarding-card-icon{width:50px;height:50px;border-radius:14px;}
+    }
+    @media(max-width:560px){
+      .onboarding-panel{border-radius:20px;padding:28px 18px 22px;}
+      .onboarding-top-actions{top:18px;right:18px;}
+      .onboarding-kicker{margin-top:28px;}
+      .onboarding-card-copy{font-size:.86rem;}
+      .onboarding-steps{gap:8px;}
+      .onboarding-step-line{width:18px;}
+      .onboarding-next{min-width:132px;}
+    }
     #subj-modal-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:10px;overflow:visible;}
     #subj-modal-footer .btn-glass{flex:0 0 auto!important;min-height:42px;padding:9px 16px!important;white-space:nowrap;}
     #subj-modal-footer #btn-subj-add-new{padding-inline:22px!important;}
@@ -1625,6 +1674,29 @@
         <button class="auth-google" id="auth-google" type="button"><strong>G</strong><span>Entrar com Google</span></button>
       </form>
       <div class="auth-security"><i data-lucide="shield-check"></i><span>Seus dados estão protegidos<br>com criptografia de ponta.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="onboarding-tour" id="onboarding-tour" aria-hidden="true" aria-labelledby="onboarding-title" role="dialog" aria-modal="true">
+  <div class="onboarding-panel" tabindex="-1">
+    <div class="onboarding-top-actions">
+      <button class="onboarding-skip" type="button" data-onboarding-action="skip">Pular tour</button>
+      <button class="onboarding-close" type="button" aria-label="Fechar tour" data-onboarding-action="close"><i data-lucide="x"></i></button>
+    </div>
+    <div class="onboarding-left">
+      <div class="onboarding-kicker">Primeiro acesso</div>
+      <h2 class="onboarding-title" id="onboarding-title"></h2>
+      <p class="onboarding-lead" id="onboarding-lead"></p>
+      <p class="onboarding-copy" id="onboarding-copy"></p>
+    </div>
+    <div class="onboarding-right" id="onboarding-feature-list"></div>
+    <div class="onboarding-footer">
+      <div class="onboarding-steps">
+        <button class="onboarding-prev" type="button" aria-label="Passo anterior" data-onboarding-action="prev"><i data-lucide="arrow-left"></i></button>
+        <div class="onboarding-step-list" id="onboarding-step-list"></div>
+      </div>
+      <button class="onboarding-next" type="button" data-onboarding-action="next"><span id="onboarding-next-label">Pr&oacute;ximo</span><i data-lucide="arrow-right"></i></button>
     </div>
   </div>
 </section>
@@ -2621,9 +2693,36 @@ function sanitizeProfile(input){
     email: sanitizeText(safe.email || '', ''),
   };
 }
+function getSessionProfileFallback(session=AuthController?.getSession?.()){
+  const user = session?.user || {};
+  const meta = user.user_metadata || user.userMetadata || {};
+  const email = sanitizeText(user.email || session?.email || '', '');
+  const emailName = email.includes('@') ?email.split('@')[0] : '';
+  return sanitizeProfile({
+    id: user.id || session?.user_id || null,
+    fullName: meta.full_name || meta.fullName || '',
+    displayName: meta.display_name || meta.displayName || meta.name || meta.full_name || emailName || '',
+    studyGoal: meta.study_goal || meta.studyGoal || '',
+    email,
+  });
+}
+function mergeProfileForDisplay(remote={}, local={}, session=AuthController?.getSession?.()){
+  const fallback = getSessionProfileFallback(session);
+  const cloud = sanitizeProfile(remote);
+  const cached = sanitizeProfile(local);
+  return sanitizeProfile({
+    ...cached,
+    ...cloud,
+    id: cloud.id || cached.id || fallback.id,
+    fullName: cloud.fullName || cached.fullName || fallback.fullName,
+    displayName: cloud.displayName || cached.displayName || fallback.displayName,
+    studyGoal: cloud.studyGoal || cached.studyGoal || fallback.studyGoal,
+    email: cloud.email || cached.email || fallback.email,
+  });
+}
 function getProfileFirstName(){
   const profile = DataStoreLocal.settings.getProfile();
-  const name = sanitizeText(profile.displayName || '', '');
+  const name = sanitizeText(profile.displayName || profile.fullName || profile.email || '', '');
   return name ?name.split(/\s+/)[0] : '';
 }
 const NoteUIState = {
@@ -2848,6 +2947,7 @@ const STORAGE_KEYS = {
   theme: 'sf_theme',
   sidebarCollapsed: 'sf_sidebar_collapsed',
   analyticsEvents: 'sf_events',
+  onboardingSeen: 'sf_onboarding_seen',
   supabaseConfig: 'sf_supabase_config',
   supabaseSession: 'sf_supabase_session',
   userProfile: 'sf_user_profile',
@@ -3688,7 +3788,11 @@ const AuthController = {
     const result = await DataStoreSupabase.profiles.getCurrent();
     if(result.ok){
       const session = this.getSession();
-      const profile = {...result.data,email:session?.user?.email || ''};
+      const profile = mergeProfileForDisplay(
+        {...result.data,email:session?.user?.email || ''},
+        DataStoreLocal.settings.getProfile(),
+        session
+      );
       DataStoreLocal.settings.saveProfile(profile);
       if(profile.layout) DataStoreLocal.setRaw(STORAGE_KEYS.layout, profile.layout);
       DataStoreLocal.settings.saveExamDate(profile.examDate || null);
@@ -3697,7 +3801,9 @@ const AuthController = {
       DataStoreLocal.settings.saveActiveView(profile.activeView || 'dashboard');
       return result.data;
     }
-    return DataStoreLocal.settings.getProfile();
+    const fallback = mergeProfileForDisplay({}, DataStoreLocal.settings.getProfile(), this.getSession());
+    DataStoreLocal.settings.saveProfile(fallback);
+    return fallback;
   },
   async saveSignupProfile({fullName,displayName,studyGoal}){
     const result = await DataStoreSupabase.profiles.upsert({fullName,displayName,studyGoal});
@@ -3760,6 +3866,7 @@ const AuthController = {
         await DataStore.sync.pull();
         updateWorkspaceHeading(getActiveView());
         renderAll();
+        OnboardingTour.maybeOpen(this.mode === 'signup' ?350 : 650);
         toast(this.mode === 'signup' ?'Conta criada e conectada.' : 'Login realizado.');
       } else {
         this.setMessage('Conta criada. Confira seu e-mail para confirmar o acesso.', 'success');
@@ -3798,6 +3905,7 @@ const AuthController = {
           updateWorkspaceHeading(getActiveView());
           renderAll();
           applyDashboardLayoutFromStorage();
+          OnboardingTour.maybeOpen(850);
         })
         .catch(error=>console.warn('[StudyFlow] Falha ao restaurar sessão Supabase:', error));
     }
@@ -3862,7 +3970,7 @@ const DataStore = {
       if(!catalog.ok) return catalog;
       const profile = await DataStoreSupabase.profiles.getCurrent();
       if(profile.ok){
-        DataStoreLocal.settings.saveProfile({...DataStoreLocal.settings.getProfile(), ...profile.data});
+        DataStoreLocal.settings.saveProfile(mergeProfileForDisplay(profile.data, DataStoreLocal.settings.getProfile(), AuthController.getSession()));
         if(profile.data.layout) DataStoreLocal.setRaw(STORAGE_KEYS.layout, profile.data.layout);
         DataStoreLocal.settings.saveExamDate(profile.data.examDate || null);
         DataStoreLocal.setRaw(STORAGE_KEYS.theme, profile.data.theme === 'dark' ?'dark' : 'light');
@@ -4256,6 +4364,148 @@ function resetLocalDataForCleanSeedRequest(){
   const query = params.toString();
   window.history.replaceState(null, '', `${window.location.pathname}${query ?`?${query}` : ''}${window.location.hash}`);
 }
+
+const OnboardingTour = {
+  index: 0,
+  slides: [
+    {
+      title: 'Bem-vindo ao<span>COLISEU</span>',
+      lead: 'No seu primeiro acesso, conheça rapidamente tudo o que o app faz para organizar seus estudos para a PMMG.',
+      copy: 'Este tour apresenta as principais áreas do COLISEU em 4 telas. Em poucos cliques, você vai entender como usar cada recurso ao máximo.',
+      features: [
+        ['layout-dashboard','Dashboard inteligente','Visão completa do seu progresso, foco e recomendações diárias.'],
+        ['calendar-days','Agenda da semana','Planeje seus estudos e acompanhe sua constância dia após dia.'],
+        ['list-checks','Tarefas e rotina','Organize tarefas, crie hábitos e mantenha sua rotina de estudos em dia.'],
+        ['target','Sessões de foco','Use o cronômetro inteligente para manter o foco e elevar sua produtividade.'],
+      ],
+    },
+    {
+      title: 'Organize tudo<span>em um só lugar</span>',
+      lead: 'Agenda, matérias, tarefas e conteúdos reunidos em uma experiência simples e profissional.',
+      copy: 'Centralize sua rotina de estudos, acompanhe prazos, priorize o que importa e saiba exatamente o que fazer a cada dia.',
+      features: [
+        ['book-open','Matérias e conteúdos','Acompanhe seu progresso por matéria e retome de onde parou.'],
+        ['calendar','Agenda semanal','Visualize seus compromissos e sessões de estudo com clareza.'],
+        ['list-todo','Tarefas do dia','Veja o que precisa ser feito hoje e mantenha sua disciplina em dia.'],
+        ['file-text','Edital PMMG','O material da opção Edital PMMG é baseado no último edital do concurso.'],
+      ],
+    },
+    {
+      title: 'Estude com foco<span>e profundidade</span>',
+      lead: 'Ferramentas pensadas para manter ritmo, registrar aprendizados e reduzir distrações.',
+      copy: 'O COLISEU te ajuda a entrar em modo de foco, acompanhar suas sessões e registrar o que aprendeu de forma prática e organizada.',
+      features: [
+        ['timer','Pomodoro inteligente','Sessões com foco total, pausas e ciclos que funcionam.'],
+        ['notebook-pen','Anotação da sessão','Registre aprendizados e reflexões enquanto o conteúdo está fresco.'],
+        ['sparkles','Notebook LM','Resumos inteligentes e insights dos seus conteúdos de estudo.'],
+        ['smile','Humor e rotina','Acompanhe seu humor e crie hábitos que fortaleçam sua consistência.'],
+      ],
+    },
+    {
+      title: 'Acompanhe sua<span>evolução</span>',
+      lead: 'Veja seu desempenho, sua constância e seu progresso com clareza.',
+      copy: 'Acompanhe seu progresso mensal, analise seu desempenho semanal, mantenha sua constância com os dias seguidos e ajuste o layout da experiência do seu jeito.',
+      features: [
+        ['trending-up','Progresso mensal','Veja o quanto você já estudou no mês e seu percentual de progresso.'],
+        ['chart-line','Análise semanal','Compare seu tempo de estudo com a semana anterior e identifique sua evolução.'],
+        ['flame','Dias seguidos','Acompanhe sua sequência de estudos e mantenha a constância.'],
+        ['grid-2x2','Layout personalizável','Adapte os blocos e informações do dashboard para sua rotina e preferências.'],
+      ],
+    },
+  ],
+  userKey(){
+    const session = AuthController.getSession?.();
+    const user = session?.user || {};
+    return `${STORAGE_KEYS.onboardingSeen}:${user.id || user.email || 'local'}`;
+  },
+  hasSeen(){
+    return DataStoreLocal.getRaw(this.userKey(), false) === true;
+  },
+  markSeen(){
+    DataStoreLocal.setRaw(this.userKey(), true);
+  },
+  maybeOpen(delay=700){
+    if(!AuthController.isAuthenticated?.() || this.hasSeen()) return;
+    window.setTimeout(()=>this.open(), delay);
+  },
+  open(){
+    if(!AuthController.isAuthenticated?.()) return;
+    this.index = 0;
+    this.render();
+    const root = document.getElementById('onboarding-tour');
+    if(!root) return;
+    root.classList.add('open');
+    root.setAttribute('aria-hidden','false');
+    document.body.classList.add('onboarding-open');
+    setTimeout(()=>root.querySelector('.onboarding-panel')?.focus(), 0);
+  },
+  close({seen=true}={}){
+    if(seen) this.markSeen();
+    const root = document.getElementById('onboarding-tour');
+    root?.classList.remove('open');
+    root?.setAttribute('aria-hidden','true');
+    document.body.classList.remove('onboarding-open');
+  },
+  next(){
+    if(this.index >= this.slides.length - 1){
+      this.close({seen:true});
+      toast('Tour concluído. Bom estudo.');
+      return;
+    }
+    this.index += 1;
+    this.render();
+  },
+  prev(){
+    this.index = Math.max(0, this.index - 1);
+    this.render();
+  },
+  render(){
+    const slide = this.slides[this.index] || this.slides[0];
+    const title = document.getElementById('onboarding-title');
+    const lead = document.getElementById('onboarding-lead');
+    const copy = document.getElementById('onboarding-copy');
+    const list = document.getElementById('onboarding-feature-list');
+    const steps = document.getElementById('onboarding-step-list');
+    const nextLabel = document.getElementById('onboarding-next-label');
+    const prev = document.querySelector('[data-onboarding-action="prev"]');
+    if(title) title.innerHTML = slide.title;
+    if(lead) lead.textContent = slide.lead;
+    if(copy) copy.textContent = slide.copy;
+    if(list) list.innerHTML = slide.features.map(([icon,title,body])=>`
+      <article class="onboarding-card">
+        <div class="onboarding-card-icon"><i data-lucide="${icon}"></i></div>
+        <div><div class="onboarding-card-title">${title}</div><div class="onboarding-card-copy">${body}</div></div>
+      </article>
+    `).join('');
+    if(steps) steps.innerHTML = this.slides.map((_,idx)=>`${idx ?'<span class="onboarding-step-line"></span>' : ''}<button class="onboarding-step${idx===this.index ?' active' : ''}" type="button" data-onboarding-step="${idx}" aria-label="Ir para o passo ${idx+1}" aria-current="${idx===this.index ?'step' : 'false'}">${idx+1}</button>`).join('');
+    if(nextLabel) nextLabel.textContent = this.index === this.slides.length - 1 ?'Começar agora' : 'Próximo';
+    if(prev) prev.disabled = this.index === 0;
+    lucide.createIcons({nodes:document.getElementById('onboarding-tour')?.querySelectorAll('[data-lucide]')});
+  },
+  bind(){
+    document.querySelectorAll('[data-onboarding-action]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const action = btn.dataset.onboardingAction;
+        if(action === 'next') this.next();
+        if(action === 'prev') this.prev();
+        if(action === 'skip' || action === 'close') this.close({seen:true});
+      });
+    });
+    document.getElementById('onboarding-step-list')?.addEventListener('click',event=>{
+      const btn = event.target.closest('[data-onboarding-step]');
+      if(!btn) return;
+      this.index = Math.max(0, Math.min(this.slides.length - 1, Number(btn.dataset.onboardingStep) || 0));
+      this.render();
+    });
+    document.addEventListener('keydown',event=>{
+      const open = document.getElementById('onboarding-tour')?.classList.contains('open');
+      if(!open) return;
+      if(event.key === 'Escape') this.close({seen:true});
+      if(event.key === 'ArrowRight') this.next();
+      if(event.key === 'ArrowLeft') this.prev();
+    });
+  },
+};
 
 /* MODAL */
 
@@ -6777,7 +7027,7 @@ function initEventBindings(){
   });
   initSidebarInteractions();
   initThemeMode();
-  on('btn-notifications','click',()=>toast('Sem notificações no momento.'));
+  on('btn-notifications','click',()=>OnboardingTour.open());
   on('topbar-period-pill','click',()=>{
     WorkspaceState.agendaMonthOffset = 0;
     setActiveView('agenda');
@@ -7197,6 +7447,7 @@ safeCall(()=>seedIfEmpty(), 'startup:seedIfEmpty');
 safeCall(()=>migrateAppData(), 'startup:migrateAppData');
 safeCall(()=>migrateSubjectsEncoding(), 'startup:migrateSubjectsEncoding');
 safeCall(()=>Pomo.init(), 'startup:Pomo.init');
+safeCall(()=>OnboardingTour.bind(), 'startup:OnboardingTour.bind');
 safeCall(()=>AuthController.init(), 'startup:AuthController.init');
 safeCall(()=>lucide.createIcons(), 'startup:lucide.createIcons');
 safeCall(()=>initEventBindings(), 'startup:initEventBindings');
