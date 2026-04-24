@@ -2569,6 +2569,10 @@ function sanitizeProfile(input){
     fullName: sanitizeText(safe.fullName || safe.full_name || '', ''),
     displayName: sanitizeText(safe.displayName || safe.display_name || '', ''),
     studyGoal: sanitizeText(safe.studyGoal || safe.study_goal || '', ''),
+    activeView: VIEW_IDS.includes(safe.activeView || safe.active_view) ?(safe.activeView || safe.active_view) : 'dashboard',
+    theme: (safe.theme === 'dark' || safe.theme === 'light') ?safe.theme : 'light',
+    sidebarCollapsed: !!(safe.sidebarCollapsed ?? safe.sidebar_collapsed),
+    layout: Array.isArray(safe.layout) ?safe.layout : null,
     email: sanitizeText(safe.email || '', ''),
   };
 }
@@ -3007,13 +3011,17 @@ const DataStoreSupabase = {
         full_name: row?.full_name || '',
         display_name: row?.display_name || '',
         study_goal: row?.study_goal || '',
+        active_view: row?.active_view || 'dashboard',
+        theme: row?.theme || 'light',
+        sidebar_collapsed: !!row?.sidebar_collapsed,
+        layout: Array.isArray(row?.layout) ?row.layout : null,
       });
     },
     async getCurrent(){
       const session = DataStoreLocal.getRaw(STORAGE_KEYS.supabaseSession, null);
       const userId = sanitizeText(session?.user?.id || '', '');
       if(!userId) return {ok:false,reason:'supabase-auth-required'};
-      const result = await DataStoreSupabase.request(`profiles?id=eq.${encodeURIComponent(userId)}&select=id,full_name,display_name,study_goal&limit=1`);
+      const result = await DataStoreSupabase.request(`profiles?id=eq.${encodeURIComponent(userId)}&select=id,full_name,display_name,study_goal,active_view,theme,sidebar_collapsed,layout&limit=1`);
       if(!result.ok) return result;
       return {ok:true,data:this.map((Array.isArray(result.data) ?result.data[0] : null) || {id:userId})};
     },
@@ -3030,10 +3038,31 @@ const DataStoreSupabase = {
           full_name:safe.fullName,
           display_name:safe.displayName,
           study_goal:safe.studyGoal,
+          active_view:safe.activeView,
+          theme:safe.theme,
+          sidebar_collapsed:safe.sidebarCollapsed,
+          layout:safe.layout,
         }),
       });
       if(!result.ok) return result;
       return {ok:true,data:this.map((Array.isArray(result.data) ?result.data[0] : null) || {id:userId,full_name:safe.fullName,display_name:safe.displayName,study_goal:safe.studyGoal})};
+    },
+    async syncPreferences(){
+      if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
+      const userId = DataStoreSupabase.getUserId();
+      if(!userId) return DataStoreSupabase.fail();
+      const result = await DataStoreSupabase.request('profiles', {
+        method:'POST',
+        headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
+        body:JSON.stringify({
+          id:userId,
+          active_view: DataStoreLocal.settings.getActiveView(),
+          theme: DataStoreLocal.getRaw(STORAGE_KEYS.theme, 'light') === 'dark' ?'dark' : 'light',
+          sidebar_collapsed: !!DataStoreLocal.getRaw(STORAGE_KEYS.sidebarCollapsed, false),
+          layout: DataStoreLocal.getRaw(STORAGE_KEYS.layout, null),
+        }),
+      });
+      return result.ok ?{ok:true} : result;
     },
   },
   progress: {
@@ -3512,7 +3541,12 @@ const AuthController = {
     const result = await DataStoreSupabase.profiles.getCurrent();
     if(result.ok){
       const session = this.getSession();
-      DataStoreLocal.settings.saveProfile({...result.data,email:session?.user?.email || ''});
+      const profile = {...result.data,email:session?.user?.email || ''};
+      DataStoreLocal.settings.saveProfile(profile);
+      if(profile.layout) DataStoreLocal.setRaw(STORAGE_KEYS.layout, profile.layout);
+      DataStoreLocal.setRaw(STORAGE_KEYS.theme, profile.theme === 'dark' ?'dark' : 'light');
+      DataStoreLocal.setRaw(STORAGE_KEYS.sidebarCollapsed, !!profile.sidebarCollapsed);
+      DataStoreLocal.settings.saveActiveView(profile.activeView || 'dashboard');
       return result.data;
     }
     return DataStoreLocal.settings.getProfile();
@@ -3615,6 +3649,7 @@ const AuthController = {
         .then(()=>{
           updateWorkspaceHeading(getActiveView());
           renderAll();
+          applyDashboardLayoutFromStorage();
         })
         .catch(error=>console.warn('[StudyFlow] Falha ao restaurar sessão Supabase:', error));
     }
@@ -3657,12 +3692,23 @@ const DataStore = {
       .then(result=>DataStoreSupabase.reportWriteFailure(result, label))
       .catch(error=>DataStoreSupabase.reportWriteFailure({ok:false,reason:error?.message || String(error)}, label));
   },
+  syncProfilePreferences(){
+    this.cloudWrite('preferências do painel', ()=>DataStoreSupabase.profiles.syncPreferences());
+  },
   sync: {
     async pull(){
       if(!DataStoreSupabase.isReady()) return {ok:true,mode:'local',reason:'supabase-not-ready'};
       const catalog = await DataStoreSupabase.catalog.getSubjects();
       if(catalog.ok && catalog.data.length) DataStoreLocal.subjects.saveAll(catalog.data);
       if(!catalog.ok) return catalog;
+      const profile = await DataStoreSupabase.profiles.getCurrent();
+      if(profile.ok){
+        DataStoreLocal.settings.saveProfile({...DataStoreLocal.settings.getProfile(), ...profile.data});
+        if(profile.data.layout) DataStoreLocal.setRaw(STORAGE_KEYS.layout, profile.data.layout);
+        DataStoreLocal.setRaw(STORAGE_KEYS.theme, profile.data.theme === 'dark' ?'dark' : 'light');
+        DataStoreLocal.setRaw(STORAGE_KEYS.sidebarCollapsed, !!profile.data.sidebarCollapsed);
+        DataStoreLocal.settings.saveActiveView(profile.data.activeView || 'dashboard');
+      }
       const progress = await DataStoreSupabase.progress.list();
       if(progress.ok) DataStoreLocal.subjects.saveAll(DataStoreSupabase.progress.apply(DataStoreLocal.subjects.getAll(), progress.data));
       const [tasks,schedule,sessions,notes,moods,pomo] = await Promise.all([
@@ -3719,7 +3765,10 @@ const AppDB = {
   _get(k,fb){
     return DataStoreLocal.getRaw(k,fb);
   },
-  _set(k,v){ DataStoreLocal.setRaw(k,v); },
+  _set(k,v){
+    DataStoreLocal.setRaw(k,v);
+    if([STORAGE_KEYS.layout, STORAGE_KEYS.theme, STORAGE_KEYS.sidebarCollapsed].includes(k)) DataStore.syncProfilePreferences();
+  },
   getSubjects() {
     return DataStoreLocal.subjects.getAll();
   },
@@ -3780,7 +3829,10 @@ const AppDB = {
     DataStore.cloudWrite('pomodoro', ()=>DataStoreSupabase.pomodoro.upsert(DataStoreLocal.settings.getPomoState()));
   },
   saveExamDate(v){ DataStoreLocal.settings.saveExamDate(v); },
-  saveActiveView(v){ DataStoreLocal.settings.saveActiveView(v); },
+  saveActiveView(v){
+    DataStoreLocal.settings.saveActiveView(v);
+    DataStore.syncProfilePreferences();
+  },
 };
 
 /* AppStats */
@@ -5810,8 +5862,18 @@ function fillLinkedTopicSelect(select, subjectId, preferredTopicId=null, allowEm
   select.value = preferred?.id || '';
   return select.value || null;
 }
+function ensureSubjectsAvailableForAction(){
+  const current = AppDB.getSubjects();
+  if(current.length) return current;
+  const fallback = getPMMGSubjects();
+  DataStoreLocal.subjects.saveAll(fallback);
+  DataStore.sync.pull()
+    .then(()=>{ renderSubjectGrid(); renderGoals(); renderSchedule(); renderTasks(); renderNextSession(); refreshWorkspaceView(); })
+    .catch(error=>console.warn('[StudyFlow] Falha ao recarregar catálogo Supabase:', error));
+  return fallback;
+}
 function openPomoModal(options={}){
-  const subjects=AppDB.getSubjects();
+  const subjects=ensureSubjectsAvailableForAction();
   const preferredSubjectId = options.subjectId || null;
   const preferredTopicId = options.topicId || null;
   const forceExplicitTopicChoice = options.forceExplicitTopicChoice !== false;
@@ -5852,7 +5914,7 @@ function openPomoModal(options={}){
 let _editingScheduleId = null;
 function openScheduleModal(options={}){
   const {eventId=null,prefillDate=null,prefillDayOfWeek=null,prefillTime='08:00'} = options;
-  const subjects=AppDB.getSubjects();
+  const subjects=ensureSubjectsAvailableForAction();
   if(!subjects.length){ toast('Adicione uma matéria antes de criar uma sessão.'); return; }
   const sel=document.getElementById('sched-form-subject');
   const topicSel=document.getElementById('sched-form-topic');
@@ -5896,9 +5958,13 @@ function openScheduleModal(options={}){
 }
 
 function openAddTaskModal(preSubjectId){
-  const subjects=AppDB.getSubjects();
+  const subjects=ensureSubjectsAvailableForAction();
   const sel=document.getElementById('task-form-subject');
   const topicSel=document.getElementById('task-form-topic');
+  if(!subjects.length){
+    toast('Carregando matérias do edital. Tente novamente em instantes.');
+    return;
+  }
   sel.innerHTML=subjects.map(s=>`<option value="${s.id}"${s.id===preSubjectId ?' selected' : ''}>${s.icon} ${esc(s.name)}</option>`).join('');
   fillLinkedTopicSelect(topicSel, sel.value, null, true);
   sel.onchange=()=>fillLinkedTopicSelect(topicSel, sel.value, null, true);
@@ -6773,6 +6839,7 @@ function getInitialDashboardLayout(saved){
   const currentVersion = AppDB._get('sf_dashboard_layout_version', null);
   if(currentVersion !== layoutVersion){
     AppDB._set('sf_dashboard_layout_version', layoutVersion);
+    if(Array.isArray(saved) && saved.length) return sanitizeDashboardLayout(saved);
     AppDB._set('sf_layout', DEFAULT_LAYOUT);
     return DEFAULT_LAYOUT;
   }
@@ -6793,6 +6860,18 @@ function sanitizeDashboardLayout(layout){
   const hero = cleaned.find(item=>item.id==='hero');
   if(!hasAllExpected || !hero || Number(hero.w) < 10) return DEFAULT_LAYOUT;
   return cleaned;
+}
+function applyDashboardLayoutFromStorage(){
+  if(!gsGrid) return;
+  const saved = DataStoreLocal.getRaw(STORAGE_KEYS.layout, null);
+  if(!Array.isArray(saved) || !saved.length) return;
+  const layout = sanitizeDashboardLayout(saved);
+  try{
+    gsGrid.load(layout, false);
+    DataStoreLocal.setRaw(STORAGE_KEYS.layout, gsGrid.save(false));
+  } catch(error){
+    console.warn('[StudyFlow] Não foi possível aplicar layout salvo.', error);
+  }
 }
 
 function initGrid(){
