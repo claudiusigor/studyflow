@@ -356,6 +356,15 @@
     body.modal-open{overflow:hidden;}
     .modal-title{font-size:1rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--s6);}
     .modal-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:var(--s6);}
+    .confirm-modal-card{max-width:420px;border-top-color:#ff5a1f!important;background:linear-gradient(180deg,#fffdf9,#fff7ef)!important;color:#241a14!important;box-shadow:0 28px 90px rgba(36,26,20,.28);}
+    .confirm-modal-kicker{display:inline-flex;align-items:center;gap:8px;margin-bottom:12px;font-size:.68rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#a95a2e;}
+    .confirm-modal-kicker i{width:15px;height:15px;}
+    .confirm-modal-title{font-family:Georgia,'Times New Roman',serif;font-size:1.42rem;line-height:1.08;font-weight:900;letter-spacing:-.04em;margin:0 0 10px;color:#241a14;text-wrap:balance;}
+    .confirm-modal-copy{font-size:.9rem;line-height:1.55;color:#765f4e;margin:0;}
+    .confirm-modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;}
+    .confirm-modal-actions .btn-glass{border-radius:12px;min-height:42px;flex:0 0 auto;}
+    .btn-danger-soft{background:#fff2e9;border-color:#f0c7ad;color:#9d3d18;}
+    .btn-danger-soft:hover{background:#ff5a1f;border-color:#ff5a1f;color:#fff;}
     .field{display:flex;flex-direction:column;gap:6px;margin-bottom:var(--s4);}
     .field label{font-size:0.7rem;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:0.05em;}
     .field input,.field select,.field textarea{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--r3);padding:10px 14px;color:var(--t1);font-family:inherit;font-size:0.85rem;outline:none;transition:border-color 150ms var(--ease),box-shadow 150ms var(--ease);}
@@ -703,7 +712,7 @@
     body.sidebar-collapsed .switch{margin-left:0;--sizeVar:1.65em;}
     body.theme-dark .theme-switch-row:hover{background:#2d211a;color:var(--t1);}
     body.theme-dark{--bg-base:#11100f;--surface:#1b1714;--surface-strong:#231c17;--glass-border:#382a22;--t1:#fff4e8;--t2:#cdb9a6;--t3:#9b7e68;--shadow-card:0 24px 70px rgba(0,0,0,.34);--shadow-card-hov:0 30px 85px rgba(0,0,0,.42);}
-    body.theme-dark{background:radial-gradient(circle at 52% 0%,rgba(255,90,31,.22),transparent 34%),linear-gradient(135deg,#0f0d0c 0%,#1b1512 48%,#27170f 100%);color:var(--t1);}
+    body.theme-dark{background:radial-gradient(circle at 52% 0%,rgba(255,90,31,.22),transparent 34%),linear-gradient(135deg,#0f0d0c 0%,#1b1512 48%,#27170f 100%);color:var(--t1);color-scheme:dark;}
     body.theme-dark .scene{background:#0f0d0c;}
     body.theme-dark .scene::before{background:linear-gradient(90deg,rgba(255,146,79,.08) 1px,transparent 1px),linear-gradient(180deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:48px 48px;}
     body.theme-dark .app-sidebar,body.theme-dark .topbar{background:rgba(28,22,18,.86);border-color:rgba(75,55,43,.9);box-shadow:0 24px 80px rgba(0,0,0,.28);}
@@ -726,6 +735,12 @@
     body.theme-dark .modal-card{background:#1b1714;border-color:#3b2b23;border-top-color:#ff5a1f;color:var(--t1);}
     body.theme-dark .field input,body.theme-dark .field select,body.theme-dark .field textarea{background:#241b16;border-color:#3b2b23;color:var(--t1);}
     body.theme-dark .field select option{background:#1b1714;color:var(--t1);}
+    body.theme-dark .confirm-modal-card{background:linear-gradient(180deg,#211812,#17110e)!important;border-color:#3b2b23!important;border-top-color:#ff7a3d!important;color:#fff4e8!important;box-shadow:0 30px 90px rgba(0,0,0,.52);}
+    body.theme-dark .confirm-modal-title{color:#fff4e8;}
+    body.theme-dark .confirm-modal-copy{color:#c6a58b;}
+    body.theme-dark .confirm-modal-kicker{color:#ff9b64;}
+    body.theme-dark .btn-danger-soft{background:#2f1f18;border-color:#653421;color:#ffad86;}
+    body.theme-dark .btn-danger-soft:hover{background:#ff5a1f;border-color:#ff5a1f;color:#fff;}
     body.theme-dark .switch{
       --color-primary:#3b2b23;
       --color-secondary:#8c7463;
@@ -1172,6 +1187,11 @@
     #workspaceView [data-workspace] .workspace-row-actions .nav-btn:hover{background:#fff2e5;border-color:#efd9c7;}
     #workspaceView [data-workspace] .workspace-empty,
     #workspaceView [data-workspace] .subject-placeholder-panel{border-radius:16px;background:transparent;border-color:#eadfd2;padding:24px;}
+    #workspaceView [data-workspace] .workspace-empty{position:relative;padding:30px 32px 30px 48px;line-height:1.5;color:var(--t2);}
+    #workspaceView [data-workspace] .workspace-empty::before{content:'';position:absolute;left:24px;top:31px;width:7px;height:44px;border-radius:999px;background:#ff5a1f;opacity:.72;}
+    #workspaceView [data-workspace] .workspace-empty strong{font-family:Georgia,'Times New Roman',serif;font-size:1.08rem;letter-spacing:-.03em;color:var(--t1);}
+    #workspaceView [data-workspace] .subject-placeholder-panel{padding:32px;line-height:1.5;color:var(--t2);}
+    #workspaceView [data-workspace] .subject-placeholder-panel strong{display:block;margin-bottom:6px;font-family:Georgia,'Times New Roman',serif;font-size:1.12rem;letter-spacing:-.03em;color:var(--t1);}
 
     #workspaceView [data-workspace="agenda"] .workspace-screen-body{margin-top:18px;border-radius:24px;padding:24px;background:rgba(255,253,249,.68);box-shadow:none;}
     #workspaceView [data-workspace="agenda"] .workspace-screen-body .workspace-filter-row{border-bottom:1px solid var(--subtle-line);padding-bottom:10px;margin-bottom:18px!important;}
@@ -1289,6 +1309,14 @@
     body.theme-dark #workspaceView [data-workspace="subjects"] .topic-filter-select::after{border-color:#ffb088;}
     body.theme-dark #workspaceView [data-workspace="subjects"] .topic-filter-select select option{background:#1b1714!important;color:#fff4e8!important;}
     body.theme-dark #workspaceView [data-workspace="subjects"] .topic-filter-select select option:checked{background:#ff5a1f!important;color:#fff!important;}
+    body.theme-dark #workspaceView [data-workspace] .workspace-empty,
+    body.theme-dark #workspaceView [data-workspace] .subject-placeholder-panel{background:rgba(23,18,15,.36);border-color:#3a2b23;color:#c6a58b;}
+    body.theme-dark #workspaceView [data-workspace] .workspace-empty::before{background:#ff7a3d;opacity:.82;}
+    body.theme-dark #workspaceView [data-workspace] .workspace-empty strong,
+    body.theme-dark #workspaceView [data-workspace] .subject-placeholder-panel strong{color:#fff4e8;}
+    body.theme-dark #workspaceView [data-workspace] .workspace-pill{background:#241b16;border-color:#3b2b23;color:#e5c0a4;}
+    body.theme-dark #workspaceView [data-workspace] .workspace-row-actions .nav-btn{background:#211812;border-color:#3b2b23;color:#b99a84;}
+    body.theme-dark #workspaceView [data-workspace] .workspace-row-actions .nav-btn:hover{background:#32231c;border-color:#65422f;color:#fff4e8;}
 
     /* Submenu breathing pass: keep flatter hierarchy, restore professional spacing */
     #workspaceView [data-workspace] .workspace-hero{gap:26px;margin-bottom:30px;}
@@ -1743,8 +1771,8 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn-glass secondary" style="flex:none;padding:9px 20px;" onclick="Modal.close('modal-pomo-subject')">Cancelar</button>
-      <button class="btn-glass primary" style="flex:none;padding:9px 24px;" id="btn-pomo-start-confirm">Iniciar Sessão</button>
+      <button class="btn-glass secondary" style="flex:none;padding:9px 20px;" id="btn-pomo-cancel" data-testid="modal-pomo-cancel" onclick="Modal.close('modal-pomo-subject')">Cancelar</button>
+      <button class="btn-glass primary" style="flex:none;padding:9px 24px;" id="btn-pomo-start-confirm" data-testid="modal-pomo-start">Iniciar Sessão</button>
     </div>
   </div>
 </div>
@@ -1770,8 +1798,8 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
     </div>
     <div class="field"><label for="sched-form-label">Descrição (opcional)</label><input type="text" id="sched-form-label" placeholder="Ex: Capítulo 5  -  Integrais"></div>
     <div class="modal-footer">
-      <button class="btn-glass secondary" style="flex:none;padding:9px 20px;" onclick="Modal.close('modal-schedule')">Cancelar</button>
-      <button class="btn-glass primary" style="flex:none;padding:9px 24px;" id="btn-sched-save">Salvar</button>
+      <button class="btn-glass secondary" style="flex:none;padding:9px 20px;" id="btn-sched-cancel" data-testid="modal-schedule-cancel" onclick="Modal.close('modal-schedule')">Cancelar</button>
+      <button class="btn-glass primary" style="flex:none;padding:9px 24px;" id="btn-sched-save" data-testid="modal-schedule-save">Salvar</button>
     </div>
   </div>
 </div>
@@ -1784,8 +1812,8 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
     <div class="field"><label for="task-form-topic">Conteúdo vinculado</label><select id="task-form-topic"></select></div>
     <div class="field"><label for="task-form-title">Título da tarefa</label><input type="text" id="task-form-title" placeholder="Ex: Resolver exercícios cap. 4"></div>
     <div class="modal-footer">
-      <button class="btn-glass secondary" style="flex:none;padding:9px 20px;" onclick="Modal.close('modal-add-task')">Cancelar</button>
-      <button class="btn-glass primary" style="flex:none;padding:9px 24px;" id="btn-task-save">Adicionar</button>
+      <button class="btn-glass secondary" style="flex:none;padding:9px 20px;" id="btn-task-cancel" data-testid="modal-task-cancel" onclick="Modal.close('modal-add-task')">Cancelar</button>
+      <button class="btn-glass primary" style="flex:none;padding:9px 24px;" id="btn-task-save" data-testid="modal-task-save">Adicionar</button>
     </div>
   </div>
 </div>
@@ -1812,7 +1840,7 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn-glass primary" style="flex:none;padding:9px 24px;" id="btn-note-save">Concluir</button>
+      <button class="btn-glass primary" style="flex:none;padding:9px 24px;" id="btn-note-save" data-testid="modal-note-save">Concluir</button>
     </div>
   </div>
 </div>
@@ -1824,8 +1852,8 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
     <div class="field"><label for="exam-date-input">Data do Concurso</label><input type="date" id="exam-date-input"></div>
     <p style="font-size:0.78rem;color:var(--t2);margin-top:-8px">Defina a data para acompanhar a contagem regressiva no topo.</p>
     <div class="modal-footer">
-      <button class="btn-glass secondary" style="flex:none;padding:9px 20px;" onclick="Modal.close('modal-exam-date')">Cancelar</button>
-      <button class="btn-glass primary" style="flex:none;padding:9px 24px;" id="btn-exam-date-save">Salvar</button>
+      <button class="btn-glass secondary" style="flex:none;padding:9px 20px;" id="btn-exam-date-cancel" data-testid="modal-exam-date-cancel" onclick="Modal.close('modal-exam-date')">Cancelar</button>
+      <button class="btn-glass primary" style="flex:none;padding:9px 24px;" id="btn-exam-date-save" data-testid="modal-exam-date-save">Salvar</button>
     </div>
   </div>
 </div>
@@ -1855,7 +1883,7 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
     </div>
     <div class="modal-footer" id="subj-modal-footer">
       <input type="file" id="import-json-file" accept="application/json" style="display:none" />
-      <button class="btn-glass secondary" style="flex:none;padding:9px 20px;" onclick="Modal.close('modal-subjects')">Fechar</button>
+      <button class="btn-glass secondary" style="flex:none;padding:9px 20px;" id="btn-subjects-close" data-testid="modal-subjects-close" onclick="Modal.close('modal-subjects')">Fechar</button>
       <button class="btn-glass secondary" style="flex:none;padding:9px 18px;" id="btn-export-json">Exportar dados</button>
       <button class="btn-glass secondary" style="flex:none;padding:9px 18px;" id="btn-import-json">Importar dados</button>
       <button class="btn-glass secondary" style="flex:none;padding:9px 18px;" id="btn-export-events">Exportar eventos</button>
@@ -1884,7 +1912,20 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
     </div>
     <div class="mood-cal-grid" id="mood-calendar-grid"></div>
     <div class="modal-footer" style="margin-top:20px;">
-      <button class="btn-glass secondary" style="flex:1" onclick="Modal.close('modal-mood')">Fechar calendário</button>
+      <button class="btn-glass secondary" style="flex:1" id="btn-mood-close" data-testid="modal-mood-close" onclick="Modal.close('modal-mood')">Fechar calendário</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm destructive action -->
+<div id="modal-confirm-delete" class="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-delete-title" aria-hidden="true">
+  <div class="modal-card confirm-modal-card" tabindex="-1">
+    <div class="confirm-modal-kicker"><i data-lucide="shield-alert" aria-hidden="true"></i><span>Confirmar exclusão</span></div>
+    <h2 class="confirm-modal-title" id="confirm-delete-title">Excluir item?</h2>
+    <p class="confirm-modal-copy" id="confirm-delete-copy">Esta ação remove o item da sua base local.</p>
+    <div class="confirm-modal-actions">
+      <button class="btn-glass secondary" type="button" id="btn-confirm-cancel" data-testid="confirm-delete-cancel">Cancelar</button>
+      <button class="btn-glass btn-danger-soft" type="button" id="btn-confirm-delete" data-testid="confirm-delete-accept">Excluir</button>
     </div>
   </div>
 </div>
@@ -2863,6 +2904,7 @@ const Modal = {
     this._lastFocus=document.activeElement;
     modal.classList.add('open');
     modal.setAttribute('aria-hidden','false');
+    modal.removeAttribute('inert');
     document.getElementById('modal-overlay').classList.add('active');
     document.body.classList.add('modal-open');
     const first=modal.querySelector(FOCUSABLE_SEL) || modal.querySelector('.modal-card');
@@ -2873,6 +2915,12 @@ const Modal = {
     if(!modal)return;
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden','true');
+    modal.setAttribute('inert','');
+    if(id==='modal-confirm-delete' && window.ConfirmDialog?.pending){
+      const resolve = window.ConfirmDialog.pending;
+      window.ConfirmDialog.pending = null;
+      resolve(false);
+    }
     const anyOpen=[...document.querySelectorAll('.modal.open')].length>0;
     if(!anyOpen){
       document.getElementById('modal-overlay').classList.remove('active');
@@ -2882,7 +2930,12 @@ const Modal = {
     }
   },
   closeAll(){
-    document.querySelectorAll('.modal.open').forEach(m=>{m.classList.remove('open');m.setAttribute('aria-hidden','true');});
+    if(window.ConfirmDialog?.pending){
+      const resolve = window.ConfirmDialog.pending;
+      window.ConfirmDialog.pending = null;
+      resolve(false);
+    }
+    document.querySelectorAll('.modal.open').forEach(m=>{m.classList.remove('open');m.setAttribute('aria-hidden','true');m.setAttribute('inert','');});
     document.getElementById('modal-overlay').classList.remove('active');
     document.body.classList.remove('modal-open');
     if(this._lastFocus && document.contains(this._lastFocus)) this._lastFocus.focus();
@@ -2899,6 +2952,31 @@ const Modal = {
     else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus();}
   },
 };
+
+window.ConfirmDialog = {
+  pending:null,
+  open({title='Excluir item?', copy='Esta ação remove o item da sua base local.', confirmLabel='Excluir'}={}){
+    if(this.pending) this.pending(false);
+    document.getElementById('confirm-delete-title').textContent = title;
+    document.getElementById('confirm-delete-copy').textContent = copy;
+    document.getElementById('btn-confirm-delete').textContent = confirmLabel;
+    return new Promise(resolve=>{
+      this.pending = resolve;
+      Modal.open('modal-confirm-delete');
+      lucide.createIcons({nodes:document.getElementById('modal-confirm-delete').querySelectorAll('[data-lucide]')});
+    });
+  },
+  settle(value){
+    const resolve = this.pending;
+    this.pending = null;
+    Modal.close('modal-confirm-delete');
+    if(resolve) resolve(!!value);
+  }
+};
+
+function confirmDestructiveAction(options){
+  return window.ConfirmDialog.open(options);
+}
 
 /* POMODORO */
 
@@ -4103,7 +4181,7 @@ function buildSubjectDetailWorkspace(subject){
       </div>`
     : `<div class="subject-placeholder-panel"><strong>${activeTab==='stats'?'Estatísticas':activeTab==='questions'?'Questões':'Revisões'} em preparação</strong>Esta área já está estruturada para a próxima evolução do módulo.</div>`;
 
-  return `<section class="subject-detail-shell" data-workspace="subjects" data-subject-detail="${subject.id}">
+  return `<section class="subject-detail-shell" data-subject-detail="${subject.id}">
     <div class="subject-detail-head">
       <div>
         <button class="subject-back-btn" type="button" data-action="subject-back"><i data-lucide="chevron-left"></i><span>Voltar</span></button>
@@ -4970,7 +5048,7 @@ function initSidebarInteractions(){
   });
 }
 
-function handleWorkspaceAction(action, button){
+async function handleWorkspaceAction(action, button){
   if(!action) return;
   const subjectId = button.dataset.subjectId || button.dataset.subjectId || null;
   switch(action){
@@ -5002,7 +5080,11 @@ function handleWorkspaceAction(action, button){
       openScheduleModal({eventId: button.dataset.id});
       return;
     case 'agenda-delete':
-      deleteScheduleEvent(button.dataset.id);
+      if(await confirmDestructiveAction({
+        title:'Excluir evento da agenda?',
+        copy:'A sessão será removida da agenda local. Essa ação não apaga matérias nem conteúdos vinculados.',
+        confirmLabel:'Excluir evento'
+      })) deleteScheduleEvent(button.dataset.id);
       return;
     case 'agenda-filter':
       WorkspaceState.agendaFilter = button.dataset.filter || 'upcoming';
@@ -5024,7 +5106,11 @@ function handleWorkspaceAction(action, button){
       toggleTask(button.dataset.id);
       return;
     case 'tasks-delete':
-      deleteTask(button.dataset.id);
+      if(await confirmDestructiveAction({
+        title:'Excluir tarefa?',
+        copy:'A tarefa será removida da fila local. Conteúdos e matérias vinculados serão preservados.',
+        confirmLabel:'Excluir tarefa'
+      })) deleteTask(button.dataset.id);
       return;
     case 'pomodoro-start-flow':
     case 'pomodoro-open-modal':
@@ -5141,14 +5227,19 @@ function initEventBindings(){
   const byId = id => document.getElementById(id);
   const on = (id, event, handler) => byId(id)?.addEventListener(event, e => safeCall(()=>handler(e), `event:${id}:${event}`));
   const onNode = (node, event, handler, context) => node?.addEventListener(event, e => safeCall(()=>handler(e), context));
+  document.querySelectorAll('.modal:not(.open)').forEach(modal=>modal.setAttribute('inert',''));
   // Overlay + Escape
   on('modal-overlay','click',()=>Modal.closeAll());
   document.addEventListener('keydown',e=>{ if(e.key==='Escape')Modal.closeAll(); Modal.trap(e); });
 
   // Event Delegation for Schedule List
-  onNode(byId('scheduleList'),'click', e => {
+  onNode(byId('scheduleList'),'click', async e => {
     const btn = e.target.closest('.sched-delete');
-    if(btn) deleteScheduleEvent(btn.dataset.id);
+    if(btn && await confirmDestructiveAction({
+      title:'Excluir evento da agenda?',
+      copy:'A sessão será removida da agenda local. Essa ação não apaga matérias nem conteúdos vinculados.',
+      confirmLabel:'Excluir evento'
+    })) deleteScheduleEvent(btn.dataset.id);
   }, 'event:scheduleList:click');
 
   // Event Delegation for Subject Grid
@@ -5162,11 +5253,15 @@ function initEventBindings(){
   }, 'event:subjectGrid:click');
 
   // Event Delegation for Subjects Modal
-  onNode(byId('subjects-list-in-modal'),'click', e => {
+  onNode(byId('subjects-list-in-modal'),'click', async e => {
     const editBtn = e.target.closest('[data-edit]');
     if(editBtn) showSubjectForm(editBtn.dataset.edit);
     const delBtn = e.target.closest('[data-del]');
-    if(delBtn && confirm('Excluir matéria e todas as tarefas relacionadas')){ deleteSubject(delBtn.dataset.del); refreshSubjectsList(); }
+    if(delBtn && await confirmDestructiveAction({
+      title:'Excluir matéria?',
+      copy:'A matéria e as tarefas relacionadas serão removidas da sua base local. Essa ação não afeta o restante do edital.',
+      confirmLabel:'Excluir matéria'
+    })){ deleteSubject(delBtn.dataset.del); refreshSubjectsList(); }
   }, 'event:subjects-list-in-modal:click');
   onNode(byId('workspaceView'),'click', e => {
     const actionBtn = e.target.closest('[data-action]');
@@ -5185,6 +5280,8 @@ function initEventBindings(){
     e.preventDefault();
     handleWorkspaceAction(actionBtn.dataset.action, actionBtn);
   }, 'event:workspaceView:keydown');
+  on('btn-confirm-cancel','click',()=>window.ConfirmDialog.settle(false));
+  on('btn-confirm-delete','click',()=>window.ConfirmDialog.settle(true));
 
   // Date display
   if(byId('dateDisplay')) byId('dateDisplay').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});
@@ -5429,8 +5526,12 @@ function initEventBindings(){
   });
 
   // PMMG subjects reset
-  on('btn-pmmg-reset','click',()=>{
-    if(!confirm('Substituir matérias atuais pela estrutura de conteúdos do edital PMMG')) return;
+  on('btn-pmmg-reset','click',async ()=>{
+    if(!await confirmDestructiveAction({
+      title:'Restaurar edital PMMG?',
+      copy:'As matérias atuais serão substituídas pela estrutura oficial do edital. Faça um backup antes se quiser preservar personalizações.',
+      confirmLabel:'Restaurar edital'
+    })) return;
     WorkspaceState.subjectDetailId = null;
     AppDB.saveSubjects(getPMMGSubjects());
     renderSubjectGrid(); renderGoals(); renderSchedule();
