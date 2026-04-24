@@ -1408,6 +1408,74 @@
     #next-session-card .hero-pomodoro-btn.ghost:disabled,
     #next-session-card .hero-pomodoro-btn.done:disabled{display:none;opacity:0;visibility:hidden;pointer-events:none;}
     body.theme-dark #note .grid-stack-item-content .card,
+    .auth-screen{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;padding:48px;background:radial-gradient(circle at 50% 0%,#fffaf4 0,#f8f1ea 45%,#efe4db 100%);color:#3d332d;}
+    body.auth-required{overflow:hidden;background:#f8f1ea;}
+    body.auth-required .auth-screen{display:flex;}
+    body.auth-required .shell,body.auth-required .skip-link{visibility:hidden;pointer-events:none;}
+    .auth-window{position:relative;width:min(1280px,92vw);height:min(820px,calc(100vh - 96px));min-height:680px;display:grid;grid-template-columns:1.05fr .86fr;align-items:center;gap:64px;padding:78px 86px 70px;border:1px solid rgba(122,99,82,.18);border-radius:18px;background:linear-gradient(145deg,#fffaf7 0%,#f7f0ea 100%);box-shadow:0 28px 70px rgba(66,48,34,.18),0 1px 0 rgba(255,255,255,.9) inset;overflow:hidden;}
+    .auth-window-dots{position:absolute;top:28px;left:30px;display:flex;gap:10px;}
+    .auth-window-dots span{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 -1px 2px rgba(0,0,0,.14);}
+    .auth-window-dots span:nth-child(1){background:#ff6158;}
+    .auth-window-dots span:nth-child(2){background:#ffc235;}
+    .auth-window-dots span:nth-child(3){background:#31c95b;}
+    .auth-brand-panel{position:relative;z-index:1;align-self:center;padding-left:62px;}
+    .auth-logo-mark{width:86px;height:86px;border-radius:18px;display:grid;place-items:center;margin-bottom:26px;background:linear-gradient(145deg,#ffb15e 0%,#ff5a1f 78%);box-shadow:0 18px 34px rgba(255,90,31,.25),inset 0 1px 0 rgba(255,255,255,.42);}
+    .auth-logo-mark img{width:66px;height:66px;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(88,45,20,.22));}
+    .auth-brand-name{font-size:2.05rem;font-weight:1000;line-height:1;letter-spacing:-.04em;color:#3c332e;}
+    .auth-brand-subtitle{margin-top:10px;font-size:1.06rem;color:#9e8d82;font-weight:600;}
+    .auth-brand-panel h1{margin-top:58px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.7rem,3.7vw,4.15rem);line-height:1.12;letter-spacing:0;color:#3d332d;}
+    .auth-brand-panel h1 span{color:#ff884c;}
+    .auth-brand-panel p{margin-top:18px;font-size:1.36rem;color:#a18f84;font-weight:500;}
+    .auth-wave{position:absolute;left:-220px;right:-260px;bottom:-210px;height:360px;opacity:.5;background:repeating-radial-gradient(ellipse at 72% 72%,transparent 0 30px,rgba(255,119,54,.14) 31px 32px,transparent 33px 52px);transform:rotate(-7deg);pointer-events:none;}
+    .auth-card{position:relative;z-index:2;width:min(458px,100%);justify-self:center;padding:40px 46px 42px;border:1px solid rgba(214,194,177,.7);border-radius:18px;background:rgba(255,252,249,.78);box-shadow:0 22px 55px rgba(75,54,38,.11),0 1px 0 rgba(255,255,255,.86) inset;backdrop-filter:blur(12px);}
+    .auth-tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:2px solid #eee2d9;margin-bottom:38px;}
+    .auth-tab{height:54px;border:0;background:transparent;border-radius:0;color:#9b887b;font-size:1.02rem;font-weight:900;cursor:pointer;}
+    .auth-tab.active{color:#ff7f43;box-shadow:0 2px 0 #ff6a2b;}
+    .auth-form{display:flex;flex-direction:column;gap:22px;}
+    .auth-field{display:flex;flex-direction:column;gap:10px;font-size:.96rem;font-weight:700;color:#5e5149;}
+    .auth-input-wrap{height:58px;display:flex;align-items:center;gap:12px;border:1px solid #e6d8ce;border-radius:15px;background:#fffdfb;box-shadow:0 2px 7px rgba(91,61,40,.04),inset 0 1px 0 rgba(255,255,255,.78);}
+    .auth-input-wrap input{min-width:0;flex:1;height:100%;border:0;background:transparent;padding:0 0 0 20px;font:inherit;font-size:1rem;color:#3d332d;outline:0;}
+    .auth-input-wrap input::placeholder{color:#c8bbb2;}
+    .auth-input-wrap>i,.auth-input-action{width:44px;height:44px;margin-right:8px;display:grid;place-items:center;color:#9f8f84;}
+    .auth-input-wrap svg{width:20px;height:20px;}
+    .auth-input-action{border:0;background:transparent;border-radius:12px;cursor:pointer;}
+    .auth-input-action:hover{background:#fbf2eb;color:#ff6a2b;}
+    .auth-message{min-height:20px;font-size:.86rem;font-weight:700;color:#b84220;}
+    .auth-message.success{color:#15803d;}
+    .auth-submit{height:58px;display:flex;align-items:center;justify-content:center;gap:16px;margin-top:0;border:0;border-radius:14px;background:linear-gradient(90deg,#ff7035,#ffad68);color:#fff;font-size:1.02rem;font-weight:950;cursor:pointer;box-shadow:0 12px 28px rgba(255,103,45,.22);}
+    .auth-submit svg{width:21px;height:21px;}
+    .auth-submit:disabled{opacity:.68;cursor:wait;}
+    .auth-separator{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;margin:10px 0 2px;color:#b5a59a;font-style:normal;font-weight:800;}
+    .auth-separator span{height:1px;background:#eadfd6;}
+    .auth-separator em{font-style:normal;}
+    .auth-google{height:58px;display:flex;align-items:center;justify-content:center;gap:18px;border:1px solid #e6d8ce;border-radius:14px;background:#fffdfb;color:#4b4039;font-size:1rem;font-weight:950;cursor:pointer;box-shadow:0 2px 8px rgba(91,61,40,.05);}
+    .auth-google strong{font-size:1.7rem;line-height:1;color:#8f7f74;font-family:Arial,sans-serif;}
+    .auth-security{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:46px;color:#9f8f84;font-size:.91rem;font-weight:600;line-height:1.35;text-align:left;}
+    .auth-security svg{width:20px;height:20px;flex:0 0 auto;}
+    body.theme-dark.auth-required .auth-screen{background:#17110e;color:#f5eee8;}
+    body.theme-dark.auth-required .auth-window{background:linear-gradient(145deg,#211815,#130f0d);border-color:#3a2a22;box-shadow:0 28px 70px rgba(0,0,0,.45);}
+    body.theme-dark.auth-required .auth-card{background:rgba(31,23,19,.86);border-color:#4b3428;}
+    body.theme-dark.auth-required .auth-brand-name,body.theme-dark.auth-required .auth-brand-panel h1{color:#fff7ef;}
+    body.theme-dark.auth-required .auth-input-wrap,body.theme-dark.auth-required .auth-google{background:#1a1411;border-color:#4a352b;color:#f5eee8;}
+    body.theme-dark.auth-required .auth-tabs{border-bottom-color:#3a2a22;}
+    @media (max-width: 980px){
+      .auth-screen{padding:22px;}
+      .auth-window{height:auto;min-height:auto;grid-template-columns:1fr;gap:34px;padding:78px 28px 34px;}
+      .auth-brand-panel{padding-left:0;text-align:center;}
+      .auth-logo-mark{margin:0 auto 22px;}
+      .auth-brand-panel h1{margin-top:34px;font-size:2.65rem;}
+      .auth-card{padding:32px 24px;}
+      .auth-window-dots{top:22px;left:24px;}
+    }
+    @media (max-width: 560px){
+      .auth-screen{padding:12px;align-items:flex-start;overflow:auto;}
+      .auth-window{width:100%;padding:70px 18px 22px;border-radius:16px;}
+      .auth-brand-panel h1{font-size:2.1rem;}
+      .auth-brand-panel p{font-size:1.05rem;}
+      .auth-card{border-radius:16px;padding:26px 18px;}
+      .auth-tabs{margin-bottom:28px;}
+      .auth-security{margin-top:34px;}
+    }
     body.theme-dark #note .session-note-card,
     body.theme-dark #note .session-note-modal-list,
     body.theme-dark #note .session-note-summary,
@@ -1421,11 +1489,53 @@
     body.theme-dark #subjects .subject-grid::-webkit-scrollbar{display:none;width:0;height:0;}
   </style>
 </head>
-<body>
+<body class="auth-required">
 <a class="skip-link" href="#appMain">Pular para o conteúdo principal</a>
 <div class="scene"></div>
 <div id="modal-overlay"></div>
 <div class="toast-msg" id="global-toast"></div>
+
+<section class="auth-screen" id="auth-screen" aria-label="Acesso ao COLISEU">
+  <div class="auth-window">
+    <div class="auth-window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="auth-brand-panel">
+      <div class="auth-logo-mark"><img src="icons/pmmg-logo.png" alt="" draggable="false"></div>
+      <div class="auth-brand-name">COLISEU</div>
+      <div class="auth-brand-subtitle">Área de estudos PMMG</div>
+      <h1>Organize, estude<br>e <span>conquiste.</span></h1>
+      <p>Foco hoje, aprovação amanhã.</p>
+      <div class="auth-wave" aria-hidden="true"></div>
+    </div>
+    <div class="auth-card" role="region" aria-labelledby="auth-title">
+      <div class="auth-tabs" role="tablist" aria-label="Modo de acesso">
+        <button class="auth-tab active" id="auth-tab-login" type="button" role="tab" aria-selected="true" data-auth-mode="login">Entrar</button>
+        <button class="auth-tab" id="auth-tab-signup" type="button" role="tab" aria-selected="false" data-auth-mode="signup">Criar conta</button>
+      </div>
+      <form class="auth-form" id="auth-form">
+        <h2 class="sr-only" id="auth-title">Entrar no COLISEU</h2>
+        <label class="auth-field">
+          <span>E-mail</span>
+          <span class="auth-input-wrap">
+            <input id="auth-email" type="email" autocomplete="email" placeholder="seu@email.com" required>
+            <i data-lucide="mail"></i>
+          </span>
+        </label>
+        <label class="auth-field">
+          <span>Senha</span>
+          <span class="auth-input-wrap">
+            <input id="auth-password" type="password" autocomplete="current-password" placeholder="Digite sua senha" minlength="6" required>
+            <button class="auth-input-action" id="auth-password-toggle" type="button" aria-label="Mostrar senha"><i data-lucide="eye"></i></button>
+          </span>
+        </label>
+        <div class="auth-message" id="auth-message" aria-live="polite"></div>
+        <button class="auth-submit" id="auth-submit" type="submit"><span>Entrar</span><i data-lucide="arrow-right"></i></button>
+        <div class="auth-separator"><span></span><em>ou</em><span></span></div>
+        <button class="auth-google" id="auth-google" type="button"><strong>G</strong><span>Entrar com Google</span></button>
+      </form>
+      <div class="auth-security"><i data-lucide="shield-check"></i><span>Seus dados estão protegidos<br>com criptografia de ponta.</span></div>
+    </div>
+  </div>
+</section>
 
 <div class="shell">
   <aside class="app-sidebar" aria-label="Navegação principal">
@@ -1449,6 +1559,7 @@
     <nav class="side-nav" aria-label="Ajustes do painel">
       <button class="side-link" type="button" id="side-edit-layout"><i data-lucide="move-3d"></i><span>Ajustar layout</span></button>
       <button class="side-link" type="button" id="side-pmmg-reset"><i data-lucide="shield-check"></i><span>Edital PMMG</span></button>
+      <button class="side-link" type="button" id="side-logout"><i data-lucide="log-out"></i><span>Sair da conta</span></button>
       <label class="theme-switch-row" for="side-theme-toggle">
         <span class="theme-switch-copy"><i data-lucide="moon"></i><span id="theme-toggle-label">Tema escuro</span></span>
         <span class="switch">
@@ -2599,6 +2710,7 @@ const STORAGE_KEYS = {
   sidebarCollapsed: 'sf_sidebar_collapsed',
   analyticsEvents: 'sf_events',
   supabaseConfig: 'sf_supabase_config',
+  supabaseSession: 'sf_supabase_session',
 };
 
 const DEFAULT_NOTE = {id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],updatedAt:null};
@@ -2735,7 +2847,7 @@ const DataStoreSupabase = {
     return SupabaseConfig.isConfigured();
   },
   getAccessToken(){
-    const session = DataStoreLocal.getRaw('sf_supabase_session', null);
+    const session = DataStoreLocal.getRaw(STORAGE_KEYS.supabaseSession, null);
     return sanitizeText(session?.access_token || '', '');
   },
   isReady(){
@@ -2786,6 +2898,145 @@ const DataStoreSupabase = {
       if(!result.ok) return result;
       return {ok:true,data:(Array.isArray(result.data) ?result.data : []).map(this.mapSubject)};
     },
+  },
+};
+
+const AuthController = {
+  mode: 'login',
+  getSession(){
+    const session = DataStoreLocal.getRaw(STORAGE_KEYS.supabaseSession, null);
+    return session && typeof session === 'object' ?session : null;
+  },
+  isAuthenticated(){
+    const session = this.getSession();
+    return !!session?.access_token;
+  },
+  setMode(mode){
+    this.mode = mode === 'signup' ?'signup' : 'login';
+    document.querySelectorAll('[data-auth-mode]').forEach(btn=>{
+      const active = btn.dataset.authMode === this.mode;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-selected', active ?'true' : 'false');
+    });
+    const title = document.getElementById('auth-title');
+    const submit = document.getElementById('auth-submit')?.querySelector('span');
+    const password = document.getElementById('auth-password');
+    if(title) title.textContent = this.mode === 'signup' ?'Criar conta no COLISEU' : 'Entrar no COLISEU';
+    if(submit) submit.textContent = this.mode === 'signup' ?'Criar conta' : 'Entrar';
+    if(password) password.autocomplete = this.mode === 'signup' ?'new-password' : 'current-password';
+    this.setMessage('');
+  },
+  setLoading(loading){
+    const submit = document.getElementById('auth-submit');
+    if(submit){
+      submit.disabled = !!loading;
+      submit.querySelector('span').textContent = loading ?'Conectando...' : (this.mode === 'signup' ?'Criar conta' : 'Entrar');
+    }
+  },
+  setMessage(message, tone='error'){
+    const node = document.getElementById('auth-message');
+    if(!node) return;
+    node.textContent = message || '';
+    node.classList.toggle('success', tone === 'success');
+  },
+  applyGate(){
+    document.body.classList.toggle('auth-required', !this.isAuthenticated());
+    document.getElementById('auth-screen')?.setAttribute('aria-hidden', this.isAuthenticated() ?'true' : 'false');
+  },
+  authHeaders(){
+    const config = SupabaseConfig.get();
+    return {
+      apikey: config.publishableKey,
+      'Content-Type': 'application/json',
+    };
+  },
+  async request(endpoint, payload){
+    const config = SupabaseConfig.get();
+    if(!SupabaseConfig.isConfigured()) throw new Error('Projeto Supabase não configurado.');
+    const response = await fetch(`${config.url}/auth/v1/${endpoint}`, {
+      method:'POST',
+      headers:this.authHeaders(),
+      body:JSON.stringify(payload),
+    });
+    const data = await response.json().catch(()=>({}));
+    if(!response.ok){
+      throw new Error(data?.msg || data?.message || data?.error_description || 'Não foi possível autenticar.');
+    }
+    return data;
+  },
+  saveSession(data){
+    const session = data?.session || data;
+    if(session?.access_token){
+      DataStoreLocal.setRaw(STORAGE_KEYS.supabaseSession, session);
+      return true;
+    }
+    return false;
+  },
+  async submit(event){
+    event?.preventDefault();
+    const email = sanitizeText(document.getElementById('auth-email')?.value || '', '');
+    const password = String(document.getElementById('auth-password')?.value || '');
+    if(!email || !password){
+      this.setMessage('Preencha e-mail e senha para continuar.');
+      return;
+    }
+    if(password.length < 6){
+      this.setMessage('A senha precisa ter pelo menos 6 caracteres.');
+      return;
+    }
+    this.setLoading(true);
+    this.setMessage('');
+    try{
+      const data = this.mode === 'signup'
+        ?await this.request('signup', {email,password})
+        :await this.request('token?grant_type=password', {email,password});
+      if(this.saveSession(data)){
+        this.applyGate();
+        await DataStore.sync.pull();
+        renderAll();
+        toast(this.mode === 'signup' ?'Conta criada e conectada.' : 'Login realizado.');
+      } else {
+        this.setMessage('Conta criada. Confira seu e-mail para confirmar o acesso.', 'success');
+      }
+    } catch(error){
+      this.setMessage(error?.message || 'Falha ao autenticar.');
+    } finally {
+      this.setLoading(false);
+    }
+  },
+  async logout(){
+    const session = this.getSession();
+    const config = SupabaseConfig.get();
+    if(session?.access_token && SupabaseConfig.isConfigured()){
+      fetch(`${config.url}/auth/v1/logout`, {
+        method:'POST',
+        headers:{
+          ...this.authHeaders(),
+          Authorization:`Bearer ${session.access_token}`,
+        },
+      }).catch(()=>{});
+    }
+    DataStoreLocal.removeRaw(STORAGE_KEYS.supabaseSession);
+    this.applyGate();
+    this.setMode('login');
+    toast('Sessão encerrada.');
+  },
+  init(){
+    this.applyGate();
+    this.setMode('login');
+    document.getElementById('auth-tab-login')?.addEventListener('click',()=>this.setMode('login'));
+    document.getElementById('auth-tab-signup')?.addEventListener('click',()=>this.setMode('signup'));
+    document.querySelectorAll('[data-auth-mode]').forEach(btn=>{
+      btn.addEventListener('click',()=>this.setMode(btn.dataset.authMode));
+    });
+    document.getElementById('auth-form')?.addEventListener('submit',event=>safeCall(()=>this.submit(event),'event:auth-submit'));
+    document.getElementById('auth-password-toggle')?.addEventListener('click',()=>{
+      const input = document.getElementById('auth-password');
+      if(!input) return;
+      input.type = input.type === 'password' ?'text' : 'password';
+      document.getElementById('auth-password-toggle')?.setAttribute('aria-label', input.type === 'password' ?'Mostrar senha' : 'Ocultar senha');
+    });
+    document.getElementById('auth-google')?.addEventListener('click',()=>this.setMessage('Login com Google será habilitado na próxima etapa.', 'success'));
   },
 };
 
@@ -5507,6 +5758,7 @@ function initEventBindings(){
   on('side-qconcursos','click',()=>{
     window.open('https://www.qconcursos.com/questoes-militares/questoes','_blank','noopener,noreferrer');
   });
+  on('side-logout','click',()=>AuthController.logout());
 
   onNode(byId('global-search-input'),'input',e=>{
     runGlobalSearch(e.target.value);
@@ -5982,6 +6234,7 @@ safeCall(()=>seedIfEmpty(), 'startup:seedIfEmpty');
 safeCall(()=>migrateAppData(), 'startup:migrateAppData');
 safeCall(()=>migrateSubjectsEncoding(), 'startup:migrateSubjectsEncoding');
 safeCall(()=>Pomo.init(), 'startup:Pomo.init');
+safeCall(()=>AuthController.init(), 'startup:AuthController.init');
 safeCall(()=>lucide.createIcons(), 'startup:lucide.createIcons');
 safeCall(()=>initEventBindings(), 'startup:initEventBindings');
 safeCall(()=>renderAll(), 'startup:renderAll');
