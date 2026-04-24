@@ -1407,7 +1407,6 @@
     #next-session-card .hero-pomodoro.is-active .hero-pomodoro-actions{grid-template-columns:54px minmax(118px,1fr) minmax(118px,1fr);justify-content:stretch;max-width:390px;}
     #next-session-card .hero-pomodoro-btn.ghost:disabled,
     #next-session-card .hero-pomodoro-btn.done:disabled{display:none;opacity:0;visibility:hidden;pointer-events:none;}
-    body.theme-dark #note .grid-stack-item-content .card,
     .auth-screen{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;padding:48px;background:radial-gradient(circle at 50% 0%,#fffaf4 0,#f8f1ea 45%,#efe4db 100%);color:#3d332d;}
     body.auth-required{overflow:hidden;background:#f8f1ea;}
     body.auth-required .auth-screen{display:flex;}
@@ -2938,12 +2937,22 @@ const DataStoreSupabase = {
   isConfigured(){
     return SupabaseConfig.isConfigured();
   },
-  getAccessToken(){
+  getSession(){
     const session = DataStoreLocal.getRaw(STORAGE_KEYS.supabaseSession, null);
+    return session && typeof session === 'object' ?session : null;
+  },
+  saveSession(session){
+    if(!session?.access_token) return false;
+    const current = this.getSession() || {};
+    DataStoreLocal.setRaw(STORAGE_KEYS.supabaseSession, {...current, ...session, user: session.user || current.user || null});
+    return true;
+  },
+  getAccessToken(){
+    const session = this.getSession();
     return sanitizeText(session?.access_token || '', '');
   },
   getUserId(){
-    const session = DataStoreLocal.getRaw(STORAGE_KEYS.supabaseSession, null);
+    const session = this.getSession();
     return sanitizeText(session?.user?.id || '', '');
   },
   isReady(){
@@ -2954,15 +2963,47 @@ const DataStoreSupabase = {
   },
   reportWriteFailure(result, label='dados'){
     if(!result || result.ok) return result;
-    console.warn(`[StudyFlow] Falha ao sincronizar ${label}:`, result.reason || result.status || result);
+    console.warn(`[StudyFlow] Falha ao sincronizar ${label}:`, result);
     toast(`Não foi possível sincronizar ${label} agora. Os dados ficaram salvos neste navegador.`);
     return result;
   },
-  async request(path, options={}){
+  sessionNeedsRefresh(session){
+    const expiresAt = Number(session?.expires_at || 0);
+    return !!expiresAt && Date.now() / 1000 > expiresAt - 90;
+  },
+  async refreshSession(){
     const config = this.getConfig();
-    const accessToken = this.getAccessToken();
+    const session = this.getSession();
+    const refreshToken = sanitizeText(session?.refresh_token || '', '');
     if(!this.isConfigured()) return {ok:false,reason:'supabase-not-configured'};
-    if(!accessToken) return {ok:false,reason:'supabase-auth-required'};
+    if(!refreshToken) return {ok:false,reason:'supabase-refresh-token-missing'};
+    const response = await fetch(`${config.url}/auth/v1/token?grant_type=refresh_token`, {
+      method:'POST',
+      headers:{
+        apikey:config.publishableKey,
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify({refresh_token:refreshToken}),
+    });
+    const text = await response.text();
+    let data = null;
+    try{ data = text ?JSON.parse(text) : null; } catch{ data = text; }
+    if(!response.ok) return {ok:false,status:response.status,reason:data};
+    const nextSession = data?.session || data;
+    return this.saveSession(nextSession) ?{ok:true,data:nextSession} : {ok:false,reason:'supabase-refresh-empty-session'};
+  },
+  async ensureSession(){
+    if(!this.isConfigured()) return {ok:false,reason:'supabase-not-configured'};
+    const session = this.getSession();
+    if(!session?.access_token) return {ok:false,reason:'supabase-auth-required'};
+    if(this.sessionNeedsRefresh(session)) return this.refreshSession();
+    return {ok:true,data:session};
+  },
+  async request(path, options={}, retry=true){
+    const config = this.getConfig();
+    const session = await this.ensureSession();
+    if(!session.ok) return session;
+    const accessToken = this.getAccessToken();
     const response = await fetch(`${config.url}/rest/v1/${path}`, {
       ...options,
       headers: {
@@ -2973,7 +3014,15 @@ const DataStoreSupabase = {
       },
     });
     if(!response.ok){
-      return {ok:false,status:response.status,reason:await response.text()};
+      const text = await response.text();
+      let reason = text;
+      try{ reason = text ?JSON.parse(text) : null; } catch{}
+      if(response.status === 401 && retry){
+        const refreshed = await this.refreshSession();
+        if(refreshed.ok) return this.request(path, options, false);
+        return refreshed;
+      }
+      return {ok:false,status:response.status,reason};
     }
     const text = await response.text();
     return {ok:true,data:text ?JSON.parse(text) : null};
