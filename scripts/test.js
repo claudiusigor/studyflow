@@ -7,6 +7,7 @@ const root = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json'), 'utf8').replace(/^\uFEFF/, ''));
 const sw = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
+const marcellusFontPath = path.join(root, 'fonts', 'marcellus-latin-400-normal.woff2');
 const schema = fs.existsSync(path.join(root, 'supabase', 'schema.sql'))
   ? fs.readFileSync(path.join(root, 'supabase', 'schema.sql'), 'utf8')
   : '';
@@ -78,6 +79,9 @@ async function run() {
 
   check('semantic landmarks exist', /<header\b/.test(html) && /<nav\b/.test(html) && /<main\b/.test(html) && /<h1\b/.test(html));
   check('professional sidebar exists', html.includes('class="app-sidebar"') && html.includes('Área de estudos PMMG') && html.includes('side-edit-layout') && html.includes('id="sidebar-toggle"'));
+  check('brand logos render without orange backing blocks', html.includes('.auth-logo-mark{width:172px;height:132px;border-radius:0;display:grid;place-items:center;margin:0 auto 18px;background:transparent;box-shadow:none;}') && html.includes('.auth-logo-mark img{width:132px;height:132px;object-fit:contain;') && html.includes('.side-logo{width:92px;height:92px;border-radius:0;background:transparent;'));
+  check('auth Marcellus font is bundled locally', fs.existsSync(marcellusFontPath) && html.includes("@font-face") && html.includes("font-family:'Marcellus Local'") && html.includes("src:url('./fonts/marcellus-latin-400-normal.woff2')"));
+  check('auth brand typography matches premium spaced wordmark', html.includes('.auth-brand-panel{position:relative;z-index:1;align-self:center;padding-left:62px;text-align:center;justify-self:center;}') && html.includes(".auth-brand-name{font-family:'Marcellus Local',Georgia,\"Times New Roman\",serif;font-size:2.28rem;font-weight:400;line-height:1;letter-spacing:.22em;color:#3c332e;text-indent:.22em;}") && html.includes('.auth-brand-subtitle{margin-top:11px;font-size:.86rem;color:#9e8d82;font-weight:700;text-transform:uppercase;letter-spacing:.28em;text-indent:.28em;}') && html.includes('.auth-brand-panel p::before'));
   check('sidebar toggle uses refined chevrons', html.includes('sidebar-toggle-mark') && html.includes('Recolher menu lateral') && script.includes("(collapsed ?'›' : '‹')") && !script.includes('panel-left-close') && !script.includes('panel-left-open'));
   check('professional topbar exists', html.includes('class="workspace-search"') && html.includes('Abrir agenda mensal') && html.includes('workspace-title'));
   check('topbar period pill opens agenda', html.includes('id="topbar-period-pill"') && script.includes("on('topbar-period-pill','click'") && script.includes("setActiveView('agenda')"));
@@ -124,6 +128,7 @@ async function run() {
   check('subject overview cards open contents', html.includes('subject-overview-card') && script.includes('data-action="subject-open"') && script.includes('Ver conteúdos'));
   check('dashboard subject cards use progress icons', script.includes("data-lucide=\"${subj.lucide||'book'}\"") && script.includes('style="background:${subj.bg};color:var(${subj.colorVar})"') && !script.includes("icon: hasVisibleEmoji(safe.icon) ?safe.icon : '??'"));
   check('tasks and agenda can link to edital topics', html.includes('id="task-form-topic"') && html.includes('id="sched-form-topic"') && script.includes('topicId: safe.topicId ?sanitizeText(safe.topicId, null) : null') && script.includes('function fillLinkedTopicSelect') && script.includes('addTask(subjectId,title,topicId)'));
+  check('task completion uses elegant animated check control', html.includes('task-complete-btn') && html.includes('task-row-exiting') && script.includes('function animateWorkspaceTaskToggle') && script.includes("case 'tasks-toggle':") && script.includes('animateWorkspaceTaskToggle(button)') && html.includes("data-lucide=\"check\"") && !script.includes("task.done ?'<i data-lucide=\"check-check\"></i>' : (subj.icon || 'Aa')"));
   check('subjects workspace uses split detail layout', html.includes('subjects-master-layout') && html.includes('subjects-side-column') && script.includes('buildSubjectsHeroCard'));
   check('topic detail controls exist', html.includes('topic-search-input') && html.includes('topic-filter-select') && html.includes('topic-row') && script.includes('data-action="topic-cycle-status"'));
   check('PMMG topic seed includes Portuguese edital items', script.includes('Adequação conceitual') && script.includes('Colocação pronominal') && script.includes('Noções de Direito e Direitos Humanos'));

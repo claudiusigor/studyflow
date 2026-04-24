@@ -24,6 +24,13 @@
     };
   </script>
   <style>
+    @font-face{
+      font-family:'Marcellus Local';
+      src:url('./fonts/marcellus-latin-400-normal.woff2') format('woff2');
+      font-weight:400;
+      font-style:normal;
+      font-display:swap;
+    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg-base: #0d0d0f;
@@ -630,8 +637,8 @@
     .shell{display:grid;grid-template-columns:252px minmax(0,1fr);grid-template-rows:auto 1fr;gap:18px;min-height:100vh;padding:14px 16px 32px;}
     .app-sidebar{grid-column:1;grid-row:1 / span 2;position:sticky;top:14px;height:calc(100vh - 28px);display:flex;flex-direction:column;background:rgba(255,253,249,.86);border:1px solid rgba(234,223,210,.9);border-radius:28px;padding:18px 14px;box-shadow:0 24px 80px rgba(68,45,28,.1);backdrop-filter:blur(18px);z-index:4;}
     .side-brand{display:flex;align-items:center;gap:10px;padding:2px 6px 18px;border-bottom:1px solid var(--glass-border);}
-    .side-logo{width:68px;height:68px;border-radius:0;background:transparent;display:grid;place-items:center;color:white;box-shadow:none;}
-    .side-logo img{width:68px;height:68px;object-fit:contain;filter:drop-shadow(0 2px 5px rgba(0,0,0,.12));}
+    .side-logo{width:92px;height:92px;border-radius:0;background:transparent;display:grid;place-items:center;color:white;box-shadow:none;}
+    .side-logo img{width:92px;height:92px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.13));}
     .side-title{font-weight:900;letter-spacing:-.04em;font-size:1.02rem;line-height:1;}
     .side-subtitle{font-size:.68rem;color:var(--t2);margin-top:2px;}
     .side-section{font-size:.64rem;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);font-weight:800;margin:18px 8px 8px;}
@@ -651,8 +658,8 @@
     body.sidebar-collapsed .shell{grid-template-columns:86px minmax(0,1fr);}
     body.sidebar-collapsed .app-sidebar{align-items:center;padding:18px 12px;}
     body.sidebar-collapsed .side-brand{width:100%;flex-direction:column;justify-content:center;gap:12px;padding:0 0 18px;margin-bottom:14px;border-bottom:1px solid var(--glass-border);}
-    body.sidebar-collapsed .side-logo{width:84px;height:84px;border-radius:0;}
-    body.sidebar-collapsed .side-logo img{width:84px;height:84px;}
+    body.sidebar-collapsed .side-logo{width:96px;height:96px;border-radius:0;background:transparent;box-shadow:none;}
+    body.sidebar-collapsed .side-logo img{width:96px;height:96px;}
     body.sidebar-collapsed .side-brand-copy,body.sidebar-collapsed .side-section,body.sidebar-collapsed .side-link span,body.sidebar-collapsed .side-upgrade{display:none;}
     body.sidebar-collapsed .side-nav{width:100%;align-items:center;gap:10px;}
     body.sidebar-collapsed .side-link{justify-content:center;width:46px;min-height:46px;padding:0;border-radius:16px;}
@@ -1218,6 +1225,19 @@
     #workspaceView [data-workspace="tasks"] .workspace-row-main{align-items:center;}
     #workspaceView [data-workspace="tasks"] .workspace-row-icon{border-radius:10px;background:transparent;border-color:#d9c7b7;color:#ff5a1f;}
     #workspaceView [data-workspace="tasks"] .workspace-row-icon:hover{background:#fff3e8;}
+    #workspaceView [data-workspace="tasks"] .task-complete-btn{width:34px;height:34px;border-radius:10px;background:transparent;border:1px solid #d7c4b2;color:#a8907b;box-shadow:none;transition:background .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease),transform .18s var(--ease);}
+    #workspaceView [data-workspace="tasks"] .task-complete-btn svg{width:17px;height:17px;stroke-width:2.2;opacity:.42;transition:opacity .18s var(--ease),transform .18s var(--ease);}
+    #workspaceView [data-workspace="tasks"] .task-complete-btn:hover{background:#fff4ea;border-color:#ffb985;color:#ff5a1f;transform:translateY(-1px);}
+    #workspaceView [data-workspace="tasks"] .task-complete-btn:hover svg{opacity:1;transform:scale(1.04);}
+    #workspaceView [data-workspace="tasks"] .task-complete-btn.is-done{background:#ff5a1f;border-color:#ff5a1f;color:#fff;}
+    #workspaceView [data-workspace="tasks"] .task-complete-btn.is-done svg{opacity:1;}
+    #workspaceView [data-workspace="tasks"] .workspace-row.task-row-exiting{overflow:hidden;pointer-events:none;animation:taskRowExit .34s var(--ease) forwards;}
+    #workspaceView [data-workspace="tasks"] .workspace-row.task-row-exiting .task-complete-btn{background:#ff5a1f;border-color:#ff5a1f;color:#fff;}
+    #workspaceView [data-workspace="tasks"] .workspace-row.task-row-exiting .task-complete-btn svg{opacity:1;}
+    @keyframes taskRowExit{0%{opacity:1;transform:translateX(0);max-height:84px;padding-top:15px;padding-bottom:15px;}45%{opacity:1;transform:translateX(10px);}100%{opacity:0;transform:translateX(32px);max-height:0;padding-top:0;padding-bottom:0;margin-top:0;margin-bottom:0;border-color:transparent;}}
+    body.theme-dark #workspaceView [data-workspace="tasks"] .task-complete-btn{background:transparent;border-color:#4a3325;color:#aa8f7a;box-shadow:none;}
+    body.theme-dark #workspaceView [data-workspace="tasks"] .task-complete-btn:hover{background:#2a1d16;border-color:#7a4a2d;color:#ff9554;box-shadow:none;}
+    body.theme-dark #workspaceView [data-workspace="tasks"] .task-complete-btn.is-done{background:#ff5a1f;border-color:#ff7a3f;color:#fff;}
     #workspaceView [data-workspace="tasks"] .workspace-pill{background:#fff8ef;border-color:#eadfd2;color:#7b6a5c;}
 
     #workspaceView [data-workspace="pomodoro"] .workspace-grid{grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);}
@@ -1417,14 +1437,15 @@
     .auth-window-dots span:nth-child(1){background:#ff6158;}
     .auth-window-dots span:nth-child(2){background:#ffc235;}
     .auth-window-dots span:nth-child(3){background:#31c95b;}
-    .auth-brand-panel{position:relative;z-index:1;align-self:center;padding-left:62px;}
-    .auth-logo-mark{width:86px;height:86px;border-radius:18px;display:grid;place-items:center;margin-bottom:26px;background:linear-gradient(145deg,#ffb15e 0%,#ff5a1f 78%);box-shadow:0 18px 34px rgba(255,90,31,.25),inset 0 1px 0 rgba(255,255,255,.42);}
-    .auth-logo-mark img{width:66px;height:66px;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(88,45,20,.22));}
-    .auth-brand-name{font-size:2.05rem;font-weight:1000;line-height:1;letter-spacing:-.04em;color:#3c332e;}
-    .auth-brand-subtitle{margin-top:10px;font-size:1.06rem;color:#9e8d82;font-weight:600;}
-    .auth-brand-panel h1{margin-top:58px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.7rem,3.7vw,4.15rem);line-height:1.12;letter-spacing:0;color:#3d332d;}
+    .auth-brand-panel{position:relative;z-index:1;align-self:center;padding-left:62px;text-align:center;justify-self:center;}
+    .auth-logo-mark{width:172px;height:132px;border-radius:0;display:grid;place-items:center;margin:0 auto 18px;background:transparent;box-shadow:none;}
+    .auth-logo-mark img{width:132px;height:132px;object-fit:contain;filter:drop-shadow(0 10px 16px rgba(88,45,20,.18));}
+    .auth-brand-name{font-family:'Marcellus Local',Georgia,"Times New Roman",serif;font-size:2.28rem;font-weight:400;line-height:1;letter-spacing:.22em;color:#3c332e;text-indent:.22em;}
+    .auth-brand-subtitle{margin-top:11px;font-size:.86rem;color:#9e8d82;font-weight:700;text-transform:uppercase;letter-spacing:.28em;text-indent:.28em;}
+    .auth-brand-panel h1{margin-top:44px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.7rem,3.7vw,4.15rem);line-height:1.12;letter-spacing:0;color:#3d332d;}
     .auth-brand-panel h1 span{color:#ff884c;}
-    .auth-brand-panel p{margin-top:18px;font-size:1.36rem;color:#a18f84;font-weight:500;}
+    .auth-brand-panel p{position:relative;margin-top:34px;font-size:1.18rem;color:#a18f84;font-weight:500;}
+    .auth-brand-panel p::before{content:'';position:absolute;left:50%;top:-18px;width:38px;height:2px;border-radius:999px;background:#ff884c;transform:translateX(-50%);}
     .auth-wave{position:absolute;left:-220px;right:-260px;bottom:-210px;height:360px;opacity:.5;background:repeating-radial-gradient(ellipse at 72% 72%,transparent 0 30px,rgba(255,119,54,.14) 31px 32px,transparent 33px 52px);transform:rotate(-7deg);pointer-events:none;}
     .auth-card{position:relative;z-index:2;width:min(458px,100%);justify-self:center;padding:40px 46px 42px;border:1px solid rgba(214,194,177,.7);border-radius:18px;background:rgba(255,252,249,.78);box-shadow:0 22px 55px rgba(75,54,38,.11),0 1px 0 rgba(255,255,255,.86) inset;backdrop-filter:blur(12px);}
     .auth-card.signup-mode{width:min(520px,100%);padding:34px 44px 36px;}
@@ -5310,7 +5331,7 @@ function buildTasksWorkspace(){
         const subj = subjects.find(s=>s.id===task.subjectId);
         return `<div class="workspace-row">
           <div class="workspace-row-main">
-            <button class="workspace-row-icon" type="button" data-action="tasks-toggle" data-id="${task.id}" aria-label="${task.done?'Reabrir':'Concluir'} tarefa">${task.done ?'<i data-lucide="check-check"></i>' : (subj.icon || 'Aa')}</button>
+            <button class="workspace-row-icon task-complete-btn${task.done ?' is-done' : ''}" type="button" data-action="tasks-toggle" data-id="${task.id}" aria-label="${task.done?'Reabrir':'Concluir'} tarefa" title="${task.done?'Reabrir tarefa':'Concluir tarefa'}"><i data-lucide="check"></i></button>
             <div>
               <div class="workspace-row-title">${esc(task.title)}</div>
               <div class="workspace-row-meta">${subj ?`${subj.icon} ${esc(subj.name)} · ` : ''}${task.done ?`concluída em ${relDate(task.completedAt)}` : `criada em ${relDate(task.createdAt)}`}</div>
@@ -5787,6 +5808,22 @@ function toggleTask(id){
   t.done=!t.done; t.completedAt=t.done ?new Date().toISOString() : null;
   if(t.done) Analytics.track(EVENT_NAMES.taskDone,{context:'tasks',subject_id:t.subjectId});
   AppDB.saveTasks(tasks); renderSubjectGrid(); renderTasks(); renderGoals(); renderNextSession(); refreshWorkspaceView();
+}
+function animateWorkspaceTaskToggle(button){
+  const id = button?.dataset?.id;
+  const task = AppDB.getTasks().find(item=>item.id===id);
+  if(!task || task.done){
+    toggleTask(id);
+    return;
+  }
+  const row = button.closest('.workspace-row');
+  if(!row){
+    toggleTask(id);
+    return;
+  }
+  button.disabled = true;
+  row.classList.add('task-row-exiting');
+  setTimeout(()=>toggleTask(id), 300);
 }
 function deleteTask(id){
   AppDB.saveTasks(AppDB.getTasks().filter(t=>t.id!==id)); renderSubjectGrid(); renderTasks(); renderNextSession(); refreshWorkspaceView();
@@ -6445,7 +6482,7 @@ async function handleWorkspaceAction(action, button){
       renderWorkspace('tasks');
       return;
     case 'tasks-toggle':
-      toggleTask(button.dataset.id);
+      animateWorkspaceTaskToggle(button);
       return;
     case 'tasks-delete':
       if(await confirmDestructiveAction({
