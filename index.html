@@ -2575,6 +2575,7 @@ function sanitizeProfile(input){
     fullName: sanitizeText(safe.fullName || safe.full_name || '', ''),
     displayName: sanitizeText(safe.displayName || safe.display_name || '', ''),
     studyGoal: sanitizeText(safe.studyGoal || safe.study_goal || '', ''),
+    examDate: (safe.examDate || safe.exam_date) && parseLocalDate(safe.examDate || safe.exam_date) ?dateKey(parseLocalDate(safe.examDate || safe.exam_date)) : null,
     activeView: VIEW_IDS.includes(safe.activeView || safe.active_view) ?(safe.activeView || safe.active_view) : 'dashboard',
     theme: (safe.theme === 'dark' || safe.theme === 'light') ?safe.theme : 'light',
     sidebarCollapsed: !!(safe.sidebarCollapsed ?? safe.sidebar_collapsed),
@@ -2983,8 +2984,7 @@ const DataStoreSupabase = {
       return result;
     }
     if(this.shouldThrottleErrorToast(label, result)) return result;
-    const detail = shortErrorDetail(result);
-    toast(`Não foi possível sincronizar ${label} agora.${detail ?` Detalhe: ${detail}` : ' Os dados ficaram salvos neste navegador.'}`);
+    toast(`Não foi possível sincronizar ${label} agora. Os dados ficaram salvos neste navegador.`);
     return result;
   },
   isAuthExpiredResult(result){
@@ -3112,6 +3112,7 @@ const DataStoreSupabase = {
         full_name: row?.full_name || '',
         display_name: row?.display_name || '',
         study_goal: row?.study_goal || '',
+        exam_date: row?.exam_date || null,
         active_view: row?.active_view || 'dashboard',
         theme: row?.theme || 'light',
         sidebar_collapsed: !!row?.sidebar_collapsed,
@@ -3121,7 +3122,7 @@ const DataStoreSupabase = {
     async getCurrent(){
       const userId = DataStoreSupabase.getUserId();
       if(!userId) return {ok:false,reason:'supabase-auth-required'};
-      const result = await DataStoreSupabase.request(`profiles?id=eq.${encodeURIComponent(userId)}&select=id,full_name,display_name,study_goal,active_view,theme,sidebar_collapsed,layout&limit=1`);
+      const result = await DataStoreSupabase.request(`profiles?id=eq.${encodeURIComponent(userId)}&select=id,full_name,display_name,study_goal,exam_date,active_view,theme,sidebar_collapsed,layout&limit=1`);
       if(!result.ok) return result;
       return {ok:true,data:this.map((Array.isArray(result.data) ?result.data[0] : null) || {id:userId})};
     },
@@ -3137,6 +3138,7 @@ const DataStoreSupabase = {
           full_name:safe.fullName,
           display_name:safe.displayName,
           study_goal:safe.studyGoal,
+          exam_date:safe.examDate,
           active_view:safe.activeView,
           theme:safe.theme,
           sidebar_collapsed:safe.sidebarCollapsed,
@@ -3144,7 +3146,7 @@ const DataStoreSupabase = {
         }),
       });
       if(!result.ok) return result;
-      return {ok:true,data:this.map((Array.isArray(result.data) ?result.data[0] : null) || {id:userId,full_name:safe.fullName,display_name:safe.displayName,study_goal:safe.studyGoal})};
+      return {ok:true,data:this.map((Array.isArray(result.data) ?result.data[0] : null) || {id:userId,full_name:safe.fullName,display_name:safe.displayName,study_goal:safe.studyGoal,exam_date:safe.examDate})};
     },
     async syncPreferences(){
       if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
@@ -3152,6 +3154,7 @@ const DataStoreSupabase = {
       if(!userId) return DataStoreSupabase.fail();
       const payload = {
         active_view: DataStoreLocal.settings.getActiveView(),
+        exam_date: DataStoreLocal.settings.getExamDate(),
         theme: DataStoreLocal.getRaw(STORAGE_KEYS.theme, 'light') === 'dark' ?'dark' : 'light',
         sidebar_collapsed: !!DataStoreLocal.getRaw(STORAGE_KEYS.sidebarCollapsed, false),
         layout: DataStoreLocal.getRaw(STORAGE_KEYS.layout, null),
@@ -3650,6 +3653,7 @@ const AuthController = {
       const profile = {...result.data,email:session?.user?.email || ''};
       DataStoreLocal.settings.saveProfile(profile);
       if(profile.layout) DataStoreLocal.setRaw(STORAGE_KEYS.layout, profile.layout);
+      DataStoreLocal.settings.saveExamDate(profile.examDate || null);
       DataStoreLocal.setRaw(STORAGE_KEYS.theme, profile.theme === 'dark' ?'dark' : 'light');
       DataStoreLocal.setRaw(STORAGE_KEYS.sidebarCollapsed, !!profile.sidebarCollapsed);
       DataStoreLocal.settings.saveActiveView(profile.activeView || 'dashboard');
@@ -3822,6 +3826,7 @@ const DataStore = {
       if(profile.ok){
         DataStoreLocal.settings.saveProfile({...DataStoreLocal.settings.getProfile(), ...profile.data});
         if(profile.data.layout) DataStoreLocal.setRaw(STORAGE_KEYS.layout, profile.data.layout);
+        DataStoreLocal.settings.saveExamDate(profile.data.examDate || null);
         DataStoreLocal.setRaw(STORAGE_KEYS.theme, profile.data.theme === 'dark' ?'dark' : 'light');
         DataStoreLocal.setRaw(STORAGE_KEYS.sidebarCollapsed, !!profile.data.sidebarCollapsed);
         DataStoreLocal.settings.saveActiveView(profile.data.activeView || 'dashboard');
@@ -3875,22 +3880,6 @@ const DataStore = {
     importLocalToCloud(){ return Promise.resolve({ok:false,mode:'local',reason:'supabase-auth-required'}); },
   },
 };
-
-if(typeof window !== 'undefined'){
-  window.studyflowDebugSupabase = async function studyflowDebugSupabase(){
-    const profile = await DataStoreSupabase.profiles.syncPreferences();
-    const tasks = await DataStoreSupabase.tasks.replaceAll(DataStoreLocal.tasks.getAll());
-    const result = {
-      configured: DataStoreSupabase.isConfigured(),
-      ready: DataStoreSupabase.isReady(),
-      userId: DataStoreSupabase.getUserId(),
-      profile,
-      tasks,
-    };
-    console.log('[StudyFlow] Supabase debug', result);
-    return result;
-  };
-}
 
 /* AppDB compatibility layer */
 
@@ -3961,7 +3950,10 @@ const AppDB = {
     DataStoreLocal.settings.savePomoState(v);
     DataStore.cloudWrite('pomodoro', ()=>DataStoreSupabase.pomodoro.upsert(DataStoreLocal.settings.getPomoState()));
   },
-  saveExamDate(v){ DataStoreLocal.settings.saveExamDate(v); },
+  saveExamDate(v){
+    DataStoreLocal.settings.saveExamDate(v);
+    DataStore.syncProfilePreferences();
+  },
   saveActiveView(v){
     DataStoreLocal.settings.saveActiveView(v);
     DataStore.syncProfilePreferences();
