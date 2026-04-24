@@ -1139,6 +1139,252 @@
     @media(max-width:1220px){.subjects-master-layout{grid-template-columns:1fr;}.subjects-side-column{position:static;}.subject-overview-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
     @media(max-width:900px){.subjects-hero-card{grid-template-columns:1fr;min-height:0;padding:28px;}.subjects-hero-visual{min-height:150px;}.subjects-hero-note{position:static;margin-top:14px;justify-self:flex-start;}.subject-detail-head{grid-template-columns:1fr;}.topic-toolbar{grid-template-columns:1fr;}}
     @media(max-width:680px){.subjects-overview-block,.subject-detail-head,.subject-detail-body{padding:20px;}.subject-overview-intro{display:block;}.subject-overview-manage{margin-top:14px;}.subject-overview-grid{grid-template-columns:1fr;}.subject-tabs{padding:0 20px;gap:8px 18px;}.subject-tab{min-height:42px;}.topic-row{grid-template-columns:44px minmax(0,1fr) 16px;gap:10px;}.topic-status-pill{grid-column:2 / 4;justify-self:start;}.subjects-hero-actions{flex-direction:column;max-width:none;}.subjects-hero-title{font-size:clamp(2rem,10vw,2.35rem);}}
+    /* Surgical submenu polish: flatter internal hierarchy, same warm identity */
+    #workspaceView{--subtle-line:rgba(234,223,210,.72);--soft-panel:#fffaf4;--soft-panel-2:#fff7ef;}
+    #workspaceView [data-workspace] .btn-glass{border-radius:12px;box-shadow:none;}
+    #workspaceView [data-workspace] .btn-glass.secondary,
+    #workspaceView [data-workspace] .btn-glass:not(.primary):not(.tertiary):not(.ghost){background:transparent;border-color:transparent;color:#6f6257;}
+    #workspaceView [data-workspace] .btn-glass.secondary:hover,
+    #workspaceView [data-workspace] .btn-glass:not(.primary):not(.tertiary):not(.ghost):hover{background:#fff3e8;border-color:#ead8c8;color:#241a14;}
+    #workspaceView [data-workspace] .workspace-header-card .btn-glass:not(.primary){background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:#fff;}
+    #workspaceView [data-workspace] .workspace-header-card .btn-glass:not(.primary):hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.22);color:#fff;}
+    #workspaceView [data-workspace] .workspace-side-card{border-radius:24px;padding:20px 22px;background:linear-gradient(180deg,#fffdf9 0%,#fff8ef 100%);box-shadow:none;}
+    #workspaceView [data-workspace] .workspace-mini-stat{padding:15px 0;border:0;border-bottom:1px solid var(--subtle-line);border-radius:0;background:transparent;}
+    #workspaceView [data-workspace] .workspace-mini-stat:last-child{border-bottom:0;}
+    #workspaceView [data-workspace] .workspace-mini-value{font-size:1.78rem;margin-top:7px;}
+    #workspaceView [data-workspace] .workspace-pill{padding:4px 8px;border-radius:999px;background:#fff3e8;border-color:#efd9c7;font-size:.68rem;}
+    #workspaceView [data-workspace] .workspace-toolbar{align-items:flex-end;padding:8px 2px 0;margin-top:16px;border-bottom:1px solid var(--subtle-line);}
+    #workspaceView [data-workspace] .workspace-filter-row{gap:4px;}
+    #workspaceView [data-workspace] .workspace-toolbar .workspace-chip{min-height:38px;padding:8px 10px;border:0;border-radius:0;background:transparent;color:#7a685a;box-shadow:none;position:relative;}
+    #workspaceView [data-workspace] .workspace-toolbar .workspace-chip::after{content:'';position:absolute;left:10px;right:10px;bottom:-1px;height:2px;border-radius:999px;background:transparent;}
+    #workspaceView [data-workspace] .workspace-toolbar .workspace-chip.active,
+    #workspaceView [data-workspace] .workspace-toolbar .workspace-chip:hover{background:transparent;color:#241a14;}
+    #workspaceView [data-workspace] .workspace-toolbar .workspace-chip.active::after{background:#ff5a1f;}
+    #workspaceView [data-workspace] .workspace-card{border-radius:22px;padding:22px 24px;box-shadow:none;background:rgba(255,253,249,.72);}
+    #workspaceView [data-workspace] .workspace-card-header{padding-bottom:14px;margin-bottom:4px;border-bottom:1px solid var(--subtle-line);}
+    #workspaceView [data-workspace] .workspace-list{gap:0;}
+    #workspaceView [data-workspace] .workspace-row,
+    #workspaceView [data-workspace] .workspace-note-item{border:0;border-bottom:1px solid var(--subtle-line);border-radius:0;background:transparent;padding:15px 2px;}
+    #workspaceView [data-workspace] .workspace-row:last-child,
+    #workspaceView [data-workspace] .workspace-note-item:last-child{border-bottom:0;}
+    #workspaceView [data-workspace] .workspace-row-icon{width:38px;height:38px;border-radius:12px;background:#fff2e5;border-color:#efd9c7;box-shadow:none;}
+    #workspaceView [data-workspace] .workspace-row-actions .nav-btn{width:38px;height:38px;border-radius:10px;background:transparent;border-color:transparent;}
+    #workspaceView [data-workspace] .workspace-row-actions .nav-btn:hover{background:#fff2e5;border-color:#efd9c7;}
+    #workspaceView [data-workspace] .workspace-empty,
+    #workspaceView [data-workspace] .subject-placeholder-panel{border-radius:16px;background:transparent;border-color:#eadfd2;padding:24px;}
+
+    #workspaceView [data-workspace="agenda"] .workspace-screen-body{margin-top:18px;border-radius:24px;padding:24px;background:rgba(255,253,249,.68);box-shadow:none;}
+    #workspaceView [data-workspace="agenda"] .workspace-screen-body .workspace-filter-row{border-bottom:1px solid var(--subtle-line);padding-bottom:10px;margin-bottom:18px!important;}
+    #workspaceView [data-workspace="agenda"] .workspace-screen-body .workspace-chip{min-height:36px;padding:7px 10px;border:0;border-radius:10px;background:transparent;color:#6f6257;}
+    #workspaceView [data-workspace="agenda"] .workspace-screen-body .workspace-chip:hover{background:#fff3e8;color:#241a14;}
+    #workspaceView [data-workspace="agenda"] .calendar-month-title{text-align:left;margin-bottom:16px;font-size:1.42rem;}
+    #workspaceView [data-workspace="agenda"] .agenda-calendar{gap:0;border:1px solid var(--subtle-line);border-radius:18px;overflow:hidden;background:#fffdf9;}
+    #workspaceView [data-workspace="agenda"] .calendar-header-cell{padding:12px 8px;border-bottom:1px solid var(--subtle-line);background:#fff8ef;font-size:.72rem;}
+    #workspaceView [data-workspace="agenda"] .calendar-day{min-height:112px;border:0;border-right:1px solid var(--subtle-line);border-bottom:1px solid var(--subtle-line);border-radius:0;background:transparent;padding:10px;box-shadow:none;transition:background 160ms var(--ease);}
+    #workspaceView [data-workspace="agenda"] .calendar-day:hover{transform:none;box-shadow:none;background:#fff9f2;}
+    #workspaceView [data-workspace="agenda"] .calendar-day.today{background:#fff7ef;box-shadow:inset 0 0 0 1px rgba(255,90,31,.22);border-color:var(--subtle-line);}
+    #workspaceView [data-workspace="agenda"] .calendar-date{font-size:.98rem;margin-bottom:8px;}
+    #workspaceView [data-workspace="agenda"] .calendar-today-badge{border-radius:999px;padding:2px 6px;font-size:.6rem;}
+    #workspaceView [data-workspace="agenda"] .calendar-event{background:transparent!important;border:0!important;border-left:3px solid currentColor!important;border-radius:0;padding:6px 0 6px 8px;margin-top:0;color:#5f5248;font-size:.7rem;}
+    #workspaceView [data-workspace="agenda"] .calendar-event + .calendar-event{border-top:1px solid rgba(234,223,210,.58)!important;}
+
+    #workspaceView [data-workspace="tasks"] .workspace-card{margin-top:14px!important;}
+    #workspaceView [data-workspace="tasks"] .workspace-row-main{align-items:center;}
+    #workspaceView [data-workspace="tasks"] .workspace-row-icon{border-radius:10px;background:transparent;border-color:#d9c7b7;color:#ff5a1f;}
+    #workspaceView [data-workspace="tasks"] .workspace-row-icon:hover{background:#fff3e8;}
+    #workspaceView [data-workspace="tasks"] .workspace-pill{background:#fff8ef;border-color:#eadfd2;color:#7b6a5c;}
+
+    #workspaceView [data-workspace="pomodoro"] .workspace-grid{grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);}
+    #workspaceView [data-workspace="pomodoro"] .workspace-pomo-main{border-radius:24px;background:linear-gradient(180deg,#fffdf9 0%,#fff8ef 100%);}
+    #workspaceView [data-workspace="pomodoro"] .workspace-pomo-display{margin-top:18px;font-size:clamp(3.4rem,8vw,5.35rem);}
+    #workspaceView [data-workspace="pomodoro"] .workspace-pomo-actions .btn-glass{min-height:46px;border-radius:12px;}
+    #workspaceView [data-workspace="pomodoro"] .workspace-stack{gap:14px;}
+    #workspaceView [data-workspace="pomodoro"] .workspace-stack .workspace-card{background:transparent;border-radius:18px;}
+    #workspaceView [data-workspace="pomodoro"] .workspace-button-row .btn-glass{flex:0 1 auto;padding-inline:16px;}
+
+    #workspaceView [data-workspace="subjects"].subjects-master-layout{gap:18px;}
+    #workspaceView [data-workspace="subjects"] .subjects-overview-block,
+    #workspaceView [data-workspace="subjects"] .subject-detail-shell{border-radius:24px;box-shadow:none;background:rgba(255,253,249,.76);}
+    #workspaceView [data-workspace="subjects"] .subject-overview-grid{gap:0;border:1px solid var(--subtle-line);border-radius:18px;overflow:hidden;background:#fffdf9;}
+    #workspaceView [data-workspace="subjects"] .subject-overview-card{min-height:158px;border:0;border-right:1px solid var(--subtle-line);border-bottom:1px solid var(--subtle-line);border-radius:0;background:transparent;box-shadow:none;padding:20px;}
+    #workspaceView [data-workspace="subjects"] .subject-overview-card:hover,
+    #workspaceView [data-workspace="subjects"] .subject-overview-card:focus-visible{transform:none;box-shadow:none;background:#fff8ef;}
+    #workspaceView [data-workspace="subjects"] .subject-overview-card.active{box-shadow:inset 3px 0 0 #ff5a1f;border-color:var(--subtle-line);background:#fff7ef;}
+    #workspaceView [data-workspace="subjects"] .subject-overview-icon,
+    #workspaceView [data-workspace="subjects"] .subject-detail-icon{border-radius:14px;box-shadow:none;}
+    #workspaceView [data-workspace="subjects"] .subject-progress-card{border-radius:14px;background:transparent;border-color:var(--subtle-line);}
+    #workspaceView [data-workspace="subjects"] .topic-search,
+    #workspaceView [data-workspace="subjects"] .topic-filter-select{border-radius:12px;background:#fff9f2;}
+    #workspaceView [data-workspace="subjects"] .topic-list{gap:0;border:1px solid var(--subtle-line);border-radius:16px;overflow:hidden;padding-right:0;background:#fffdf9;}
+    #workspaceView [data-workspace="subjects"] .topic-row{border:0;border-bottom:1px solid var(--subtle-line);border-radius:0;background:transparent;box-shadow:none;min-height:58px;}
+    #workspaceView [data-workspace="subjects"] .topic-row:last-child{border-bottom:0;}
+    #workspaceView [data-workspace="subjects"] .topic-row:hover,
+    #workspaceView [data-workspace="subjects"] .topic-row:focus-visible{transform:none;box-shadow:none;background:#fff8ef;}
+    #workspaceView [data-workspace="subjects"] .topic-status-pill{font-size:.7rem;}
+
+    #workspaceView [data-workspace="mood"] .workspace-mood-picker{gap:0;border:1px solid var(--subtle-line);border-radius:18px;overflow:hidden;background:#fffdf9;}
+    #workspaceView [data-workspace="mood"] .workspace-mood-btn{border:0;border-right:1px solid var(--subtle-line);border-radius:0;background:transparent;padding:16px 8px;transform:none;}
+    #workspaceView [data-workspace="mood"] .workspace-mood-btn:last-child{border-right:0;}
+    #workspaceView [data-workspace="mood"] .workspace-mood-btn:hover,
+    #workspaceView [data-workspace="mood"] .workspace-mood-btn.active{background:#fff7ef;border-color:var(--subtle-line);transform:none;box-shadow:inset 0 -2px 0 #ff5a1f;}
+    #workspaceView [data-workspace="mood"] .workspace-mood-btn img{width:34px;height:34px;}
+    #workspaceView [data-workspace="mood"] .workspace-note-list{gap:0;}
+
+    #modal-mood{--subtle-line:rgba(234,223,210,.72);}
+    #modal-mood .mood-picker-row{gap:0;padding:0;border:1px solid var(--subtle-line);border-radius:16px;overflow:hidden;background:#fffdf9;}
+    #modal-mood .mood-emoji-btn{width:auto;flex:1;height:50px;border:0;border-right:1px solid var(--subtle-line);border-radius:0;background:transparent;transform:none;}
+    #modal-mood .mood-emoji-btn:last-child{border-right:0;}
+    #modal-mood .mood-emoji-btn:hover,
+    #modal-mood .mood-emoji-btn.selected{background:#fff7ef;border-color:var(--subtle-line);transform:none;box-shadow:inset 0 -2px 0 #ff5a1f;}
+    #modal-mood .mood-cal-grid{gap:0;border:1px solid var(--subtle-line);border-radius:16px;overflow:hidden;background:#fffdf9;}
+    #modal-mood .mood-cal-hdr{padding:10px 4px;margin:0;background:#fff8ef;border-bottom:1px solid var(--subtle-line);}
+    #modal-mood .mood-day{border:0;border-right:1px solid var(--subtle-line);border-bottom:1px solid var(--subtle-line);border-radius:0;background:transparent;}
+    #modal-mood .mood-day.today{box-shadow:inset 0 0 0 1px rgba(255,90,31,.32);background:#fff7ef;}
+    #modal-mood .mood-day-emoji img{width:18px;height:18px;}
+
+    body.theme-dark #workspaceView,body.theme-dark #modal-mood{--subtle-line:#382a22;--soft-panel:#201813;--soft-panel-2:#241b16;}
+    body.theme-dark #workspaceView [data-workspace] .workspace-side-card,
+    body.theme-dark #workspaceView [data-workspace] .workspace-card,
+    body.theme-dark #workspaceView [data-workspace="agenda"] .workspace-screen-body,
+    body.theme-dark #workspaceView [data-workspace="subjects"] .subjects-overview-block,
+    body.theme-dark #workspaceView [data-workspace="subjects"] .subject-detail-shell{background:rgba(28,22,18,.86);box-shadow:none;}
+    body.theme-dark #workspaceView [data-workspace] .workspace-mini-stat,
+    body.theme-dark #workspaceView [data-workspace] .workspace-row,
+    body.theme-dark #workspaceView [data-workspace] .workspace-note-item{background:transparent;border-color:#382a22;}
+    body.theme-dark #workspaceView [data-workspace] .workspace-toolbar .workspace-chip,
+    body.theme-dark #workspaceView [data-workspace="agenda"] .workspace-screen-body .workspace-chip{background:transparent;border-color:transparent;color:var(--t2);}
+    body.theme-dark #workspaceView [data-workspace] .workspace-toolbar .workspace-chip.active,
+    body.theme-dark #workspaceView [data-workspace] .workspace-toolbar .workspace-chip:hover{background:transparent;color:#fff4e8;}
+    body.theme-dark #workspaceView [data-workspace="agenda"] .agenda-calendar,
+    body.theme-dark #workspaceView [data-workspace="subjects"] .subject-overview-grid,
+    body.theme-dark #workspaceView [data-workspace="subjects"] .topic-list,
+    body.theme-dark #workspaceView [data-workspace="mood"] .workspace-mood-picker,
+    body.theme-dark #modal-mood .mood-picker-row,
+    body.theme-dark #modal-mood .mood-cal-grid{background:#1b1714;border-color:#382a22;}
+    body.theme-dark #workspaceView [data-workspace="agenda"] .calendar-header-cell,
+    body.theme-dark #modal-mood .mood-cal-hdr{background:#241b16;border-color:#382a22;}
+    body.theme-dark #workspaceView [data-workspace="agenda"] .calendar-day,
+    body.theme-dark #workspaceView [data-workspace="subjects"] .subject-overview-card,
+    body.theme-dark #workspaceView [data-workspace="subjects"] .topic-row,
+    body.theme-dark #workspaceView [data-workspace="mood"] .workspace-mood-btn,
+    body.theme-dark #modal-mood .mood-emoji-btn,
+    body.theme-dark #modal-mood .mood-day{background:transparent;border-color:#382a22;}
+    body.theme-dark #workspaceView [data-workspace="agenda"] .calendar-day:hover,
+    body.theme-dark #workspaceView [data-workspace="subjects"] .subject-overview-card:hover,
+    body.theme-dark #workspaceView [data-workspace="subjects"] .topic-row:hover,
+    body.theme-dark #workspaceView [data-workspace="mood"] .workspace-mood-btn:hover,
+    body.theme-dark #workspaceView [data-workspace="mood"] .workspace-mood-btn.active,
+    body.theme-dark #modal-mood .mood-emoji-btn:hover,
+    body.theme-dark #modal-mood .mood-emoji-btn.selected{background:#2d211a;}
+
+    body.theme-dark #workspaceView [data-workspace="subjects"] .topic-search,
+    body.theme-dark #workspaceView [data-workspace="subjects"] .topic-filter-select{background:#241b16!important;border-color:#4a372b!important;color:#cdb9a6!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.035);}
+    body.theme-dark #workspaceView [data-workspace="subjects"] .topic-search:focus-within,
+    body.theme-dark #workspaceView [data-workspace="subjects"] .topic-filter-select:focus-within{border-color:#ff9554!important;box-shadow:0 0 0 3px rgba(255,149,84,.14),inset 0 1px 0 rgba(255,255,255,.04);}
+    body.theme-dark #workspaceView [data-workspace="subjects"] .topic-search input,
+    body.theme-dark #workspaceView [data-workspace="subjects"] .topic-filter-select select{color:#fff4e8!important;background:#241b16!important;}
+    body.theme-dark #workspaceView [data-workspace="subjects"] .topic-search input::placeholder{color:#9f806c!important;}
+    body.theme-dark #workspaceView [data-workspace="subjects"] .topic-filter-select svg,
+    body.theme-dark #workspaceView [data-workspace="subjects"] .topic-search svg{color:#ff9554;opacity:.82;}
+    body.theme-dark #workspaceView [data-workspace="subjects"] .topic-filter-select::after{border-color:#ffb088;}
+    body.theme-dark #workspaceView [data-workspace="subjects"] .topic-filter-select select option{background:#1b1714!important;color:#fff4e8!important;}
+    body.theme-dark #workspaceView [data-workspace="subjects"] .topic-filter-select select option:checked{background:#ff5a1f!important;color:#fff!important;}
+
+    /* Submenu breathing pass: keep flatter hierarchy, restore professional spacing */
+    #workspaceView [data-workspace] .workspace-hero{gap:26px;margin-bottom:30px;}
+    #workspaceView [data-workspace] .workspace-grid{gap:26px;margin-top:0;}
+    #workspaceView [data-workspace] .workspace-stack{gap:22px;}
+    #workspaceView [data-workspace] .workspace-card{padding:24px 28px;}
+    #workspaceView [data-workspace] .workspace-card-header{margin-bottom:16px;}
+    #workspaceView [data-workspace] .workspace-row,
+    #workspaceView [data-workspace] .workspace-note-item{padding:17px 4px;}
+    #workspaceView [data-workspace] .workspace-row-main{gap:14px;}
+    #workspaceView [data-workspace] .workspace-actions{gap:16px;}
+    #workspaceView [data-workspace] .workspace-header-card .btn-glass.secondary,
+    #workspaceView [data-workspace] .workspace-header-card .btn-glass:not(.primary):not(.tertiary):not(.ghost),
+    #workspaceView [data-workspace] .subjects-hero-card .btn-glass.secondary,
+    #workspaceView [data-workspace] .subjects-hero-card .btn-glass:not(.primary):not(.tertiary):not(.ghost){background:rgba(255,255,255,.16)!important;border:1px solid rgba(255,255,255,.28)!important;color:#fff!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.18)!important;}
+    #workspaceView [data-workspace] .workspace-header-card .btn-glass.secondary:hover,
+    #workspaceView [data-workspace] .workspace-header-card .btn-glass:not(.primary):not(.tertiary):not(.ghost):hover,
+    #workspaceView [data-workspace] .subjects-hero-card .btn-glass.secondary:hover,
+    #workspaceView [data-workspace] .subjects-hero-card .btn-glass:not(.primary):not(.tertiary):not(.ghost):hover{background:rgba(255,255,255,.24)!important;border-color:rgba(255,255,255,.36)!important;color:#fff!important;}
+    #workspaceView [data-workspace] .workspace-button-row,
+    #workspaceView [data-workspace] .workspace-pomo-actions{gap:14px;}
+    #workspaceView [data-workspace] .workspace-toolbar{margin-top:0;margin-bottom:22px;padding-top:2px;}
+    #workspaceView [data-workspace] .workspace-side-card{padding:24px 26px;}
+    #workspaceView [data-workspace] .workspace-mini-stat{padding:18px 0;}
+    #workspaceView [data-workspace] .workspace-mini-copy{max-width:42ch;line-height:1.45;}
+    #workspaceView [data-workspace] .workspace-mini-stat>div{min-width:0;overflow:visible;}
+    #workspaceView [data-workspace] .workspace-mini-label,
+    #workspaceView [data-workspace] .workspace-mini-copy{overflow:visible;text-overflow:clip;white-space:normal;}
+
+    #workspaceView [data-workspace="agenda"] .workspace-screen-body{margin-top:0;padding:28px;}
+    #workspaceView [data-workspace="agenda"] .workspace-screen-body .workspace-filter-row{gap:10px;margin-bottom:22px!important;}
+    #workspaceView [data-workspace="agenda"] .calendar-month-title{margin-bottom:20px;}
+    #workspaceView [data-workspace="agenda"] .calendar-day{padding:12px;min-height:118px;}
+    #workspaceView [data-workspace="agenda"] .calendar-event{margin-top:4px;padding:7px 0 7px 10px;}
+
+    #workspaceView [data-workspace="tasks"] .workspace-card{margin-top:0!important;}
+    #workspaceView [data-workspace="tasks"] .workspace-toolbar{gap:18px;}
+    #workspaceView [data-workspace="tasks"] .workspace-filter-row{gap:8px;}
+
+    #workspaceView [data-workspace="pomodoro"] .workspace-grid{grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr);gap:28px;}
+    #workspaceView [data-workspace="pomodoro"] .workspace-pomo-main{padding:30px 34px;}
+    #workspaceView [data-workspace="pomodoro"] .workspace-pomo-display{margin-top:24px;margin-bottom:6px;}
+    #workspaceView [data-workspace="pomodoro"] .workspace-copy{margin-top:18px;line-height:1.55;}
+    #workspaceView [data-workspace="pomodoro"] .workspace-stack .workspace-card{padding:24px 28px;}
+
+    #workspaceView [data-workspace="subjects"].subjects-master-layout{gap:28px;}
+    #workspaceView [data-workspace="subjects"] .subjects-main-column{gap:28px;}
+    #workspaceView [data-workspace="subjects"] .subjects-overview-block{padding:30px;}
+    #workspaceView [data-workspace="subjects"] .subject-overview-grid{gap:10px;border:0;background:transparent;overflow:visible;}
+    #workspaceView [data-workspace="subjects"] .subject-overview-card{border:1px solid var(--subtle-line);border-radius:14px;background:rgba(255,253,249,.58);}
+    #workspaceView [data-workspace="subjects"] .subject-overview-card.active{box-shadow:inset 3px 0 0 #ff5a1f;background:#fff7ef;}
+    #workspaceView [data-workspace="subjects"] .subject-detail-body{padding-top:22px;}
+    #workspaceView [data-workspace="subjects"] .topic-toolbar{gap:14px;margin-bottom:18px;}
+    #workspaceView [data-workspace="subjects"] .topic-row{padding:15px 16px;}
+
+    #workspaceView [data-workspace="mood"] .workspace-grid{gap:26px;}
+    #workspaceView [data-workspace="mood"] .workspace-mood-picker{gap:10px;border:0;border-radius:0;overflow:visible;background:transparent;}
+    #workspaceView [data-workspace="mood"] .workspace-mood-btn{border:1px solid var(--subtle-line);border-radius:14px;background:rgba(255,253,249,.62);padding:18px 10px;}
+    #workspaceView [data-workspace="mood"] .workspace-mood-btn:last-child{border-right:1px solid var(--subtle-line);}
+    #workspaceView [data-workspace="mood"] .workspace-mood-btn:hover,
+    #workspaceView [data-workspace="mood"] .workspace-mood-btn.active{background:#fff7ef;box-shadow:inset 0 -2px 0 #ff5a1f;}
+    #workspaceView [data-workspace="mood"] .workspace-note-list{padding-top:2px;}
+
+    #modal-mood .mood-picker-row{gap:8px;border:0;border-radius:0;overflow:visible;background:transparent;}
+    #modal-mood .mood-emoji-btn{border:1px solid var(--subtle-line);border-radius:12px;background:#fffdf9;}
+    #modal-mood .mood-emoji-btn:last-child{border-right:1px solid var(--subtle-line);}
+    #modal-mood .mood-cal-grid{margin-top:14px;}
+
+    @media(max-width:680px){
+      #workspaceView [data-workspace] .workspace-hero,
+      #workspaceView [data-workspace] .workspace-grid{gap:18px;margin-bottom:22px;}
+      #workspaceView [data-workspace] .workspace-card{padding:22px;}
+      #workspaceView [data-workspace="mood"] .workspace-mood-picker{grid-template-columns:1fr 1fr;gap:10px;}
+    }
+
+    /* Dashboard hero refinement */
+    #next-session-card .next-session-title{line-height:1.12;padding-bottom:.12em;overflow:visible;-webkit-line-clamp:unset;}
+    #next-session-card .hero-pomodoro-btn.primary{background:#fffdf9;border-color:rgba(255,255,255,.82);color:#241a14;box-shadow:0 14px 30px rgba(52,24,12,.2),inset 0 1px 0 rgba(255,255,255,.86);}
+    #next-session-card .hero-pomodoro-btn.primary:hover{background:#fff4e8;border-color:#fff7ef;color:#241a14;transform:translateY(-1px);}
+    #next-session-card .hero-pomodoro-btn.primary svg{color:#ff5a1f;}
+    #next-session-card .hero-pomodoro:not(.is-active) .hero-pomodoro-actions{grid-template-columns:minmax(150px,180px);justify-content:center;max-width:240px;}
+    #next-session-card .hero-pomodoro.is-active .hero-pomodoro-actions{grid-template-columns:54px minmax(118px,1fr) minmax(118px,1fr);justify-content:stretch;max-width:390px;}
+    #next-session-card .hero-pomodoro-btn.ghost:disabled,
+    #next-session-card .hero-pomodoro-btn.done:disabled{display:none;opacity:0;visibility:hidden;pointer-events:none;}
+    body.theme-dark #note .grid-stack-item-content .card,
+    body.theme-dark #note .session-note-card,
+    body.theme-dark #note .session-note-modal-list,
+    body.theme-dark #note .session-note-summary,
+    body.theme-dark #subjects .grid-stack-item-content .card,
+    body.theme-dark #subjects .subject-grid{scrollbar-width:none;}
+    body.theme-dark #note .grid-stack-item-content .card::-webkit-scrollbar,
+    body.theme-dark #note .session-note-card::-webkit-scrollbar,
+    body.theme-dark #note .session-note-modal-list::-webkit-scrollbar,
+    body.theme-dark #note .session-note-summary::-webkit-scrollbar,
+    body.theme-dark #subjects .grid-stack-item-content .card::-webkit-scrollbar,
+    body.theme-dark #subjects .subject-grid::-webkit-scrollbar{display:none;width:0;height:0;}
   </style>
 </head>
 <body>
@@ -1624,7 +1870,7 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
   <div class="modal-card" style="max-width:420px;padding:24px;" tabindex="-1">
     <div class="modal-title" style="text-align:center;margin-bottom:20px;" id="modal-mood-title">Como você está hoje</div>
     <div class="mood-picker-row" id="mood-picker-row">
-      <button class="mood-emoji-btn" type="button" data-mood="icons/1.png" aria-label="Registrar humor: ?timo"><img src="icons/1.png" alt="?timo" draggable="false"></button>
+      <button class="mood-emoji-btn" type="button" data-mood="icons/1.png" aria-label="Registrar humor: Ótimo"><img src="icons/1.png" alt="Ótimo" draggable="false"></button>
       <button class="mood-emoji-btn" type="button" data-mood="icons/2.png" aria-label="Registrar humor: Bem"><img src="icons/2.png" alt="Bem" draggable="false"></button>
       <button class="mood-emoji-btn" type="button" data-mood="icons/3.png" aria-label="Registrar humor: Focado"><img src="icons/3.png" alt="Focado" draggable="false"></button>
       <button class="mood-emoji-btn" type="button" data-mood="icons/4.png" aria-label="Registrar humor: Cansado"><img src="icons/4.png" alt="Cansado" draggable="false"></button>
@@ -2359,6 +2605,73 @@ const AppStats = {
     return Array.from({length:7},(_,i)=>{
       const d=new Date(start); d.setDate(start.getDate()+i); const dk=dateKey(d);
       return { dk, date:d, focusMin:this.focusOnDate(sessions,dk), completedTasks:tasks.filter(t=>t.done&&t.completedAt&&dateKey(t.completedAt)===dk).length };
+    });
+  },
+  monthBounds(offset=0){
+    const now=new Date();
+    const start=new Date(now.getFullYear(),now.getMonth()+offset,1);
+    start.setHours(0,0,0,0);
+    const end=new Date(now.getFullYear(),now.getMonth()+offset+1,0);
+    end.setHours(23,59,59,999);
+    return {start,end};
+  },
+  periodBounds(period='week',offset=0){
+    return period==='month' ?this.monthBounds(offset) : this.weekBounds(offset);
+  },
+  focusInBounds(sessions,bounds){
+    return sessions
+      .filter(s=>s.type==='focus'&&new Date(s.startedAt)>=bounds.start&&new Date(s.startedAt)<=bounds.end)
+      .reduce((a,s)=>a+s.durationMinutes,0);
+  },
+  periodLineData(sessions,period='week',offset=0){
+    if(period!=='month') return this.weeklyLineData(sessions,offset);
+    const {start,end}=this.monthBounds(offset);
+    const focus=[],brk=[],labels=[];
+    for(let d=new Date(start); d<=end; d.setDate(d.getDate()+1)){
+      const current=new Date(d); const dk=dateKey(current);
+      focus.push(this.focusOnDate(sessions,dk)/60);
+      brk.push(this.breakOnDate(sessions,dk)/60);
+      labels.push(current.getDate());
+    }
+    return {focus,break:brk,labels};
+  },
+  taskBuckets(tasks,period='week',offset=0){
+    const inRange=(value,start,end)=>{
+      if(!value) return false;
+      const dt=new Date(value);
+      return dt>=start&&dt<=end;
+    };
+    if(period==='month'){
+      const {start,end}=this.monthBounds(offset);
+      const buckets=[];
+      for(let cursor=new Date(start); cursor<=end;){
+        const bucketStart=new Date(cursor);
+        const bucketEnd=new Date(cursor);
+        bucketEnd.setDate(bucketEnd.getDate()+(6-bucketEnd.getDay()));
+        if(bucketEnd>end) bucketEnd.setTime(end.getTime());
+        bucketEnd.setHours(23,59,59,999);
+        const label=`${bucketStart.getDate()}-${bucketEnd.getDate()}`;
+        buckets.push({
+          date:bucketStart,
+          label,
+          openTasks:tasks.filter(t=>!t.done&&inRange(t.createdAt,bucketStart,bucketEnd)).length,
+          completedTasks:tasks.filter(t=>t.done&&inRange(t.completedAt,bucketStart,bucketEnd)).length
+        });
+        cursor=new Date(bucketEnd);
+        cursor.setDate(cursor.getDate()+1);
+        cursor.setHours(0,0,0,0);
+      }
+      return buckets;
+    }
+    const {start}=this.weekBounds(offset);
+    return Array.from({length:7},(_,i)=>{
+      const d=new Date(start); d.setDate(start.getDate()+i); const dk=dateKey(d);
+      return {
+        date:d,
+        label:DAY_ABBR[(i+1)%7],
+        openTasks:tasks.filter(t=>!t.done&&dateKey(t.createdAt)===dk).length,
+        completedTasks:tasks.filter(t=>t.done&&t.completedAt&&dateKey(t.completedAt)===dk).length
+      };
     });
   },
   weeklyFocusMin(sessions,offset=0){
@@ -3099,8 +3412,10 @@ function renderHeroPomodoro(target){
   const mainBtn=document.getElementById('btn-hero-pomo-main');
   const resetBtn=document.getElementById('btn-hero-pomo-reset');
   const finishBtn=document.getElementById('btn-hero-pomo-finish');
+  const hero=document.getElementById('hero-pomodoro');
   if(!display||!progress||!subject||!mainBtn)return;
   const isActive=Pomo.isRunning || hasPomoRemaining();
+  if(hero) hero.classList.toggle('is-active', isActive);
   const left=Math.max(0, Number(Pomo.leftSec)||0);
   const total=Math.max(1, Number(Pomo.totalSec)||((Pomo.focusMin||25)*60));
   const shownSec=isActive ?left : total;
@@ -3306,62 +3621,74 @@ function drawLineChart(focusArr,breakArr){
 
 function renderWeeklyAnalysis(){
   const sessions=AppDB.getSessions();
-  const focMin=AppStats.weeklyFocusMin(sessions);
-  const prevFocMin=AppStats.weeklyFocusMin(sessions,-1);
+  const period=document.getElementById('analysis-period-select')?.value === 'month' ?'month' : 'week';
+  const focMin=AppStats.focusInBounds(sessions,AppStats.periodBounds(period));
+  const prevFocMin=AppStats.focusInBounds(sessions,AppStats.periodBounds(period,-1));
   const delta=prevFocMin>0 ?Math.round(((focMin-prevFocMin)/prevFocMin)*100) : 0;
   document.getElementById('analysis-total').textContent=fmtMin(focMin)||'0m';
   const dv=document.getElementById('analysis-delta-val');
   dv.textContent=(delta>=0?'+':'')+delta+'%';
   const dd=document.getElementById('analysis-delta');
   dd.className='stat-delta '+(delta>=0?'delta-up':'delta-down');
-  const now=new Date();
-  document.getElementById('analysis-sub').textContent=`vs semana anterior  -  ${fmtMin(prevFocMin)||'0m'}`;
-  const ld=AppStats.weeklyLineData(sessions);
-  const {start}=AppStats.weekBounds(0);
-  const todayDow=new Date().getDay(); const todayIdx=todayDow===0?6:todayDow-1;
+  const isMonth=period==='month';
+  document.getElementById('analysis-sub').textContent=`vs ${isMonth?'mes':'semana'} anterior  -  ${fmtMin(prevFocMin)||'0m'}`;
+  const ld=AppStats.periodLineData(sessions,period);
+  const today=new Date();
+  const todayDow=today.getDay(); const todayIdx=todayDow===0?6:todayDow-1;
   const axEl=document.getElementById('analysis-days-x');
-  axEl.innerHTML=Array.from({length:7},(_,i)=>`<span${i===todayIdx?' class="now"':''}>${DAY_ABBR[(i+1)%7]}</span>`).join('');
+  axEl.innerHTML=isMonth
+    ? ld.labels.map(day=>`<span${day===today.getDate()?' class="now"':''}>${day%5===0||day===1||day===today.getDate()?day:''}</span>`).join('')
+    : Array.from({length:7},(_,i)=>`<span${i===todayIdx?' class="now"':''}>${DAY_ABBR[(i+1)%7]}</span>`).join('');
   setTimeout(()=>drawLineChart(ld.focus,ld.break),50);
 }
 
 function renderTasks(){
-  const sessions=AppDB.getSessions(); const tasks=AppDB.getTasks();
-  const weekData=AppStats.weekDays(sessions,tasks);
-  const total=weekData.reduce((a,d)=>a+d.completedTasks,0);
-  const prevWeekData=AppStats.weekDays(sessions,tasks,-1);
-  const prevTotal=prevWeekData.reduce((a,d)=>a+d.completedTasks,0);
-  const delta=total-prevTotal;
-  const activeDays=weekData.filter(d=>d.completedTasks>0).length;
-  document.getElementById('tasks-count').textContent=total;
+  const tasks=AppDB.getTasks();
+  const period=document.getElementById('tasks-period-select')?.value === 'month' ?'month' : 'week';
+  const periodLabel=period==='month' ?'este mes' : 'esta semana';
+  const buckets=AppStats.taskBuckets(tasks,period);
+  const prevBuckets=AppStats.taskBuckets(tasks,period,-1);
+  const openTotal=tasks.filter(task=>!task.done).length;
+  const createdInPeriod=buckets.reduce((a,d)=>a+d.openTasks,0);
+  const completedInPeriod=buckets.reduce((a,d)=>a+d.completedTasks,0);
+  const prevCreated=prevBuckets.reduce((a,d)=>a+d.openTasks,0);
+  const delta=createdInPeriod-prevCreated;
+  const activeDays=buckets.filter(d=>d.openTasks+d.completedTasks>0).length;
+  const weekData=buckets.map(d=>({...d, completedTasks:d.openTasks+d.completedTasks}));
+  document.getElementById('tasks-count').textContent=openTotal;
   document.getElementById('tasks-delta-val').textContent=(delta>=0?'+':'')+delta;
   document.getElementById('tasks-delta').className='stat-delta '+(delta>=0?'delta-up':'delta-down');
-  document.getElementById('tasks-sub').textContent=total>0
-    ?
-    `${total} tarefa${total!==1?'s':''} concluída${total!==1?'s':''} esta semana`
-    : 'Você ainda não definiu sua próxima missão';
+  document.getElementById('tasks-sub').textContent=openTotal>0
+    ? `${openTotal} tarefa${openTotal!==1?'s':''} em aberto; ${completedInPeriod} concluida${completedInPeriod!==1?'s':''} ${periodLabel}`
+    : completedInPeriod>0
+      ? `Fila limpa; ${completedInPeriod} concluida${completedInPeriod!==1?'s':''} ${periodLabel}`
+      : 'Nenhuma tarefa em aberto';
   // Bar chart
   const bc=document.getElementById('barChart');
   const maxTasks=Math.max(...weekData.map(d=>d.completedTasks),1);
   const todayDow=new Date().getDay(); const todayIdx=todayDow===0?6:todayDow-1;
-  bc.innerHTML=weekData.map((d,i)=>{
-    const h=Math.round((d.completedTasks/maxTasks)*68);
-    const ph=Math.max(0,Math.round(((maxTasks-d.completedTasks)/maxTasks)*28));
-    return `<div class="bc-col"><div class="bc-seg bc-pend" style="height:${ph}px"></div><div class="bc-seg bc-done" style="height:${h}px"></div></div>`;
+  bc.innerHTML=buckets.map(d=>{
+    const openH=Math.round((d.openTasks/maxTasks)*58);
+    const doneH=Math.round((d.completedTasks/maxTasks)*58);
+    const emptyH=d.openTasks+d.completedTasks>0 ?0 : 10;
+    return `<div class="bc-col" title="${d.openTasks} abertas, ${d.completedTasks} concluidas"><div class="bc-seg bc-pend" style="height:${Math.max(openH,emptyH)}px"></div><div class="bc-seg bc-done" style="height:${doneH}px"></div></div>`;
   }).join('');
   const ax=document.getElementById('tasks-days-x');
-  ax.innerHTML=weekData.map((d,i)=>`<span${i===todayIdx?' class="now"':''}>${DAY_ABBR[(i+1)%7]}</span>`).join('');
+  ax.innerHTML=buckets.map((d,i)=>`<span${period==='week'&&i===todayIdx?' class="now"':''}>${d.label}</span>`).join('');
   const consistency=document.getElementById('tasks-consistency');
   if(consistency){
     consistency.innerHTML=weekData.map(d=>`<span class="consistency-dot${d.completedTasks>0?' done':''}"></span>`).join('')+
-      `<span class="consistency-label">${activeDays}/7 dias consistentes</span>`;
+      `<span class="consistency-label">${activeDays}/${buckets.length} ${period==='month'?'semanas':'dias'} com tarefas</span>`;
   }
   // Day breakdown
   const db=document.getElementById('dayBreakdown');
-  const sorted=[...weekData].filter(d=>d.completedTasks>0).sort((a,b)=>b.completedTasks-a.completedTasks).slice(0,3);
-  if(!sorted.length){db.innerHTML='<div class="empty-state">Você ainda não definiu sua próxima missão</div>'; updateSidebarIndicators(); return;}
+  const sorted=[...buckets].filter(d=>d.openTasks+d.completedTasks>0).sort((a,b)=>(b.openTasks+b.completedTasks)-(a.openTasks+a.completedTasks)).slice(0,3);
+  if(!sorted.length){db.innerHTML=`<div class="empty-state">${openTotal>0 ?`${openTotal} tarefa${openTotal!==1?'s':''} aberta${openTotal!==1?'s':''} fora deste periodo` : 'Nenhuma movimentacao neste periodo'}</div>`; updateSidebarIndicators(); return;}
   db.innerHTML=sorted.map(d=>{
-    const pct=Math.round((d.completedTasks/maxTasks)*100);
-    return `<div class="db-row"><div class="db-row-meta"><span>${DAY_FULL[(d.date.getDay())]}</span><span style="color:var(--indigo-l);font-weight:700">${d.completedTasks} tarefa${d.completedTasks!==1?'s':''}</span></div><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:var(--indigo);box-shadow:0 0 6px var(--indigo)"></div></div></div>`;
+    const activity=d.openTasks+d.completedTasks;
+    const pct=Math.round((activity/maxTasks)*100);
+    const label=period==='month' ?`Semana ${d.label}` : DAY_FULL[(d.date.getDay())];
+    return `<div class="db-row"><div class="db-row-meta"><span>${label}</span><span style="color:var(--indigo-l);font-weight:700">${d.openTasks} aberta${d.openTasks!==1?'s':''} / ${d.completedTasks} feita${d.completedTasks!==1?'s':''}</span></div><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:var(--indigo);box-shadow:0 0 6px var(--indigo)"></div></div></div>`;
   }).join('');
   updateSidebarIndicators();
 }
@@ -3495,8 +3822,8 @@ function buildAgendaWorkspace(){
     return total;
   },0);
   const weeklyEvents = events.filter(eventItem=>eventItem.recurrence==='weekly').length;
-  const side = `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Atividade Mensal</div><div class="workspace-mini-value">${monthOccurrences}</div><div class="workspace-mini-copy">sessão${monthOccurrences===1?'':'ões'} neste mês.</div></div><span class="workspace-pill">Agenda real</span></div>
-                <div class="workspace-mini-stat"><div><div class="workspace-mini-label">Recorrências</div><div class="workspace-mini-value">${weeklyEvents}</div><div class="workspace-mini-copy">sessão${weeklyEvents===1?'':'ões'} repetindo semanalmente.</div></div><span class="workspace-pill">Semanal</span></div>`;
+  const side = `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Atividade Mensal</div><div class="workspace-mini-value">${monthOccurrences}</div><div class="workspace-mini-copy">${monthOccurrences===1?'sessão':'sessões'} neste mês.</div></div><span class="workspace-pill">Agenda real</span></div>
+                <div class="workspace-mini-stat"><div><div class="workspace-mini-label">Recorrências</div><div class="workspace-mini-value">${weeklyEvents}</div><div class="workspace-mini-copy">${weeklyEvents===1?'sessão':'sessões'} repetindo semanalmente.</div></div><span class="workspace-pill">Semanal</span></div>`;
 
   const dayHeaders = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'S\u00E1b'].map(d => `<div class="calendar-header-cell">${d}</div>`).join('');
   let gridHtml = dayHeaders;
@@ -3643,7 +3970,7 @@ function buildPomodoroWorkspace(){
     'Use esta sala para escolher a matéria, controlar o ritmo e acompanhar o que já foi feito hoje.',
     actions,
     `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Matéria ativa</div><div class="workspace-mini-value">${activeSubject?.icon || '?'}</div><div class="workspace-mini-copy">${activeSubject ?esc(activeSubject.name) : 'Escolha uma matéria para começar.'}</div></div><span class="workspace-pill">${Pomo.phase==='focus' ?'Foco' : 'Pausa'}</span></div>
-     <div class="workspace-mini-stat"><div><div class="workspace-mini-label">Ciclos</div><div class="workspace-mini-value">${Pomo.sessionCount}</div><div class="workspace-mini-copy">sessão${Pomo.sessionCount===1?'':'ões'} completas nesta sequência.</div></div><span class="workspace-pill">${Pomo.isRunning ?'Em andamento' : 'Pronto'}</span></div>`,
+     <div class="workspace-mini-stat"><div><div class="workspace-mini-label">Ciclos</div><div class="workspace-mini-value">${Pomo.sessionCount}</div><div class="workspace-mini-copy">${Pomo.sessionCount===1?'sessão completa':'sessões completas'} nesta sequência.</div></div><span class="workspace-pill">${Pomo.isRunning ?'Em andamento' : 'Pronto'}</span></div>`,
     `<div class="workspace-grid">
       <div class="workspace-card workspace-pomo-main">
         <div class="workspace-card-header"><div><div class="workspace-card-title">Timer principal</div><div class="workspace-card-copy">Pronto para iniciar, pausar ou retomar sem sair da tela.</div></div></div>
@@ -3833,7 +4160,7 @@ function buildSubjectsWorkspace(){
 function buildMoodWorkspace(){
   const moods = AppDB.getMoods();
   const labels = {
-    'icons/1.png':'?timo',
+    'icons/1.png':'Ótimo',
     'icons/2.png':'Bem',
     'icons/3.png':'Focado',
     'icons/4.png':'Cansado',
@@ -3854,7 +4181,7 @@ function buildMoodWorkspace(){
     'Registre como você está, veja o histórico recente e acompanhe o ritmo emocional do estudo.',
     `${workspaceActionButton('mood-open-calendar','Abrir calendário','calendar','primary')}${workspaceActionButton('view-dashboard','Voltar ao dashboard','layout-dashboard')}`,
     `<div class="workspace-mini-stat"><div><div class="workspace-mini-label">Hoje</div><div class="workspace-mini-value">${current ?'?' : '?'}</div><div class="workspace-mini-copy">${current ?labels[current] : 'Ainda sem registro para hoje.'}</div></div><span class="workspace-pill">Estado</span></div>
-     <div class="workspace-mini-stat"><div><div class="workspace-mini-label">?ltimos registros</div><div class="workspace-mini-value">${recent.length}</div><div class="workspace-mini-copy">dias com humor salvo na base atual.</div></div><span class="workspace-pill">Histórico</span></div>`,
+     <div class="workspace-mini-stat"><div><div class="workspace-mini-label">Últimos registros</div><div class="workspace-mini-value">${recent.length}</div><div class="workspace-mini-copy">dias com humor salvo na base atual.</div></div><span class="workspace-pill">Histórico</span></div>`,
     `<div class="workspace-grid">
       <div class="workspace-card">
         <div class="workspace-card-header"><div><div class="workspace-card-title">Como você está hoje</div><div class="workspace-card-copy">Escolha um estado para registrar rapidamente.</div></div></div>
@@ -4974,6 +5301,8 @@ function initEventBindings(){
   });
 
   // Tasks
+  on('tasks-period-select','change',()=>renderTasks());
+  on('analysis-period-select','change',()=>renderWeeklyAnalysis());
   on('btn-tasks-add','click',()=>openAddTaskModal(null));
   on('btn-task-save','click',()=>{
     const subjectId=byId('task-form-subject').value;
