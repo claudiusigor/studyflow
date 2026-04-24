@@ -152,6 +152,7 @@ async function run() {
   check('AppDB delegates to local DataStore', script.includes('AppDB compatibility layer') && script.includes('return DataStoreLocal.subjects.getAll();') && script.includes('DataStoreLocal.tasks.saveAll(v);') && script.includes('DataStoreLocal.notes.saveOne(v);'));
   check('Supabase DataStore bridge is gated behind config and auth', script.includes('const SupabaseConfig') && script.includes('const DataStoreSupabase') && script.includes("reason:'supabase-auth-required'") && script.includes('DataStoreSupabase.isReady()') && script.includes('sf_supabase_config'));
   check('Supabase catalog maps official edital without user progress', script.includes('official_subjects?select=id,name,short_label') && script.includes("status:'not_started'") && script.includes('DataStoreLocal.subjects.saveAll(catalog.data)'));
+  check('Supabase public project config is present', html.includes('window.STUDYFLOW_SUPABASE_CONFIG') && html.includes('https://katyzecqeodacutbmuvr.supabase.co') && html.includes('sb_publishable_pQHqENje7HP66qjJNIckCg_ue2T3o03'));
   check('release telemetry exists', script.includes('const Analytics') && script.includes('focus_start') && script.includes('task_done') && script.includes('theme_toggle'));
   check('backup controls exist', html.includes('id=\"btn-export-json\"') && html.includes('id=\"btn-import-json\"') && html.includes('id=\"import-json-file\"') && script.includes('function exportAppData') && script.includes('function importAppData'));
 
