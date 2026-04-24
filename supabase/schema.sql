@@ -16,6 +16,7 @@ $$;
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   display_name text,
+  study_goal text,
   exam_date date,
   active_view text not null default 'dashboard'
     check (active_view in ('dashboard', 'agenda', 'tasks', 'pomodoro', 'subjects', 'mood')),
@@ -26,6 +27,9 @@ create table if not exists public.profiles (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.profiles
+  add column if not exists study_goal text;
 
 create table if not exists public.official_catalogs (
   id text primary key,

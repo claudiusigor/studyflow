@@ -1428,27 +1428,44 @@
     .auth-brand-panel p{margin-top:18px;font-size:1.36rem;color:#a18f84;font-weight:500;}
     .auth-wave{position:absolute;left:-220px;right:-260px;bottom:-210px;height:360px;opacity:.5;background:repeating-radial-gradient(ellipse at 72% 72%,transparent 0 30px,rgba(255,119,54,.14) 31px 32px,transparent 33px 52px);transform:rotate(-7deg);pointer-events:none;}
     .auth-card{position:relative;z-index:2;width:min(458px,100%);justify-self:center;padding:40px 46px 42px;border:1px solid rgba(214,194,177,.7);border-radius:18px;background:rgba(255,252,249,.78);box-shadow:0 22px 55px rgba(75,54,38,.11),0 1px 0 rgba(255,255,255,.86) inset;backdrop-filter:blur(12px);}
+    .auth-card.signup-mode{width:min(520px,100%);padding:34px 44px 36px;}
     .auth-tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:2px solid #eee2d9;margin-bottom:38px;}
+    .auth-card.signup-mode .auth-tabs{margin-bottom:20px;}
     .auth-tab{height:54px;border:0;background:transparent;border-radius:0;color:#9b887b;font-size:1.02rem;font-weight:900;cursor:pointer;}
     .auth-tab.active{color:#ff7f43;box-shadow:0 2px 0 #ff6a2b;}
     .auth-form{display:flex;flex-direction:column;gap:22px;}
+    .auth-card.signup-mode .auth-form{gap:14px;}
+    .auth-signup-only{display:none!important;}
+    .auth-card.signup-mode .auth-signup-only{display:flex!important;}
     .auth-field{display:flex;flex-direction:column;gap:10px;font-size:.96rem;font-weight:700;color:#5e5149;}
+    .auth-card.signup-mode .auth-field{gap:7px;font-size:.84rem;}
     .auth-input-wrap{height:58px;display:flex;align-items:center;gap:12px;border:1px solid #e6d8ce;border-radius:15px;background:#fffdfb;box-shadow:0 2px 7px rgba(91,61,40,.04),inset 0 1px 0 rgba(255,255,255,.78);}
+    .auth-card.signup-mode .auth-input-wrap{height:42px;border-radius:10px;}
     .auth-input-wrap input{min-width:0;flex:1;height:100%;border:0;background:transparent;padding:0 0 0 20px;font:inherit;font-size:1rem;color:#3d332d;outline:0;}
+    .auth-card.signup-mode .auth-input-wrap input{font-size:.86rem;padding-left:14px;}
     .auth-input-wrap input::placeholder{color:#c8bbb2;}
+    .auth-select-wrap select{min-width:0;flex:1;height:100%;border:0;background:transparent;padding:0 0 0 14px;font:inherit;font-size:.86rem;color:#8c7b70;outline:0;appearance:none;}
     .auth-input-wrap>i,.auth-input-action{width:44px;height:44px;margin-right:8px;display:grid;place-items:center;color:#9f8f84;}
+    .auth-card.signup-mode .auth-input-wrap>i,.auth-card.signup-mode .auth-input-action{width:36px;height:36px;margin-right:4px;}
     .auth-input-wrap svg{width:20px;height:20px;}
+    .auth-card.signup-mode .auth-input-wrap svg{width:16px;height:16px;}
     .auth-input-action{border:0;background:transparent;border-radius:12px;cursor:pointer;}
     .auth-input-action:hover{background:#fbf2eb;color:#ff6a2b;}
+    .auth-terms{flex-direction:row!important;align-items:flex-start;gap:10px;margin-top:2px;color:#9d8c82;font-size:.78rem;font-weight:700;line-height:1.35;}
+    .auth-terms input{width:16px;height:16px;margin-top:1px;accent-color:#ff7a3c;flex:0 0 auto;}
+    .auth-terms a{color:#ff7a3c;text-decoration:none;}
+    .auth-terms a:hover{text-decoration:underline;}
     .auth-message{min-height:20px;font-size:.86rem;font-weight:700;color:#b84220;}
     .auth-message.success{color:#15803d;}
     .auth-submit{height:58px;display:flex;align-items:center;justify-content:center;gap:16px;margin-top:0;border:0;border-radius:14px;background:linear-gradient(90deg,#ff7035,#ffad68);color:#fff;font-size:1.02rem;font-weight:950;cursor:pointer;box-shadow:0 12px 28px rgba(255,103,45,.22);}
+    .auth-card.signup-mode .auth-submit{height:50px;border-radius:11px;font-size:.92rem;}
     .auth-submit svg{width:21px;height:21px;}
     .auth-submit:disabled{opacity:.68;cursor:wait;}
     .auth-separator{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;margin:10px 0 2px;color:#b5a59a;font-style:normal;font-weight:800;}
     .auth-separator span{height:1px;background:#eadfd6;}
     .auth-separator em{font-style:normal;}
     .auth-google{height:58px;display:flex;align-items:center;justify-content:center;gap:18px;border:1px solid #e6d8ce;border-radius:14px;background:#fffdfb;color:#4b4039;font-size:1rem;font-weight:950;cursor:pointer;box-shadow:0 2px 8px rgba(91,61,40,.05);}
+    .auth-card.signup-mode .auth-separator,.auth-card.signup-mode .auth-google,.auth-card.signup-mode .auth-security{display:none;}
     .auth-google strong{font-size:1.7rem;line-height:1;color:#8f7f74;font-family:Arial,sans-serif;}
     .auth-security{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:46px;color:#9f8f84;font-size:.91rem;font-weight:600;line-height:1.35;text-align:left;}
     .auth-security svg{width:20px;height:20px;flex:0 0 auto;}
@@ -1457,6 +1474,8 @@
     body.theme-dark.auth-required .auth-card{background:rgba(31,23,19,.86);border-color:#4b3428;}
     body.theme-dark.auth-required .auth-brand-name,body.theme-dark.auth-required .auth-brand-panel h1{color:#fff7ef;}
     body.theme-dark.auth-required .auth-input-wrap,body.theme-dark.auth-required .auth-google{background:#1a1411;border-color:#4a352b;color:#f5eee8;}
+    body.theme-dark.auth-required .auth-select-wrap select{color:#d9c6b8;}
+    body.theme-dark.auth-required .auth-terms{color:#b79d89;}
     body.theme-dark.auth-required .auth-tabs{border-bottom-color:#3a2a22;}
     @media (max-width: 980px){
       .auth-screen{padding:22px;}
@@ -1502,8 +1521,8 @@
       <div class="auth-logo-mark"><img src="icons/pmmg-logo.png" alt="" draggable="false"></div>
       <div class="auth-brand-name">COLISEU</div>
       <div class="auth-brand-subtitle">Área de estudos PMMG</div>
-      <h1>Organize, estude<br>e <span>conquiste.</span></h1>
-      <p>Foco hoje, aprovação amanhã.</p>
+      <h1 id="auth-brand-title">Organize, estude<br>e <span>conquiste.</span></h1>
+      <p id="auth-brand-copy">Foco hoje, aprovação amanhã.</p>
       <div class="auth-wave" aria-hidden="true"></div>
     </div>
     <div class="auth-card" role="region" aria-labelledby="auth-title">
@@ -1513,6 +1532,13 @@
       </div>
       <form class="auth-form" id="auth-form">
         <h2 class="sr-only" id="auth-title">Entrar no COLISEU</h2>
+        <label class="auth-field auth-signup-only">
+          <span>Nome completo</span>
+          <span class="auth-input-wrap">
+            <input id="auth-name" type="text" autocomplete="name" placeholder="Seu nome completo">
+            <i data-lucide="user-round"></i>
+          </span>
+        </label>
         <label class="auth-field">
           <span>E-mail</span>
           <span class="auth-input-wrap">
@@ -1526,6 +1552,30 @@
             <input id="auth-password" type="password" autocomplete="current-password" placeholder="Digite sua senha" minlength="6" required>
             <button class="auth-input-action" id="auth-password-toggle" type="button" aria-label="Mostrar senha"><i data-lucide="eye"></i></button>
           </span>
+        </label>
+        <label class="auth-field auth-signup-only">
+          <span>Confirmar senha</span>
+          <span class="auth-input-wrap">
+            <input id="auth-password-confirm" type="password" autocomplete="new-password" placeholder="Confirme sua senha">
+            <button class="auth-input-action" id="auth-password-confirm-toggle" type="button" aria-label="Mostrar confirmação de senha"><i data-lucide="eye"></i></button>
+          </span>
+        </label>
+        <label class="auth-field auth-signup-only">
+          <span>Objetivo de estudo</span>
+          <span class="auth-input-wrap auth-select-wrap">
+            <select id="auth-study-goal">
+              <option value="">Escolha seu foco</option>
+              <option value="Aprovação PMMG">Aprovação PMMG</option>
+              <option value="Organizar rotina">Organizar rotina</option>
+              <option value="Ganhar constância">Ganhar constância</option>
+              <option value="Revisar edital">Revisar edital</option>
+            </select>
+            <i data-lucide="chevron-down"></i>
+          </span>
+        </label>
+        <label class="auth-terms auth-signup-only">
+          <input id="auth-terms" type="checkbox">
+          <span>Aceito os <a href="#" data-auth-link="terms">termos</a> e a <a href="#" data-auth-link="privacy">política de privacidade</a>.</span>
         </label>
         <div class="auth-message" id="auth-message" aria-live="polite"></div>
         <button class="auth-submit" id="auth-submit" type="submit"><span>Entrar</span><i data-lucide="arrow-right"></i></button>
@@ -1579,7 +1629,7 @@
 <div class="brand-copy"><h1 class="brand-name">COLISEU</h1><span class="brand-tagline">Painel tático PMMG</span></div>
     </div>
     <div class="workspace-heading">
-      <div class="workspace-title"><h1 id="workspace-title-heading">Olá, Claus!</h1><p id="workspace-title-copy">Organize seu estudo PMMG com foco, ritmo e revisão.</p></div>
+      <div class="workspace-title"><h1 id="workspace-title-heading">Olá!</h1><p id="workspace-title-copy">Organize seu estudo PMMG com foco, ritmo e revisão.</p></div>
       <div class="workspace-search" role="search" aria-label="Busca visual">
         <i data-lucide="search"></i>
         <input id="global-search-input" type="search" placeholder="Buscar matéria, conteúdo ou tarefa..." aria-label="Buscar matéria, conteúdo ou tarefa">
@@ -2493,6 +2543,20 @@ function sanitizeNote(input){
     checklist: insights.map(item=>({id:item.id,label:item.text,done:item.icon==='target'})),
   };
 }
+function sanitizeProfile(input){
+  const safe = input && typeof input === 'object' ?input : {};
+  return {
+    id: safe.id ?sanitizeText(safe.id, null) : null,
+    displayName: sanitizeText(safe.displayName || safe.display_name || '', ''),
+    studyGoal: sanitizeText(safe.studyGoal || safe.study_goal || '', ''),
+    email: sanitizeText(safe.email || '', ''),
+  };
+}
+function getProfileFirstName(){
+  const profile = DataStoreLocal.settings.getProfile();
+  const name = sanitizeText(profile.displayName || '', '');
+  return name ?name.split(/\s+/)[0] : '';
+}
 const NoteUIState = {
   autosaveTimer: null,
   autosaveMessageTimer: null,
@@ -2711,6 +2775,7 @@ const STORAGE_KEYS = {
   analyticsEvents: 'sf_events',
   supabaseConfig: 'sf_supabase_config',
   supabaseSession: 'sf_supabase_session',
+  userProfile: 'sf_user_profile',
 };
 
 const DEFAULT_NOTE = {id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],updatedAt:null};
@@ -2773,6 +2838,9 @@ const DataStoreLocal = {
     saveActiveView(v){ DataStoreLocal.setRaw(STORAGE_KEYS.activeView, VIEW_IDS.includes(v) ?v : 'dashboard'); },
     getDataVersion(){ return parseInt(DataStoreLocal.getRaw(STORAGE_KEYS.dataVersion,0),10) || 0; },
     saveDataVersion(v){ DataStoreLocal.setRaw(STORAGE_KEYS.dataVersion,v); },
+    getProfile(){ return sanitizeProfile(DataStoreLocal.getRaw(STORAGE_KEYS.userProfile, null)); },
+    saveProfile(v){ DataStoreLocal.setRaw(STORAGE_KEYS.userProfile, sanitizeProfile(v)); },
+    clearProfile(){ DataStoreLocal.removeRaw(STORAGE_KEYS.userProfile); },
   },
   exportSnapshot(){
     return {
@@ -2899,6 +2967,40 @@ const DataStoreSupabase = {
       return {ok:true,data:(Array.isArray(result.data) ?result.data : []).map(this.mapSubject)};
     },
   },
+  profiles: {
+    map(row){
+      return sanitizeProfile({
+        id: row?.id || null,
+        display_name: row?.display_name || '',
+        study_goal: row?.study_goal || '',
+      });
+    },
+    async getCurrent(){
+      const session = DataStoreLocal.getRaw(STORAGE_KEYS.supabaseSession, null);
+      const userId = sanitizeText(session?.user?.id || '', '');
+      if(!userId) return {ok:false,reason:'supabase-auth-required'};
+      const result = await DataStoreSupabase.request(`profiles?id=eq.${encodeURIComponent(userId)}&select=id,display_name,study_goal&limit=1`);
+      if(!result.ok) return result;
+      return {ok:true,data:this.map((Array.isArray(result.data) ?result.data[0] : null) || {id:userId})};
+    },
+    async upsert(profile){
+      const session = DataStoreLocal.getRaw(STORAGE_KEYS.supabaseSession, null);
+      const userId = sanitizeText(session?.user?.id || '', '');
+      if(!userId) return {ok:false,reason:'supabase-auth-required'};
+      const safe = sanitizeProfile(profile);
+      const result = await DataStoreSupabase.request('profiles', {
+        method:'POST',
+        headers:{Prefer:'resolution=merge-duplicates,return=representation'},
+        body:JSON.stringify({
+          id:userId,
+          display_name:safe.displayName,
+          study_goal:safe.studyGoal,
+        }),
+      });
+      if(!result.ok) return result;
+      return {ok:true,data:this.map((Array.isArray(result.data) ?result.data[0] : null) || {id:userId,display_name:safe.displayName,study_goal:safe.studyGoal})};
+    },
+  },
 };
 
 const AuthController = {
@@ -2913,17 +3015,30 @@ const AuthController = {
   },
   setMode(mode){
     this.mode = mode === 'signup' ?'signup' : 'login';
+    const signup = this.mode === 'signup';
     document.querySelectorAll('[data-auth-mode]').forEach(btn=>{
       const active = btn.dataset.authMode === this.mode;
       btn.classList.toggle('active', active);
       btn.setAttribute('aria-selected', active ?'true' : 'false');
     });
+    document.querySelector('.auth-card')?.classList.toggle('signup-mode', signup);
     const title = document.getElementById('auth-title');
     const submit = document.getElementById('auth-submit')?.querySelector('span');
     const password = document.getElementById('auth-password');
-    if(title) title.textContent = this.mode === 'signup' ?'Criar conta no COLISEU' : 'Entrar no COLISEU';
-    if(submit) submit.textContent = this.mode === 'signup' ?'Criar conta' : 'Entrar';
-    if(password) password.autocomplete = this.mode === 'signup' ?'new-password' : 'current-password';
+    const brandTitle = document.getElementById('auth-brand-title');
+    const brandCopy = document.getElementById('auth-brand-copy');
+    const name = document.getElementById('auth-name');
+    const confirm = document.getElementById('auth-password-confirm');
+    const goal = document.getElementById('auth-study-goal');
+    const terms = document.getElementById('auth-terms');
+    if(title) title.textContent = signup ?'Criar conta no COLISEU' : 'Entrar no COLISEU';
+    if(submit) submit.textContent = signup ?'Criar conta' : 'Entrar';
+    if(password) password.autocomplete = signup ?'new-password' : 'current-password';
+    if(brandTitle) brandTitle.innerHTML = signup ?'Comece sua jornada<br>com <span>estratégia.</span>' :'Organize, estude<br>e <span>conquiste.</span>';
+    if(brandCopy) brandCopy.textContent = signup ?'Crie sua conta, organize sua rotina e acompanhe sua evolução.' :'Foco hoje, aprovação amanhã.';
+    [name, confirm, goal, terms].forEach(field=>{
+      if(field) field.required = signup;
+    });
     this.setMessage('');
   },
   setLoading(loading){
@@ -2972,27 +3087,82 @@ const AuthController = {
     }
     return false;
   },
+  resetLocalStudyDataForAccount(){
+    AppDB.saveSubjects([]);
+    AppDB.saveSchedule([]);
+    AppDB.saveTasks([]);
+    AppDB.saveSessions([]);
+    AppDB.saveNote(DEFAULT_NOTE);
+    AppDB.saveSessionNotes([]);
+    DataStoreLocal.setRaw(STORAGE_KEYS.moods, {});
+    AppDB.savePomoState({...DEFAULT_POMO});
+    AppDB.saveExamDate(null);
+    AppDB.saveActiveView('dashboard');
+  },
+  async loadProfile(){
+    const result = await DataStoreSupabase.profiles.getCurrent();
+    if(result.ok){
+      const session = this.getSession();
+      DataStoreLocal.settings.saveProfile({...result.data,email:session?.user?.email || ''});
+      return result.data;
+    }
+    return DataStoreLocal.settings.getProfile();
+  },
+  async saveSignupProfile({displayName,studyGoal}){
+    const result = await DataStoreSupabase.profiles.upsert({displayName,studyGoal});
+    if(!result.ok) throw new Error(result.reason || 'Não foi possível salvar seu perfil.');
+    const session = this.getSession();
+    DataStoreLocal.settings.saveProfile({...result.data,email:session?.user?.email || ''});
+    return result.data;
+  },
   async submit(event){
     event?.preventDefault();
     const email = sanitizeText(document.getElementById('auth-email')?.value || '', '');
     const password = String(document.getElementById('auth-password')?.value || '');
+    const displayName = sanitizeText(document.getElementById('auth-name')?.value || '', '');
+    const passwordConfirm = String(document.getElementById('auth-password-confirm')?.value || '');
+    const studyGoal = sanitizeText(document.getElementById('auth-study-goal')?.value || '', '');
+    const termsAccepted = !!document.getElementById('auth-terms')?.checked;
     if(!email || !password){
       this.setMessage('Preencha e-mail e senha para continuar.');
+      return;
+    }
+    if(this.mode === 'signup' && !displayName){
+      this.setMessage('Informe seu nome completo para personalizar o app.');
       return;
     }
     if(password.length < 6){
       this.setMessage('A senha precisa ter pelo menos 6 caracteres.');
       return;
     }
+    if(this.mode === 'signup' && password !== passwordConfirm){
+      this.setMessage('As senhas precisam ser iguais.');
+      return;
+    }
+    if(this.mode === 'signup' && !studyGoal){
+      this.setMessage('Escolha seu objetivo de estudo.');
+      return;
+    }
+    if(this.mode === 'signup' && !termsAccepted){
+      this.setMessage('Aceite os termos e a política para criar sua conta.');
+      return;
+    }
     this.setLoading(true);
     this.setMessage('');
     try{
       const data = this.mode === 'signup'
-        ?await this.request('signup', {email,password})
+        ?await this.request('signup', {email,password,data:{display_name:displayName,study_goal:studyGoal}})
         :await this.request('token?grant_type=password', {email,password});
       if(this.saveSession(data)){
+        this.resetLocalStudyDataForAccount();
+        if(this.mode === 'signup'){
+          await this.saveSignupProfile({displayName,studyGoal});
+        } else {
+          await this.loadProfile();
+        }
         this.applyGate();
         await DataStore.sync.pull();
+        updateWorkspaceHeading(getActiveView());
         renderAll();
         toast(this.mode === 'signup' ?'Conta criada e conectada.' : 'Login realizado.');
       } else {
@@ -3017,6 +3187,7 @@ const AuthController = {
       }).catch(()=>{});
     }
     DataStoreLocal.removeRaw(STORAGE_KEYS.supabaseSession);
+    DataStoreLocal.settings.clearProfile();
     this.applyGate();
     this.setMode('login');
     toast('Sessão encerrada.');
@@ -3036,7 +3207,19 @@ const AuthController = {
       input.type = input.type === 'password' ?'text' : 'password';
       document.getElementById('auth-password-toggle')?.setAttribute('aria-label', input.type === 'password' ?'Mostrar senha' : 'Ocultar senha');
     });
+    document.getElementById('auth-password-confirm-toggle')?.addEventListener('click',()=>{
+      const input = document.getElementById('auth-password-confirm');
+      if(!input) return;
+      input.type = input.type === 'password' ?'text' : 'password';
+      document.getElementById('auth-password-confirm-toggle')?.setAttribute('aria-label', input.type === 'password' ?'Mostrar confirmação de senha' : 'Ocultar confirmação de senha');
+    });
     document.getElementById('auth-google')?.addEventListener('click',()=>this.setMessage('Login com Google será habilitado na próxima etapa.', 'success'));
+    document.querySelectorAll('[data-auth-link]').forEach(link=>{
+      link.addEventListener('click',event=>{
+        event.preventDefault();
+        this.setMessage('Termos e privacidade serão publicados antes do lançamento.', 'success');
+      });
+    });
   },
 };
 
@@ -4286,11 +4469,11 @@ function renderGoals(){
 }
 
 const VIEW_CONFIG = {
-  dashboard: { title:'Olá, Claus!', copy:'Organize seu estudo PMMG com foco, ritmo e revisão.' },
+  dashboard: { title:'Olá!', personalized:true, copy:'Organize seu estudo PMMG com foco, ritmo e revisão.' },
   agenda: { title:'Agenda de estudo', copy:'Planeje sua semana, ajuste sessões e mantenha o edital em movimento.' },
   tasks: { title:'Tarefas acionáveis', copy:'Transforme intenção em execução com uma fila clara do que fazer agora.' },
   pomodoro: { title:'Sala de foco', copy:'Entre em uma sessão mais profunda com contexto, ritmo e controle do seu tempo.' },
-  subjects: { title:'Olá, Claus! ', copy:'Vamos evoluir juntos hoje.' },
+  subjects: { title:'Matérias e conteúdos', copy:'Vamos evoluir juntos hoje.' },
   mood: { title:'Humor e energia', copy:'Acompanhe como você estuda ao longo da semana e registre seu estado com mais contexto.' },
 };
 
@@ -4317,7 +4500,10 @@ function updateWorkspaceHeading(viewId){
   const view = VIEW_CONFIG[normalizeViewId(viewId)] || VIEW_CONFIG.dashboard;
   const title = document.getElementById('workspace-title-heading');
   const copy = document.getElementById('workspace-title-copy');
-  if(title) title.textContent = view.title;
+  if(title){
+    const firstName = getProfileFirstName();
+    title.textContent = view.personalized ?(firstName ?`Olá, ${firstName}!` : 'Olá!') : view.title;
+  }
   if(copy) copy.textContent = view.copy;
 }
 
