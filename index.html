@@ -2139,8 +2139,8 @@ function sanitizeText(str, fallback=''){
   return typeof fallback === 'string' ?fallback : '';
 }
 function topicFromSeed(subjectId, item, index){
-  const [code,title,status='not_started'] = item;
-  return sanitizeTopic({id:`${subjectId}-topic-${String(index+1).padStart(2,'0')}`, code, title, status});
+  const [code,title] = item;
+  return sanitizeTopic({id:`${subjectId}-topic-${String(index+1).padStart(2,'0')}`, code, title, status:'not_started'});
 }
 function getDefaultTopicsForSubject(subject){
   const id = sanitizeText(subject.id || '', '');
@@ -2574,59 +2574,180 @@ const Analytics = {
   },
 };
 
-/* AppDB */
+/* DATA STORE */
 
-const AppDB = {
+const STORAGE_KEYS = {
+  dataVersion: 'sf_data_version',
+  subjects: 'sf_subjects',
+  sessions: 'sf_sessions',
+  schedule: 'sf_schedule',
+  tasks: 'sf_tasks',
+  note: 'sf_note',
+  sessionNotes: 'sf_session_notes',
+  moods: 'sf_moods',
+  pomoState: 'sf_pomo_state',
+  examDate: 'sf_exam_date',
+  activeView: 'sf_active_view',
+  layout: 'sf_layout',
+  theme: 'sf_theme',
+  sidebarCollapsed: 'sf_sidebar_collapsed',
+  analyticsEvents: 'sf_events',
+};
+
+const DEFAULT_NOTE = {id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],updatedAt:null};
+
+const DataStoreLocal = {
   _cache: {},
-  _get(k,fb){ 
+  getRaw(k,fb){
     if(this._cache[k] !== undefined && this._cache[k] !== null) return this._cache[k];
     try{ const r=localStorage.getItem(k); let val = r?JSON.parse(r):fb; if(val===null)val=fb; this._cache[k]=val; return val; }
-    catch(e){ return fb; } 
+    catch(e){ return fb; }
   },
-  _set(k,v){ this._cache[k]=v; try{ localStorage.setItem(k,JSON.stringify(v)); } catch(e){ console.warn('[StudyFlow] localStorage falhou:',k,e.name); } },
+  setRaw(k,v){
+    this._cache[k]=v;
+    try{ localStorage.setItem(k,JSON.stringify(v)); }
+    catch(e){ console.warn('[StudyFlow] localStorage falhou:',k,e.name); }
+  },
+  removeRaw(k){
+    delete this._cache[k];
+    try{ localStorage.removeItem(k); }
+    catch(e){ console.warn('[StudyFlow] localStorage remove falhou:',k,e.name); }
+  },
+  subjects: {
+    getAll(){ const raw = DataStoreLocal.getRaw(STORAGE_KEYS.subjects,[]); return Array.isArray(raw) ?raw.map(sanitizeSubject) : []; },
+    saveAll(v){ DataStoreLocal.setRaw(STORAGE_KEYS.subjects,(Array.isArray(v)?v:[]).map(sanitizeSubject)); },
+  },
+  sessions: {
+    getAll(){ const raw = DataStoreLocal.getRaw(STORAGE_KEYS.sessions,[]); return Array.isArray(raw) ?raw.filter(s=>s && typeof s==='object').map(sanitizeStudySession) : []; },
+    saveAll(v){ DataStoreLocal.setRaw(STORAGE_KEYS.sessions,(Array.isArray(v)?v:[]).map(sanitizeStudySession)); },
+  },
+  schedule: {
+    getAll(){ const raw = DataStoreLocal.getRaw(STORAGE_KEYS.schedule,[]); return Array.isArray(raw) ?raw.map(sanitizeScheduleEvent) : []; },
+    saveAll(v){ DataStoreLocal.setRaw(STORAGE_KEYS.schedule,(Array.isArray(v)?v:[]).map(sanitizeScheduleEvent)); },
+  },
+  tasks: {
+    getAll(){ const raw = DataStoreLocal.getRaw(STORAGE_KEYS.tasks,[]); return Array.isArray(raw) ?raw.map(sanitizeTask) : []; },
+    saveAll(v){ DataStoreLocal.setRaw(STORAGE_KEYS.tasks,(Array.isArray(v)?v:[]).map(sanitizeTask)); },
+  },
+  notes: {
+    getCurrent(){ return sanitizeNote(DataStoreLocal.getRaw(STORAGE_KEYS.note,DEFAULT_NOTE)); },
+    saveCurrent(v){ DataStoreLocal.setRaw(STORAGE_KEYS.note,sanitizeNote(v)); },
+    getAll(){ const raw = DataStoreLocal.getRaw(STORAGE_KEYS.sessionNotes,[]); return Array.isArray(raw) ?raw.map(sanitizeNote) : []; },
+    saveAll(v){ DataStoreLocal.setRaw(STORAGE_KEYS.sessionNotes,(Array.isArray(v)?v:[]).map(sanitizeNote)); },
+    saveOne(v){
+      const note = sanitizeNote(v);
+      const notes = this.getAll().filter(item=>item.sessionId!==note.sessionId && item.id!==note.id);
+      notes.push(note);
+      this.saveAll(notes.slice(-250));
+    },
+  },
+  moods: {
+    getAll(){ return DataStoreLocal.getRaw(STORAGE_KEYS.moods,{}); },
+    save(date,mood){ const moods=this.getAll(); if(!mood)delete moods[date]; else moods[date]=mood; DataStoreLocal.setRaw(STORAGE_KEYS.moods,moods); },
+  },
+  settings: {
+    getPomoState(){ return DataStoreLocal.getRaw(STORAGE_KEYS.pomoState,{...DEFAULT_POMO}) || {...DEFAULT_POMO}; },
+    savePomoState(v){ DataStoreLocal.setRaw(STORAGE_KEYS.pomoState,v); },
+    getExamDate(){ return DataStoreLocal.getRaw(STORAGE_KEYS.examDate,null); },
+    saveExamDate(v){ DataStoreLocal.setRaw(STORAGE_KEYS.examDate,v); },
+    getActiveView(){ return DataStoreLocal.getRaw(STORAGE_KEYS.activeView,'dashboard'); },
+    saveActiveView(v){ DataStoreLocal.setRaw(STORAGE_KEYS.activeView, VIEW_IDS.includes(v) ?v : 'dashboard'); },
+    getDataVersion(){ return parseInt(DataStoreLocal.getRaw(STORAGE_KEYS.dataVersion,0),10) || 0; },
+    saveDataVersion(v){ DataStoreLocal.setRaw(STORAGE_KEYS.dataVersion,v); },
+  },
+  exportSnapshot(){
+    return {
+      sf_data_version: this.settings.getDataVersion(),
+      sf_subjects: this.subjects.getAll(),
+      sf_tasks: this.tasks.getAll(),
+      sf_schedule: this.schedule.getAll(),
+      sf_sessions: this.sessions.getAll(),
+      sf_note: this.notes.getCurrent(),
+      sf_session_notes: this.notes.getAll(),
+      sf_moods: this.moods.getAll(),
+      sf_pomo_state: this.settings.getPomoState(),
+      sf_exam_date: this.settings.getExamDate(),
+      sf_layout: this.getRaw(STORAGE_KEYS.layout, null),
+      sf_theme: this.getRaw(STORAGE_KEYS.theme, 'light'),
+      sf_active_view: this.settings.getActiveView(),
+      sf_sidebar_collapsed: !!this.getRaw(STORAGE_KEYS.sidebarCollapsed, false),
+      sf_events: this.getRaw(STORAGE_KEYS.analyticsEvents, []),
+    };
+  },
+  importSnapshot(parsed){
+    const snapshot = parsed && typeof parsed === 'object' ?parsed : {};
+    this.subjects.saveAll(Array.isArray(snapshot.sf_subjects) ?snapshot.sf_subjects : []);
+    this.tasks.saveAll(Array.isArray(snapshot.sf_tasks) ?snapshot.sf_tasks : []);
+    this.schedule.saveAll(Array.isArray(snapshot.sf_schedule) ?snapshot.sf_schedule : []);
+    this.sessions.saveAll(Array.isArray(snapshot.sf_sessions) ?snapshot.sf_sessions : []);
+    this.notes.saveCurrent(snapshot.sf_note || DEFAULT_NOTE);
+    const importedSessionNotes = Array.isArray(snapshot.sf_session_notes) ?snapshot.sf_session_notes : [];
+    const importedLegacyNote = sanitizeNote(snapshot.sf_note || DEFAULT_NOTE);
+    this.notes.saveAll(importedSessionNotes.length ?importedSessionNotes : (importedLegacyNote.summary || importedLegacyNote.insights.length ?[{...importedLegacyNote,id:'legacy-session-annotation',sessionId:'legacy-session-annotation'}] : []));
+    this.setRaw(STORAGE_KEYS.moods, snapshot.sf_moods && typeof snapshot.sf_moods === 'object' ?snapshot.sf_moods : {});
+    this.settings.savePomoState(snapshot.sf_pomo_state || {...DEFAULT_POMO});
+    this.settings.saveExamDate(snapshot.sf_exam_date || null);
+    this.setRaw(STORAGE_KEYS.layout, snapshot.sf_layout || null);
+    this.setRaw(STORAGE_KEYS.theme, snapshot.sf_theme === 'dark' ?'dark' : 'light');
+    this.settings.saveActiveView(snapshot.sf_active_view || 'dashboard');
+    this.setRaw(STORAGE_KEYS.sidebarCollapsed, !!snapshot.sf_sidebar_collapsed);
+    this.setRaw(STORAGE_KEYS.analyticsEvents, Array.isArray(snapshot.sf_events) ?snapshot.sf_events : []);
+    this.settings.saveDataVersion(STORAGE_VERSION);
+  },
+};
+
+const DataStore = {
+  mode: 'local',
+  local: DataStoreLocal,
+  sync: {
+    pull(){ return Promise.resolve({ok:true,mode:'local'}); },
+    pushPending(){ return Promise.resolve({ok:true,mode:'local'}); },
+    importLocalToCloud(){ return Promise.resolve({ok:false,mode:'local',reason:'supabase-not-configured'}); },
+  },
+};
+
+/* AppDB compatibility layer */
+
+const AppDB = {
+  _get(k,fb){
+    return DataStoreLocal.getRaw(k,fb);
+  },
+  _set(k,v){ DataStoreLocal.setRaw(k,v); },
   getSubjects() {
-    const raw = this._get('sf_subjects',[]);
-    return Array.isArray(raw) ?raw.map(sanitizeSubject) : [];
+    return DataStoreLocal.subjects.getAll();
   },
   getSessions() {
-    const raw = this._get('sf_sessions',[]);
-    return Array.isArray(raw) ?raw.filter(s=>s && typeof s==='object').map(sanitizeStudySession) : [];
+    return DataStoreLocal.sessions.getAll();
   },
   getSchedule() {
-    const raw = this._get('sf_schedule',[]);
-    return Array.isArray(raw) ?raw.map(sanitizeScheduleEvent) : [];
+    return DataStoreLocal.schedule.getAll();
   },
   getTasks() {
-    const raw = this._get('sf_tasks',[]);
-    return Array.isArray(raw) ?raw.map(sanitizeTask) : [];
+    return DataStoreLocal.tasks.getAll();
   },
-  getNote()     { return sanitizeNote(this._get('sf_note',{id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],updatedAt:null})); },
+  getNote()     { return DataStoreLocal.notes.getCurrent(); },
   getSessionNotes() {
-    const raw = this._get('sf_session_notes',[]);
-    return Array.isArray(raw) ?raw.map(sanitizeNote) : [];
+    return DataStoreLocal.notes.getAll();
   },
-  getMoods()    { return this._get('sf_moods',{}); },
-  getPomoState(){ return this._get('sf_pomo_state',{...DEFAULT_POMO}) || {...DEFAULT_POMO}; },
-  getExamDate(){ return this._get('sf_exam_date',null); },
-  getActiveView(){ return this._get('sf_active_view','dashboard'); },
-  getDataVersion(){ return parseInt(this._get('sf_data_version',0),10) || 0; },
-  saveDataVersion(v){ this._set('sf_data_version', v); },
-  saveSubjects(v){ this._set('sf_subjects',(Array.isArray(v)?v:[]).map(sanitizeSubject)); },
-  saveSessions(v){ this._set('sf_sessions',(Array.isArray(v)?v:[]).map(sanitizeStudySession)); },
-  saveSchedule(v){ this._set('sf_schedule',(Array.isArray(v)?v:[]).map(sanitizeScheduleEvent)); },
-  saveTasks(v)   { this._set('sf_tasks',(Array.isArray(v)?v:[]).map(sanitizeTask)); },
-  saveNote(v)    { this._set('sf_note',sanitizeNote(v)); },
-  saveSessionNotes(v){ this._set('sf_session_notes',(Array.isArray(v)?v:[]).map(sanitizeNote)); },
+  getMoods()    { return DataStoreLocal.moods.getAll(); },
+  getPomoState(){ return DataStoreLocal.settings.getPomoState(); },
+  getExamDate(){ return DataStoreLocal.settings.getExamDate(); },
+  getActiveView(){ return DataStoreLocal.settings.getActiveView(); },
+  getDataVersion(){ return DataStoreLocal.settings.getDataVersion(); },
+  saveDataVersion(v){ DataStoreLocal.settings.saveDataVersion(v); },
+  saveSubjects(v){ DataStoreLocal.subjects.saveAll(v); },
+  saveSessions(v){ DataStoreLocal.sessions.saveAll(v); },
+  saveSchedule(v){ DataStoreLocal.schedule.saveAll(v); },
+  saveTasks(v)   { DataStoreLocal.tasks.saveAll(v); },
+  saveNote(v)    { DataStoreLocal.notes.saveCurrent(v); },
+  saveSessionNotes(v){ DataStoreLocal.notes.saveAll(v); },
   saveSessionNote(v){
-    const note = sanitizeNote(v);
-    const notes = this.getSessionNotes().filter(item=>item.sessionId!==note.sessionId && item.id!==note.id);
-    notes.push(note);
-    this.saveSessionNotes(notes.slice(-250));
+    DataStoreLocal.notes.saveOne(v);
   },
-  saveMood(k,v)  { const m=this.getMoods(); if(!v)delete m[k]; else m[k]=v; this._set('sf_moods',m); },
-  savePomoState(v){ this._set('sf_pomo_state',v); },
-  saveExamDate(v){ this._set('sf_exam_date',v); },
-  saveActiveView(v){ this._set('sf_active_view', VIEW_IDS.includes(v) ?v : 'dashboard'); },
+  saveMood(k,v)  { DataStoreLocal.moods.save(k,v); },
+  savePomoState(v){ DataStoreLocal.settings.savePomoState(v); },
+  saveExamDate(v){ DataStoreLocal.settings.saveExamDate(v); },
+  saveActiveView(v){ DataStoreLocal.settings.saveActiveView(v); },
 };
 
 /* AppStats */
@@ -2816,23 +2937,7 @@ function migrateAppData(){
   AppDB.saveDataVersion(STORAGE_VERSION);
 }
 function exportAppData(){
-  const payload = {
-    sf_data_version: STORAGE_VERSION,
-    sf_subjects: AppDB.getSubjects(),
-    sf_tasks: AppDB.getTasks(),
-    sf_schedule: AppDB.getSchedule(),
-    sf_sessions: AppDB.getSessions(),
-    sf_note: AppDB.getNote(),
-    sf_session_notes: AppDB.getSessionNotes(),
-    sf_moods: AppDB.getMoods(),
-    sf_pomo_state: AppDB.getPomoState(),
-    sf_exam_date: AppDB.getExamDate(),
-    sf_layout: AppDB._get('sf_layout', null),
-    sf_theme: AppDB._get('sf_theme', 'light'),
-    sf_active_view: AppDB.getActiveView(),
-    sf_sidebar_collapsed: !!AppDB._get('sf_sidebar_collapsed', false),
-    sf_events: AppDB._get('sf_events', []),
-  };
+  const payload = DataStoreLocal.exportSnapshot();
   const blob = new Blob([JSON.stringify(payload, null, 2)], {type: 'application/json;charset=utf-8'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -2845,23 +2950,7 @@ function importAppData(file){
   reader.onload = () => {
     safeCall(() => {
       const parsed = JSON.parse(String(reader.result || '{}'));
-      AppDB.saveSubjects(Array.isArray(parsed.sf_subjects) ?parsed.sf_subjects : []);
-      AppDB.saveTasks(Array.isArray(parsed.sf_tasks) ?parsed.sf_tasks : []);
-      AppDB.saveSchedule(Array.isArray(parsed.sf_schedule) ?parsed.sf_schedule : []);
-      AppDB.saveSessions(Array.isArray(parsed.sf_sessions) ?parsed.sf_sessions : []);
-      AppDB.saveNote(parsed.sf_note || {id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],updatedAt:null});
-      const importedSessionNotes = Array.isArray(parsed.sf_session_notes) ?parsed.sf_session_notes : [];
-      const importedLegacyNote = sanitizeNote(parsed.sf_note || {id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],updatedAt:null});
-      AppDB.saveSessionNotes(importedSessionNotes.length ?importedSessionNotes : (importedLegacyNote.summary || importedLegacyNote.insights.length ?[{...importedLegacyNote,id:'legacy-session-annotation',sessionId:'legacy-session-annotation'}] : []));
-      AppDB._set('sf_moods', parsed.sf_moods && typeof parsed.sf_moods === 'object' ?parsed.sf_moods : {});
-      AppDB.savePomoState(parsed.sf_pomo_state || {...DEFAULT_POMO});
-      AppDB.saveExamDate(parsed.sf_exam_date || null);
-      AppDB._set('sf_layout', parsed.sf_layout || null);
-      AppDB._set('sf_theme', parsed.sf_theme === 'dark' ?'dark' : 'light');
-      AppDB.saveActiveView(parsed.sf_active_view || 'dashboard');
-      AppDB._set('sf_sidebar_collapsed', !!parsed.sf_sidebar_collapsed);
-      AppDB._set('sf_events', Array.isArray(parsed.sf_events) ?parsed.sf_events : []);
-      AppDB.saveDataVersion(STORAGE_VERSION);
+      DataStoreLocal.importSnapshot(parsed);
       syncStorageToOfficialEdital();
       migrateSubjectsEncoding();
       renderAll();
@@ -2875,7 +2964,7 @@ function importAppData(file){
 }
 
 function seedIfEmpty(){
-  if(localStorage.getItem('sf_seeded_empty_v2') && AppDB.getSubjects().length) return;
+  if(DataStoreLocal.getRaw('sf_seeded_empty_v2', null) && AppDB.getSubjects().length) return;
   const subjects=getPMMGSubjects();
   AppDB.saveSubjects(subjects);
   AppDB.saveSchedule([]);
@@ -2884,14 +2973,40 @@ function seedIfEmpty(){
   AppDB.saveNote({id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],updatedAt:null});
   AppDB.saveSessionNotes([]);
   // Limpando antigas flags de seed (mocked data migration)
-  localStorage.removeItem('sf_seeded_pmmg_v1');
-  localStorage.removeItem('sf_seeded');
-  localStorage.setItem('sf_seeded_empty_v2','1');
+  DataStoreLocal.removeRaw('sf_seeded_pmmg_v1');
+  DataStoreLocal.removeRaw('sf_seeded');
+  DataStoreLocal.setRaw('sf_seeded_empty_v2','1');
 }
 function forcePMMGReset() {
-  if (localStorage.getItem('sf_reset_pmmg_done_v6')) return;
+  if (DataStoreLocal.getRaw('sf_reset_pmmg_done_v6', null)) return;
   syncStorageToOfficialEdital();
-  localStorage.setItem('sf_reset_pmmg_done_v6', '1');
+  DataStoreLocal.setRaw('sf_reset_pmmg_done_v6', '1');
+}
+function resetLocalDataForCleanSeedRequest(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('cleanseed') !== '1') return;
+  Object.keys(localStorage).filter(key=>key.startsWith('sf_')).forEach(key=>DataStoreLocal.removeRaw(key));
+  DataStoreLocal._cache = {};
+  AppDB.saveSubjects(getPMMGSubjects());
+  AppDB.saveSchedule([]);
+  AppDB.saveTasks([]);
+  AppDB.saveSessions([]);
+  AppDB.saveNote(DEFAULT_NOTE);
+  AppDB.saveSessionNotes([]);
+  DataStoreLocal.setRaw(STORAGE_KEYS.moods, {});
+  AppDB.savePomoState({...DEFAULT_POMO});
+  AppDB.saveExamDate(null);
+  AppDB.saveActiveView('dashboard');
+  AppDB.saveDataVersion(STORAGE_VERSION);
+  DataStoreLocal.setRaw(STORAGE_KEYS.layout, null);
+  DataStoreLocal.setRaw(STORAGE_KEYS.theme, 'light');
+  DataStoreLocal.setRaw(STORAGE_KEYS.sidebarCollapsed, false);
+  DataStoreLocal.setRaw(STORAGE_KEYS.analyticsEvents, []);
+  DataStoreLocal.setRaw('sf_seeded_empty_v2','1');
+  DataStoreLocal.setRaw('sf_reset_pmmg_done_v6','1');
+  params.delete('cleanseed');
+  const query = params.toString();
+  window.history.replaceState(null, '', `${window.location.pathname}${query ?`?${query}` : ''}${window.location.hash}`);
 }
 
 /* MODAL */
@@ -5762,6 +5877,7 @@ window.addEventListener('unhandledrejection', event => {
   console.error('[StudyFlow] Promise rejeitada:', event.reason);
 });
 
+safeCall(()=>resetLocalDataForCleanSeedRequest(), 'startup:resetLocalDataForCleanSeedRequest');
 safeCall(()=>forcePMMGReset(), 'startup:forcePMMGReset');
 safeCall(()=>seedIfEmpty(), 'startup:seedIfEmpty');
 safeCall(()=>migrateAppData(), 'startup:migrateAppData');
