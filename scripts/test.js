@@ -8,7 +8,7 @@ const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json'), 'utf8').replace(/^\uFEFF/, ''));
 const sw = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
 const marcellusFontPath = path.join(root, 'fonts', 'marcellus-latin-400-normal.woff2');
-const authColonnadePath = path.join(root, 'assets', 'auth-colonnade-ghost.png');
+const authColonnadeTransparentPath = path.join(root, 'assets', 'auth-colonnade-ghost-transparent.png');
 const schema = fs.existsSync(path.join(root, 'supabase', 'schema.sql'))
   ? fs.readFileSync(path.join(root, 'supabase', 'schema.sql'), 'utf8')
   : '';
@@ -83,7 +83,8 @@ async function run() {
   check('sidebar uses dynamic viewport height for tablet stability', html.includes('.app-sidebar{grid-column:1;grid-row:1 / span 2;position:sticky;top:14px;height:calc(100dvh - 28px);max-height:calc(100dvh - 28px);display:flex;flex-direction:column;overflow:auto;') && html.includes('.app-sidebar::-webkit-scrollbar{display:none;}') && html.includes('.side-upgrade{margin-top:16px;flex-shrink:0;'));
   check('brand logos render without orange backing blocks', html.includes('.auth-logo-mark{width:172px;height:132px;border-radius:0;display:grid;place-items:center;margin:0 auto 18px;background:transparent;box-shadow:none;}') && html.includes('.auth-logo-mark img{width:132px;height:132px;object-fit:contain;') && html.includes('.side-logo{width:92px;height:92px;border-radius:0;background:transparent;'));
   check('auth Marcellus font is bundled locally', fs.existsSync(marcellusFontPath) && html.includes("@font-face") && html.includes("font-family:'Marcellus Local'") && html.includes("src:url('./fonts/marcellus-latin-400-normal.woff2')"));
-  check('auth classical background asset is bundled locally', fs.existsSync(authColonnadePath) && html.includes("assets/auth-colonnade-ghost.png") && html.includes('.auth-window::before') && html.includes('.auth-wave{display:none;}'));
+  check('auth classical background asset is bundled locally', fs.existsSync(authColonnadeTransparentPath) && html.includes("assets/auth-colonnade-ghost-transparent.png") && html.includes('.auth-window::before') && !html.includes("mix-blend-mode:multiply;filter:saturate(.88)"));
+  check('auth classical background asset has alpha', fs.existsSync(authColonnadeTransparentPath) && (await sharp(authColonnadeTransparentPath).metadata()).hasAlpha);
   check('auth brand typography matches premium spaced wordmark', html.includes('.auth-brand-panel{position:relative;z-index:1;align-self:center;padding-left:62px;text-align:center;justify-self:center;}') && html.includes(".auth-brand-name{font-family:'Marcellus Local',Georgia,\"Times New Roman\",serif;font-size:2.28rem;font-weight:400;line-height:1;letter-spacing:.22em;color:#3c332e;text-indent:.22em;}") && html.includes('.auth-brand-subtitle{margin-top:11px;font-size:.86rem;color:#9e8d82;font-weight:700;text-transform:uppercase;letter-spacing:.28em;text-indent:.28em;}') && html.includes('.auth-brand-panel p::before'));
   check('sidebar toggle uses refined chevrons', html.includes('sidebar-toggle-mark') && html.includes('Recolher menu lateral') && script.includes("(collapsed ?'›' : '‹')") && !script.includes('panel-left-close') && !script.includes('panel-left-open'));
   check('professional topbar exists', html.includes('class="workspace-search"') && html.includes('Abrir agenda mensal') && html.includes('workspace-title') && html.includes('id="btn-topbar-logout"') && html.includes('Como você está hoje?'));
