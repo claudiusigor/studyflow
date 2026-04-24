@@ -2958,6 +2958,7 @@ const DataStoreSupabase = {
     if(!session?.access_token) return false;
     const current = this.getSession() || {};
     DataStoreLocal.setRaw(STORAGE_KEYS.supabaseSession, {...current, ...session, user: session.user || current.user || null});
+    this._expiredSessionHandled = false;
     return true;
   },
   getAccessToken(){
@@ -2977,9 +2978,46 @@ const DataStoreSupabase = {
   reportWriteFailure(result, label='dados'){
     if(!result || result.ok) return result;
     console.warn(`[StudyFlow] Falha ao sincronizar ${label}:`, result);
+    if(this.isAuthExpiredResult(result)){
+      this.handleExpiredSession();
+      return result;
+    }
+    if(this.shouldThrottleErrorToast(label, result)) return result;
     const detail = shortErrorDetail(result);
     toast(`Não foi possível sincronizar ${label} agora.${detail ?` Detalhe: ${detail}` : ' Os dados ficaram salvos neste navegador.'}`);
     return result;
+  },
+  isAuthExpiredResult(result){
+    const detail = shortErrorDetail(result).toLowerCase();
+    return result?.authExpired
+      || result?.status === 401
+      || detail.includes('invalid refresh token')
+      || detail.includes('refresh token not found')
+      || detail.includes('jwt expired')
+      || detail.includes('supabase-refresh-token');
+  },
+  shouldThrottleErrorToast(label, result){
+    const key = `${label}:${result?.status || ''}:${shortErrorDetail(result)}`;
+    const now = Date.now();
+    this._lastErrorToast = this._lastErrorToast || {};
+    if(now - (this._lastErrorToast[key] || 0) < 12000) return true;
+    this._lastErrorToast[key] = now;
+    return false;
+  },
+  handleExpiredSession(){
+    if(this._expiredSessionHandled) return;
+    this._expiredSessionHandled = true;
+    DataStoreLocal.removeRaw(STORAGE_KEYS.supabaseSession);
+    DataStoreLocal.settings.clearProfile();
+    toast('Sua sessão expirou. Entre novamente para sincronizar com o Supabase.');
+    setTimeout(()=>{
+      try{
+        AuthController?.applyGate?.();
+        AuthController?.setMode?.('login');
+      } catch(error){
+        console.warn('[StudyFlow] Falha ao aplicar gate após expiração de sessão:', error);
+      }
+    }, 0);
   },
   sessionNeedsRefresh(session){
     const expiresAt = Number(session?.expires_at || 0);
@@ -2990,7 +3028,7 @@ const DataStoreSupabase = {
     const session = this.getSession();
     const refreshToken = sanitizeText(session?.refresh_token || '', '');
     if(!this.isConfigured()) return {ok:false,reason:'supabase-not-configured'};
-    if(!refreshToken) return {ok:false,reason:'supabase-refresh-token-missing'};
+    if(!refreshToken) return {ok:false,reason:'supabase-refresh-token-missing',authExpired:true};
     const response = await fetch(`${config.url}/auth/v1/token?grant_type=refresh_token`, {
       method:'POST',
       headers:{
@@ -3002,9 +3040,9 @@ const DataStoreSupabase = {
     const text = await response.text();
     let data = null;
     try{ data = text ?JSON.parse(text) : null; } catch{ data = text; }
-    if(!response.ok) return {ok:false,status:response.status,reason:data};
+    if(!response.ok) return {ok:false,status:response.status,reason:data,authExpired:true};
     const nextSession = data?.session || data;
-    return this.saveSession(nextSession) ?{ok:true,data:nextSession} : {ok:false,reason:'supabase-refresh-empty-session'};
+    return this.saveSession(nextSession) ?{ok:true,data:nextSession} : {ok:false,reason:'supabase-refresh-empty-session',authExpired:true};
   },
   async ensureSession(){
     if(!this.isConfigured()) return {ok:false,reason:'supabase-not-configured'};
@@ -3753,6 +3791,8 @@ const DataStore = {
   mode: 'local',
   local: DataStoreLocal,
   cloud: DataStoreSupabase,
+  _preferenceTimer: null,
+  _preferencePaused: false,
   cloudWrite(label, operation){
     if(!DataStoreSupabase.isReady()) return;
     Promise.resolve()
@@ -3761,7 +3801,16 @@ const DataStore = {
       .catch(error=>DataStoreSupabase.reportWriteFailure({ok:false,reason:error?.message || String(error)}, label));
   },
   syncProfilePreferences(){
-    this.cloudWrite('preferências do painel', ()=>DataStoreSupabase.profiles.syncPreferences());
+    if(this._preferencePaused || !DataStoreSupabase.isReady()) return;
+    clearTimeout(this._preferenceTimer);
+    this._preferenceTimer = setTimeout(()=>{
+      this.cloudWrite('preferências do painel', ()=>DataStoreSupabase.profiles.syncPreferences());
+    }, 900);
+  },
+  pausePreferenceSync(fn){
+    this._preferencePaused = true;
+    try{ return fn(); }
+    finally{ this._preferencePaused = false; }
   },
   sync: {
     async pull(){
@@ -6991,10 +7040,12 @@ function initGrid(){
   // Load saved layout
   const saved = AppDB._get('sf_layout', null);
   const initialLayout = getInitialDashboardLayout(saved);
-  if(initialLayout && Array.isArray(initialLayout)){
-    try{ gsGrid.load(initialLayout, false); } catch(e){ console.warn('[StudyFlow] Layout corrompido, usando padrão.',e); }
-  }
-  AppDB._set('sf_layout', gsGrid.save(false));
+  DataStore.pausePreferenceSync(()=>{
+    if(initialLayout && Array.isArray(initialLayout)){
+      try{ gsGrid.load(initialLayout, false); } catch(e){ console.warn('[StudyFlow] Layout corrompido, usando padrão.',e); }
+    }
+    AppDB._set('sf_layout', gsGrid.save(false));
+  });
 
   // Persist on change
   gsGrid.on('change dragstop resizestop', ()=>{
