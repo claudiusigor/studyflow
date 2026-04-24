@@ -15,6 +15,7 @@ $$;
 
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
+  full_name text,
   display_name text,
   study_goal text,
   exam_date date,
@@ -29,6 +30,7 @@ create table if not exists public.profiles (
 );
 
 alter table public.profiles
+  add column if not exists full_name text,
   add column if not exists study_goal text;
 
 create table if not exists public.official_catalogs (

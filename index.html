@@ -1439,18 +1439,19 @@
     .auth-card.signup-mode .auth-signup-only{display:flex!important;}
     .auth-field{display:flex;flex-direction:column;gap:10px;font-size:.96rem;font-weight:700;color:#5e5149;}
     .auth-card.signup-mode .auth-field{gap:7px;font-size:.84rem;}
-    .auth-input-wrap{height:58px;display:flex;align-items:center;gap:12px;border:1px solid #e6d8ce;border-radius:15px;background:#fffdfb;box-shadow:0 2px 7px rgba(91,61,40,.04),inset 0 1px 0 rgba(255,255,255,.78);}
+    .auth-input-wrap{position:relative;height:58px;display:flex;align-items:center;border:1px solid #e6d8ce;border-radius:15px;background:#fffdfb;box-shadow:0 2px 7px rgba(91,61,40,.04),inset 0 1px 0 rgba(255,255,255,.78);}
     .auth-card.signup-mode .auth-input-wrap{height:42px;border-radius:10px;}
-    .auth-input-wrap input{min-width:0;flex:1;height:100%;border:0;background:transparent;padding:0 0 0 20px;font:inherit;font-size:1rem;color:#3d332d;outline:0;}
-    .auth-card.signup-mode .auth-input-wrap input{font-size:.86rem;padding-left:14px;}
+    .auth-input-wrap input{min-width:0;flex:1;height:100%;border:0;background:transparent;padding:0 52px 0 20px;font:inherit;font-size:1rem;color:#3d332d;outline:0;}
+    .auth-card.signup-mode .auth-input-wrap input{font-size:.86rem;padding-left:14px;padding-right:44px;}
     .auth-input-wrap input::placeholder{color:#c8bbb2;}
-    .auth-select-wrap select{min-width:0;flex:1;height:100%;border:0;background:transparent;padding:0 0 0 14px;font:inherit;font-size:.86rem;color:#8c7b70;outline:0;appearance:none;}
-    .auth-input-wrap>i,.auth-input-action{width:44px;height:44px;margin-right:8px;display:grid;place-items:center;color:#9f8f84;}
-    .auth-card.signup-mode .auth-input-wrap>i,.auth-card.signup-mode .auth-input-action{width:36px;height:36px;margin-right:4px;}
+    .auth-select-wrap select{min-width:0;flex:1;height:100%;border:0;background:transparent;padding:0 44px 0 14px;font:inherit;font-size:.86rem;color:#8c7b70;outline:0;appearance:none;}
+    .auth-input-wrap>i,.auth-input-action{position:absolute;right:13px;top:50%;transform:translateY(-50%);width:24px;height:24px;display:grid;place-items:center;color:#9f9188;opacity:.88;}
+    .auth-input-wrap>i{pointer-events:none;}
+    .auth-card.signup-mode .auth-input-wrap>i,.auth-card.signup-mode .auth-input-action{right:12px;width:20px;height:20px;}
     .auth-input-wrap svg{width:20px;height:20px;}
     .auth-card.signup-mode .auth-input-wrap svg{width:16px;height:16px;}
-    .auth-input-action{border:0;background:transparent;border-radius:12px;cursor:pointer;}
-    .auth-input-action:hover{background:#fbf2eb;color:#ff6a2b;}
+    .auth-input-action{border:0;background:transparent;border-radius:10px;cursor:pointer;padding:0;}
+    .auth-input-action:hover{background:#fbf2eb;color:#ff6a2b;opacity:1;}
     .auth-terms{flex-direction:row!important;align-items:flex-start;gap:10px;margin-top:2px;color:#9d8c82;font-size:.78rem;font-weight:700;line-height:1.35;}
     .auth-terms input{width:16px;height:16px;margin-top:1px;accent-color:#ff7a3c;flex:0 0 auto;}
     .auth-terms a{color:#ff7a3c;text-decoration:none;}
@@ -1469,6 +1470,9 @@
     .auth-google strong{font-size:1.7rem;line-height:1;color:#8f7f74;font-family:Arial,sans-serif;}
     .auth-security{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:46px;color:#9f8f84;font-size:.91rem;font-weight:600;line-height:1.35;text-align:left;}
     .auth-security svg{width:20px;height:20px;flex:0 0 auto;}
+    #subj-modal-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:10px;overflow:visible;}
+    #subj-modal-footer .btn-glass{flex:0 0 auto!important;min-height:42px;padding:9px 16px!important;white-space:nowrap;}
+    #subj-modal-footer #btn-subj-add-new{padding-inline:22px!important;}
     body.theme-dark.auth-required .auth-screen{background:#17110e;color:#f5eee8;}
     body.theme-dark.auth-required .auth-window{background:linear-gradient(145deg,#211815,#130f0d);border-color:#3a2a22;box-shadow:0 28px 70px rgba(0,0,0,.45);}
     body.theme-dark.auth-required .auth-card{background:rgba(31,23,19,.86);border-color:#4b3428;}
@@ -1535,8 +1539,15 @@
         <label class="auth-field auth-signup-only">
           <span>Nome completo</span>
           <span class="auth-input-wrap">
-            <input id="auth-name" type="text" autocomplete="name" placeholder="Seu nome completo">
+            <input id="auth-full-name" type="text" autocomplete="name" placeholder="Seu nome completo">
             <i data-lucide="user-round"></i>
+          </span>
+        </label>
+        <label class="auth-field auth-signup-only">
+          <span>Como gostaria de ser chamado</span>
+          <span class="auth-input-wrap">
+            <input id="auth-display-name" type="text" autocomplete="nickname" placeholder="Ex.: Fulano">
+            <i data-lucide="badge-check"></i>
           </span>
         </label>
         <label class="auth-field">
@@ -2547,6 +2558,7 @@ function sanitizeProfile(input){
   const safe = input && typeof input === 'object' ?input : {};
   return {
     id: safe.id ?sanitizeText(safe.id, null) : null,
+    fullName: sanitizeText(safe.fullName || safe.full_name || '', ''),
     displayName: sanitizeText(safe.displayName || safe.display_name || '', ''),
     studyGoal: sanitizeText(safe.studyGoal || safe.study_goal || '', ''),
     email: sanitizeText(safe.email || '', ''),
@@ -2971,6 +2983,7 @@ const DataStoreSupabase = {
     map(row){
       return sanitizeProfile({
         id: row?.id || null,
+        full_name: row?.full_name || '',
         display_name: row?.display_name || '',
         study_goal: row?.study_goal || '',
       });
@@ -2979,7 +2992,7 @@ const DataStoreSupabase = {
       const session = DataStoreLocal.getRaw(STORAGE_KEYS.supabaseSession, null);
       const userId = sanitizeText(session?.user?.id || '', '');
       if(!userId) return {ok:false,reason:'supabase-auth-required'};
-      const result = await DataStoreSupabase.request(`profiles?id=eq.${encodeURIComponent(userId)}&select=id,display_name,study_goal&limit=1`);
+      const result = await DataStoreSupabase.request(`profiles?id=eq.${encodeURIComponent(userId)}&select=id,full_name,display_name,study_goal&limit=1`);
       if(!result.ok) return result;
       return {ok:true,data:this.map((Array.isArray(result.data) ?result.data[0] : null) || {id:userId})};
     },
@@ -2993,12 +3006,13 @@ const DataStoreSupabase = {
         headers:{Prefer:'resolution=merge-duplicates,return=representation'},
         body:JSON.stringify({
           id:userId,
+          full_name:safe.fullName,
           display_name:safe.displayName,
           study_goal:safe.studyGoal,
         }),
       });
       if(!result.ok) return result;
-      return {ok:true,data:this.map((Array.isArray(result.data) ?result.data[0] : null) || {id:userId,display_name:safe.displayName,study_goal:safe.studyGoal})};
+      return {ok:true,data:this.map((Array.isArray(result.data) ?result.data[0] : null) || {id:userId,full_name:safe.fullName,display_name:safe.displayName,study_goal:safe.studyGoal})};
     },
   },
 };
@@ -3027,7 +3041,8 @@ const AuthController = {
     const password = document.getElementById('auth-password');
     const brandTitle = document.getElementById('auth-brand-title');
     const brandCopy = document.getElementById('auth-brand-copy');
-    const name = document.getElementById('auth-name');
+    const fullName = document.getElementById('auth-full-name');
+    const displayName = document.getElementById('auth-display-name');
     const confirm = document.getElementById('auth-password-confirm');
     const goal = document.getElementById('auth-study-goal');
     const terms = document.getElementById('auth-terms');
@@ -3036,7 +3051,7 @@ const AuthController = {
     if(password) password.autocomplete = signup ?'new-password' : 'current-password';
     if(brandTitle) brandTitle.innerHTML = signup ?'Comece sua jornada<br>com <span>estratégia.</span>' :'Organize, estude<br>e <span>conquiste.</span>';
     if(brandCopy) brandCopy.textContent = signup ?'Crie sua conta, organize sua rotina e acompanhe sua evolução.' :'Foco hoje, aprovação amanhã.';
-    [name, confirm, goal, terms].forEach(field=>{
+    [fullName, displayName, confirm, goal, terms].forEach(field=>{
       if(field) field.required = signup;
     });
     this.setMessage('');
@@ -3108,8 +3123,8 @@ const AuthController = {
     }
     return DataStoreLocal.settings.getProfile();
   },
-  async saveSignupProfile({displayName,studyGoal}){
-    const result = await DataStoreSupabase.profiles.upsert({displayName,studyGoal});
+  async saveSignupProfile({fullName,displayName,studyGoal}){
+    const result = await DataStoreSupabase.profiles.upsert({fullName,displayName,studyGoal});
     if(!result.ok) throw new Error(result.reason || 'Não foi possível salvar seu perfil.');
     const session = this.getSession();
     DataStoreLocal.settings.saveProfile({...result.data,email:session?.user?.email || ''});
@@ -3119,7 +3134,8 @@ const AuthController = {
     event?.preventDefault();
     const email = sanitizeText(document.getElementById('auth-email')?.value || '', '');
     const password = String(document.getElementById('auth-password')?.value || '');
-    const displayName = sanitizeText(document.getElementById('auth-name')?.value || '', '');
+    const fullName = sanitizeText(document.getElementById('auth-full-name')?.value || '', '');
+    const displayName = sanitizeText(document.getElementById('auth-display-name')?.value || '', '');
     const passwordConfirm = String(document.getElementById('auth-password-confirm')?.value || '');
     const studyGoal = sanitizeText(document.getElementById('auth-study-goal')?.value || '', '');
     const termsAccepted = !!document.getElementById('auth-terms')?.checked;
@@ -3127,8 +3143,12 @@ const AuthController = {
       this.setMessage('Preencha e-mail e senha para continuar.');
       return;
     }
+    if(this.mode === 'signup' && !fullName){
+      this.setMessage('Informe seu nome completo para criar sua conta.');
+      return;
+    }
     if(this.mode === 'signup' && !displayName){
-      this.setMessage('Informe seu nome completo para personalizar o app.');
+      this.setMessage('Informe como gostaria de ser chamado.');
       return;
     }
     if(password.length < 6){
@@ -3151,12 +3171,12 @@ const AuthController = {
     this.setMessage('');
     try{
       const data = this.mode === 'signup'
-        ?await this.request('signup', {email,password,data:{display_name:displayName,study_goal:studyGoal}})
+        ?await this.request('signup', {email,password,data:{full_name:fullName,display_name:displayName,study_goal:studyGoal}})
         :await this.request('token?grant_type=password', {email,password});
       if(this.saveSession(data)){
         this.resetLocalStudyDataForAccount();
         if(this.mode === 'signup'){
-          await this.saveSignupProfile({displayName,studyGoal});
+          await this.saveSignupProfile({fullName,displayName,studyGoal});
         } else {
           await this.loadProfile();
         }
