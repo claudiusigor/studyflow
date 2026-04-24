@@ -295,6 +295,26 @@ alter table public.mood_entries enable row level security;
 alter table public.pomodoro_states enable row level security;
 alter table public.analytics_events enable row level security;
 
+grant usage on schema public to authenticated;
+
+grant select
+on public.official_catalogs,
+   public.official_subjects,
+   public.official_topics
+to authenticated;
+
+grant select, insert, update, delete
+on public.profiles,
+   public.user_topic_progress,
+   public.tasks,
+   public.schedule_events,
+   public.study_sessions,
+   public.session_notes,
+   public.mood_entries,
+   public.pomodoro_states,
+   public.analytics_events
+to authenticated;
+
 drop policy if exists "Authenticated users can read official catalogs" on public.official_catalogs;
 create policy "Authenticated users can read official catalogs"
 on public.official_catalogs

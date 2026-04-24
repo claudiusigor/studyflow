@@ -7,6 +7,9 @@ const root = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json'), 'utf8').replace(/^\uFEFF/, ''));
 const sw = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
+const schema = fs.existsSync(path.join(root, 'supabase', 'schema.sql'))
+  ? fs.readFileSync(path.join(root, 'supabase', 'schema.sql'), 'utf8')
+  : '';
 const failures = [];
 
 function check(name, condition, detail = '') {
@@ -165,7 +168,9 @@ async function run() {
   check('Supabase session reload restores cloud data', script.includes('this.isAuthenticated()') && script.includes('this.loadProfile()') && script.includes('.then(()=>DataStore.sync.pull())') && script.includes("Falha ao restaurar sessão Supabase"));
   check('Supabase REST calls refresh expired auth sessions', script.includes('sessionNeedsRefresh(session)') && script.includes('refreshSession()') && script.includes("token?grant_type=refresh_token") && script.includes('if(response.status === 401 && retry)'));
   check('Supabase profile flow stores display name and goal', script.includes('full_name') && script.includes('study_goal') && script.includes('DataStoreSupabase.profiles.upsert') && script.includes('DataStoreSupabase.profiles.getCurrent') && script.includes('DataStoreLocal.settings.saveProfile') && script.includes('password !== passwordConfirm') && script.includes('auth-terms'));
-  check('Supabase profile preferences preserve dashboard layout', script.includes('syncPreferences()') && script.includes('active_view') && script.includes('sidebar_collapsed') && script.includes('layout: DataStoreLocal.getRaw(STORAGE_KEYS.layout, null)') && script.includes('if(profile.layout) DataStoreLocal.setRaw(STORAGE_KEYS.layout, profile.layout)'));
+  check('Supabase profile preferences preserve dashboard layout', script.includes('syncPreferences()') && script.includes('active_view') && script.includes('sidebar_collapsed') && script.includes('layout: DataStoreLocal.getRaw(STORAGE_KEYS.layout, null)') && script.includes("method:'PATCH'") && script.includes('if(profile.layout) DataStoreLocal.setRaw(STORAGE_KEYS.layout, profile.layout)'));
+  check('Supabase writes use explicit conflict targets and uuid ids', script.includes('function uuidOrNew') && script.includes('profiles?on_conflict=id') && script.includes('tasks?on_conflict=id') && script.includes('user_topic_progress?on_conflict=user_id,topic_id') && script.includes('mood_entries?on_conflict=user_id,entry_date') && script.includes('pomodoro_states?on_conflict=user_id'));
+  check('Supabase schema grants authenticated access before RLS policies', schema.includes('grant usage on schema public to authenticated;') && schema.includes('grant select, insert, update, delete') && schema.includes('public.tasks') && schema.includes('public.profiles') && schema.includes('to authenticated;'));
   check('task modal recovers official subjects before opening', script.includes('function ensureSubjectsAvailableForAction') && script.includes('DataStoreLocal.subjects.saveAll(fallback)') && script.includes('const subjects=ensureSubjectsAvailableForAction();') && script.includes('Carregando matérias do edital'));
   check('auth icons use aligned input action styling', html.includes('.auth-input-wrap{position:relative;') && html.includes('.auth-input-wrap>i,.auth-input-wrap>svg,.auth-input-action') && html.includes('right:10px;top:50%;transform:translateY(-50%)') && html.includes('right:8px;width:30px;height:30px') && html.includes('#subj-modal-footer{display:flex;flex-wrap:wrap'));
   check('hardcoded user name is removed', !html.includes('Olá, Claus') && !script.includes('Olá, Claus'));

@@ -2221,7 +2221,14 @@ function openPMMGEdital(){
 
 /* HELPERS */
 
-function uid(){ return typeof crypto!=='undefined' && crypto.randomUUID ?crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2); }
+function uid(){
+  if(typeof crypto!=='undefined' && crypto.randomUUID) return crypto.randomUUID();
+  return '10000000-1000-4000-8000-100000000000'.replace(/[018]/g,c=>
+    (Number(c) ^ Math.random() * 16 >> Number(c) / 4).toString(16)
+  );
+}
+function isUuid(value){ return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value || '')); }
+function uuidOrNew(value){ return isUuid(value) ?String(value) : uid(); }
 function dateKey(d){ const dt=typeof d==='string'?new Date(d):(d||new Date()); return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`; }
 function todayKey(){ return dateKey(new Date()); }
 function fmtMin(m){ const h=Math.floor(m/60),mn=m%60; if(!h)return `${mn}m`; if(!mn)return `${h}h`; return `${h}h ${mn}m`; }
@@ -2478,7 +2485,7 @@ function syncStorageToOfficialEdital(){
 function sanitizeTask(input){
   const safe = input && typeof input === 'object' ?input : {};
   return {
-    id: sanitizeText(safe.id, uid()),
+    id: uuidOrNew(safe.id),
     subjectId: sanitizeText(safe.subjectId, ''),
     topicId: safe.topicId ?sanitizeText(safe.topicId, null) : null,
     title: sanitizeText(safe.title, 'Tarefa'),
@@ -2496,7 +2503,7 @@ function sanitizeScheduleEvent(input){
     : scheduleDateForWeekday(rawDow);
   const dateObj = parseLocalDate(date);
   return {
-    id: sanitizeText(safe.id, uid()),
+    id: uuidOrNew(safe.id),
     subjectId: sanitizeText(safe.subjectId, ''),
     topicId: safe.topicId ?sanitizeText(safe.topicId, null) : null,
     date,
@@ -2510,7 +2517,7 @@ function sanitizeScheduleEvent(input){
 function sanitizeStudySession(input){
   const safe = input && typeof input === 'object' ?input : {};
   return {
-    id: sanitizeText(safe.id, uid()),
+    id: uuidOrNew(safe.id),
     subjectId: safe.subjectId ?sanitizeText(safe.subjectId, null) : null,
     topicId: safe.topicId ?sanitizeText(safe.topicId, null) : null,
     startedAt: sanitizeText(safe.startedAt, new Date().toISOString()),
@@ -2745,6 +2752,12 @@ function toast(message){
   clearTimeout(window._toastTimer);
   window._toastTimer = setTimeout(()=>t.classList.remove('show'), 3200);
 }
+function shortErrorDetail(result){
+  const reason = result?.reason;
+  if(!reason) return result?.status ?`HTTP ${result.status}` : '';
+  if(typeof reason === 'string') return reason.slice(0, 140);
+  return sanitizeText(reason.message || reason.msg || reason.error_description || reason.code || JSON.stringify(reason), '').slice(0, 140);
+}
 function inferPlatform(){
   return window.matchMedia('(max-width: 900px)').matches ?'mobile' : 'desktop';
 }
@@ -2964,7 +2977,8 @@ const DataStoreSupabase = {
   reportWriteFailure(result, label='dados'){
     if(!result || result.ok) return result;
     console.warn(`[StudyFlow] Falha ao sincronizar ${label}:`, result);
-    toast(`Não foi possível sincronizar ${label} agora. Os dados ficaram salvos neste navegador.`);
+    const detail = shortErrorDetail(result);
+    toast(`Não foi possível sincronizar ${label} agora.${detail ?` Detalhe: ${detail}` : ' Os dados ficaram salvos neste navegador.'}`);
     return result;
   },
   sessionNeedsRefresh(session){
@@ -3067,19 +3081,17 @@ const DataStoreSupabase = {
       });
     },
     async getCurrent(){
-      const session = DataStoreLocal.getRaw(STORAGE_KEYS.supabaseSession, null);
-      const userId = sanitizeText(session?.user?.id || '', '');
+      const userId = DataStoreSupabase.getUserId();
       if(!userId) return {ok:false,reason:'supabase-auth-required'};
       const result = await DataStoreSupabase.request(`profiles?id=eq.${encodeURIComponent(userId)}&select=id,full_name,display_name,study_goal,active_view,theme,sidebar_collapsed,layout&limit=1`);
       if(!result.ok) return result;
       return {ok:true,data:this.map((Array.isArray(result.data) ?result.data[0] : null) || {id:userId})};
     },
     async upsert(profile){
-      const session = DataStoreLocal.getRaw(STORAGE_KEYS.supabaseSession, null);
-      const userId = sanitizeText(session?.user?.id || '', '');
+      const userId = DataStoreSupabase.getUserId();
       if(!userId) return {ok:false,reason:'supabase-auth-required'};
       const safe = sanitizeProfile(profile);
-      const result = await DataStoreSupabase.request('profiles', {
+      const result = await DataStoreSupabase.request('profiles?on_conflict=id', {
         method:'POST',
         headers:{Prefer:'resolution=merge-duplicates,return=representation'},
         body:JSON.stringify({
@@ -3100,16 +3112,23 @@ const DataStoreSupabase = {
       if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
       const userId = DataStoreSupabase.getUserId();
       if(!userId) return DataStoreSupabase.fail();
-      const result = await DataStoreSupabase.request('profiles', {
+      const payload = {
+        active_view: DataStoreLocal.settings.getActiveView(),
+        theme: DataStoreLocal.getRaw(STORAGE_KEYS.theme, 'light') === 'dark' ?'dark' : 'light',
+        sidebar_collapsed: !!DataStoreLocal.getRaw(STORAGE_KEYS.sidebarCollapsed, false),
+        layout: DataStoreLocal.getRaw(STORAGE_KEYS.layout, null),
+      };
+      const patched = await DataStoreSupabase.request(`profiles?id=eq.${encodeURIComponent(userId)}`, {
+        method:'PATCH',
+        headers:{Prefer:'return=representation'},
+        body:JSON.stringify(payload),
+      });
+      if(patched.ok && Array.isArray(patched.data) && patched.data.length) return {ok:true};
+      if(!patched.ok) return patched;
+      const result = await DataStoreSupabase.request('profiles?on_conflict=id', {
         method:'POST',
         headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
-        body:JSON.stringify({
-          id:userId,
-          active_view: DataStoreLocal.settings.getActiveView(),
-          theme: DataStoreLocal.getRaw(STORAGE_KEYS.theme, 'light') === 'dark' ?'dark' : 'light',
-          sidebar_collapsed: !!DataStoreLocal.getRaw(STORAGE_KEYS.sidebarCollapsed, false),
-          layout: DataStoreLocal.getRaw(STORAGE_KEYS.layout, null),
-        }),
+        body:JSON.stringify({id:userId, ...payload}),
       });
       return result.ok ?{ok:true} : result;
     },
@@ -3157,7 +3176,7 @@ const DataStoreSupabase = {
       const clear = await DataStoreSupabase.request(`user_topic_progress?user_id=eq.${encodeURIComponent(userId)}`, {method:'DELETE'});
       if(!clear.ok) return clear;
       if(!rows.length) return {ok:true,data:[]};
-      const result = await DataStoreSupabase.request('user_topic_progress', {
+      const result = await DataStoreSupabase.request('user_topic_progress?on_conflict=user_id,topic_id', {
         method:'POST',
         headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
         body:JSON.stringify(rows),
@@ -3209,7 +3228,7 @@ const DataStoreSupabase = {
       const deleted = await DataStoreSupabase.request(deletePath, {method:'DELETE'});
       if(!deleted.ok) return deleted;
       if(!safe.length) return {ok:true,data:[]};
-      const result = await DataStoreSupabase.request('tasks', {
+      const result = await DataStoreSupabase.request('tasks?on_conflict=id', {
         method:'POST',
         headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
         body:JSON.stringify(safe.map(task=>this.toRow(task))),
@@ -3268,7 +3287,7 @@ const DataStoreSupabase = {
       const deleted = await DataStoreSupabase.request(deletePath, {method:'DELETE'});
       if(!deleted.ok) return deleted;
       if(!safe.length) return {ok:true,data:[]};
-      const result = await DataStoreSupabase.request('schedule_events', {
+      const result = await DataStoreSupabase.request('schedule_events?on_conflict=id', {
         method:'POST',
         headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
         body:JSON.stringify(safe.map(eventItem=>this.toRow(eventItem))),
@@ -3320,7 +3339,7 @@ const DataStoreSupabase = {
       const deleted = await DataStoreSupabase.request(deletePath, {method:'DELETE'});
       if(!deleted.ok) return deleted;
       if(!safe.length) return {ok:true,data:[]};
-      const result = await DataStoreSupabase.request('study_sessions', {
+      const result = await DataStoreSupabase.request('study_sessions?on_conflict=id', {
         method:'POST',
         headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
         body:JSON.stringify(safe.map(session=>this.toRow(session))),
@@ -3377,7 +3396,7 @@ const DataStoreSupabase = {
       if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
       const userId = DataStoreSupabase.getUserId();
       if(!userId) return DataStoreSupabase.fail();
-      const safe = (Array.isArray(notes) ?notes : []).map(sanitizeNote);
+      const safe = (Array.isArray(notes) ?notes : []).map(note=>({...sanitizeNote(note), id:uuidOrNew(note?.id)}));
       const ids = safe.map(note=>note.id).filter(Boolean);
       const deletePath = ids.length
         ?`session_notes?user_id=eq.${encodeURIComponent(userId)}&id=not.in.(${ids.map(encodeURIComponent).join(',')})`
@@ -3385,7 +3404,7 @@ const DataStoreSupabase = {
       const deleted = await DataStoreSupabase.request(deletePath, {method:'DELETE'});
       if(!deleted.ok) return deleted;
       if(!safe.length) return {ok:true,data:[]};
-      const result = await DataStoreSupabase.request('session_notes', {
+      const result = await DataStoreSupabase.request('session_notes?on_conflict=id', {
         method:'POST',
         headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
         body:JSON.stringify(safe.map(note=>this.toRow(note))),
@@ -3421,7 +3440,7 @@ const DataStoreSupabase = {
       const deleted = await DataStoreSupabase.request(`mood_entries?user_id=eq.${encodeURIComponent(userId)}`, {method:'DELETE'});
       if(!deleted.ok) return deleted;
       if(!rows.length) return {ok:true,data:{}};
-      const result = await DataStoreSupabase.request('mood_entries', {
+      const result = await DataStoreSupabase.request('mood_entries?on_conflict=user_id,entry_date', {
         method:'POST',
         headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
         body:JSON.stringify(rows),
@@ -3479,7 +3498,7 @@ const DataStoreSupabase = {
     },
     async upsert(state){
       if(!DataStoreSupabase.isReady()) return DataStoreSupabase.fail();
-      const result = await DataStoreSupabase.request('pomodoro_states', {
+      const result = await DataStoreSupabase.request('pomodoro_states?on_conflict=user_id', {
         method:'POST',
         headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
         body:JSON.stringify(this.toRow(state)),
@@ -3807,6 +3826,22 @@ const DataStore = {
     importLocalToCloud(){ return Promise.resolve({ok:false,mode:'local',reason:'supabase-auth-required'}); },
   },
 };
+
+if(typeof window !== 'undefined'){
+  window.studyflowDebugSupabase = async function studyflowDebugSupabase(){
+    const profile = await DataStoreSupabase.profiles.syncPreferences();
+    const tasks = await DataStoreSupabase.tasks.replaceAll(DataStoreLocal.tasks.getAll());
+    const result = {
+      configured: DataStoreSupabase.isConfigured(),
+      ready: DataStoreSupabase.isReady(),
+      userId: DataStoreSupabase.getUserId(),
+      profile,
+      tasks,
+    };
+    console.log('[StudyFlow] Supabase debug', result);
+    return result;
+  };
+}
 
 /* AppDB compatibility layer */
 
