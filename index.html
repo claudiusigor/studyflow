@@ -2592,6 +2592,7 @@ const STORAGE_KEYS = {
   theme: 'sf_theme',
   sidebarCollapsed: 'sf_sidebar_collapsed',
   analyticsEvents: 'sf_events',
+  supabaseConfig: 'sf_supabase_config',
 };
 
 const DEFAULT_NOTE = {id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],updatedAt:null};
@@ -2696,13 +2697,105 @@ const DataStoreLocal = {
   },
 };
 
+const SupabaseConfig = {
+  get(){
+    const fromWindow = window.STUDYFLOW_SUPABASE_CONFIG;
+    const saved = DataStoreLocal.getRaw(STORAGE_KEYS.supabaseConfig, {});
+    const source = fromWindow && typeof fromWindow === 'object' ?fromWindow : saved;
+    return {
+      url: sanitizeText(source?.url || source?.supabaseUrl || '', ''),
+      publishableKey: sanitizeText(source?.publishableKey || source?.anonKey || '', ''),
+    };
+  },
+  isConfigured(){
+    const config = this.get();
+    return /^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(config.url) && config.publishableKey.startsWith('sb_');
+  },
+  save(config){
+    const next = {
+      url: sanitizeText(config?.url || '', ''),
+      publishableKey: sanitizeText(config?.publishableKey || '', ''),
+    };
+    DataStoreLocal.setRaw(STORAGE_KEYS.supabaseConfig, next);
+    return next;
+  },
+};
+
+const DataStoreSupabase = {
+  getConfig(){
+    return SupabaseConfig.get();
+  },
+  isConfigured(){
+    return SupabaseConfig.isConfigured();
+  },
+  getAccessToken(){
+    const session = DataStoreLocal.getRaw('sf_supabase_session', null);
+    return sanitizeText(session?.access_token || '', '');
+  },
+  isReady(){
+    return this.isConfigured() && !!this.getAccessToken();
+  },
+  async request(path, options={}){
+    const config = this.getConfig();
+    const accessToken = this.getAccessToken();
+    if(!this.isConfigured()) return {ok:false,reason:'supabase-not-configured'};
+    if(!accessToken) return {ok:false,reason:'supabase-auth-required'};
+    const response = await fetch(`${config.url}/rest/v1/${path}`, {
+      ...options,
+      headers: {
+        apikey: config.publishableKey,
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+        ...(options.headers || {}),
+      },
+    });
+    if(!response.ok){
+      return {ok:false,status:response.status,reason:await response.text()};
+    }
+    const text = await response.text();
+    return {ok:true,data:text ?JSON.parse(text) : null};
+  },
+  catalog: {
+    mapSubject(row){
+      const topics = Array.isArray(row?.official_topics) ?row.official_topics : [];
+      return sanitizeSubject({
+        id: row.id,
+        name: row.name,
+        icon: row.short_label,
+        colorVar: row.color_var,
+        bg: row.bg,
+        grad: row.gradient,
+        glow: row.glow,
+        lucide: row.lucide_icon,
+        monthlyTargetHours: row.monthly_target_hours,
+        topics: topics
+          .slice()
+          .sort((a,b)=>(a.sort_order || 0) - (b.sort_order || 0))
+          .map(topic=>({id:topic.id, code:topic.code, title:topic.title, status:'not_started'})),
+      });
+    },
+    async getSubjects(){
+      const query = 'official_subjects?select=id,name,short_label,lucide_icon,color_var,bg,gradient,glow,monthly_target_hours,sort_order,official_topics(id,code,title,sort_order)&order=sort_order.asc&official_topics.order=sort_order.asc';
+      const result = await DataStoreSupabase.request(query);
+      if(!result.ok) return result;
+      return {ok:true,data:(Array.isArray(result.data) ?result.data : []).map(this.mapSubject)};
+    },
+  },
+};
+
 const DataStore = {
   mode: 'local',
   local: DataStoreLocal,
+  cloud: DataStoreSupabase,
   sync: {
-    pull(){ return Promise.resolve({ok:true,mode:'local'}); },
-    pushPending(){ return Promise.resolve({ok:true,mode:'local'}); },
-    importLocalToCloud(){ return Promise.resolve({ok:false,mode:'local',reason:'supabase-not-configured'}); },
+    async pull(){
+      if(!DataStoreSupabase.isReady()) return {ok:true,mode:'local',reason:'supabase-not-ready'};
+      const catalog = await DataStoreSupabase.catalog.getSubjects();
+      if(catalog.ok && catalog.data.length) DataStoreLocal.subjects.saveAll(catalog.data);
+      return catalog.ok ?{ok:true,mode:'cloud',catalogSubjects:catalog.data.length} : catalog;
+    },
+    pushPending(){ return Promise.resolve({ok:true,mode:'local',reason:'cloud-sync-not-enabled'}); },
+    importLocalToCloud(){ return Promise.resolve({ok:false,mode:'local',reason:'supabase-auth-required'}); },
   },
 };
 
