@@ -201,6 +201,7 @@
     .session-note-card{background:var(--surface);border:1px solid var(--surface-border);box-shadow:0 14px 32px rgba(52,32,17,.08);display:flex;flex-direction:column;gap:16px;padding:20px;}
     body.theme-dark .session-note-card{background:#201813;border-color:#3a2d25;box-shadow:0 16px 34px rgba(0,0,0,.32);}
     .session-note-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
+    .session-note-header,.session-note-meta,.session-note-audio,.session-note-section{flex:0 0 auto;}
     .session-note-heading{display:flex;align-items:flex-start;gap:12px;min-width:0;}
     .session-note-badge{width:38px;height:38px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#fff7ef,#ffe3cb);border:1px solid rgba(255,142,71,.22);color:var(--amber);box-shadow:inset 0 1px 0 rgba(255,255,255,.75);}
     body.theme-dark .session-note-badge{background:linear-gradient(180deg,#35241d,#281c17);border-color:#4a342a;color:#ff8c4a;box-shadow:none;}
@@ -215,7 +216,7 @@
     .session-note-icon-btn svg{width:16px;height:16px;}
     body.theme-dark .session-note-icon-btn{background:#261c17;color:#c7a791;}
     body.theme-dark .session-note-icon-btn:hover{background:#32231c;color:#ff9b64;}
-    .session-note-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:10px 12px;border-radius:18px;background:#fff8f2;border:1px solid rgba(232,217,205,.9);}
+    .session-note-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:10px 12px;border-radius:18px;background:#fff8f2;border:1px solid rgba(232,217,205,.9);}
     body.theme-dark .session-note-meta{background:#241b16;border-color:#3a2d25;}
     .session-note-meta-item{display:flex;align-items:flex-start;gap:10px;min-width:0;}
     .session-note-meta-icon{width:30px;height:30px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fffdf9;border:1px solid rgba(232,217,205,.95);color:#b17a55;}
@@ -224,8 +225,9 @@
     .session-note-meta-copy{min-width:0;}
     .session-note-meta-label{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);}
     .session-note-meta-value{margin-top:3px;font-size:.84rem;font-weight:700;line-height:1.35;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .session-note-audio{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:18px;background:#fff7ef;border:1px solid rgba(235,221,208,.95);}
+    .session-note-audio{display:grid;grid-template-columns:auto minmax(0,max-content) minmax(64px,1fr) auto auto;align-items:center;gap:10px;padding:9px 10px;border-radius:18px;background:#fff7ef;border:1px solid rgba(235,221,208,.95);min-width:0;overflow:hidden;}
     body.theme-dark .session-note-audio{background:#241b16;border-color:#3a2d25;}
+    .session-note-audio[data-state="empty"]{align-items:center;}
     .session-note-audio-toggle,.session-note-audio-tts{width:38px;height:38px;flex-shrink:0;border:none;border-radius:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 180ms var(--ease),background 180ms var(--ease),color 180ms var(--ease),box-shadow 180ms var(--ease);}
     .session-note-audio-toggle{background:linear-gradient(180deg,#ff8a4c,#ff5a1f);color:#fff;box-shadow:0 10px 18px rgba(255,90,31,.18);}
     .session-note-audio-toggle:hover{transform:translateY(-1px);box-shadow:0 12px 20px rgba(255,90,31,.24);}
@@ -234,11 +236,27 @@
     body.theme-dark .session-note-audio-toggle{box-shadow:none;}
     body.theme-dark .session-note-audio-tts{background:#1c1511;border-color:#3a2d25;color:#d6ae91;}
     .session-note-audio-toggle svg,.session-note-audio-tts svg{width:16px;height:16px;}
-    .session-note-wave{flex:1;display:flex;align-items:center;gap:4px;min-height:30px;padding:0 4px;}
-    .session-note-wave-bar{width:4px;min-width:4px;border-radius:999px;background:linear-gradient(180deg,rgba(255,153,99,.36),rgba(255,90,31,.65));transition:height 220ms var(--ease),opacity 220ms var(--ease),transform 220ms var(--ease);}
+    .session-note-wave{display:flex;align-items:center;justify-content:center;gap:clamp(2px,0.7vw,4px);min-width:42px;max-width:180px;min-height:30px;padding:0 2px;overflow:hidden;justify-self:center;width:100%;}
+    .session-note-wave-bar{width:clamp(2px,0.75vw,4px);min-width:2px;border-radius:999px;background:linear-gradient(180deg,rgba(255,153,99,.36),rgba(255,90,31,.65));transition:height 220ms var(--ease),opacity 220ms var(--ease),transform 220ms var(--ease);}
     .session-note-audio.is-playing .session-note-wave-bar{animation:sessionWave 1.8s ease-in-out infinite;}
+    .session-note-audio.is-recording .session-note-wave-bar{animation:sessionWave .82s ease-in-out infinite;background:linear-gradient(180deg,rgba(255,196,152,.55),rgba(255,90,31,.92));}
     .session-note-audio-time{font-size:.8rem;font-weight:700;color:#8e6a52;min-width:40px;text-align:right;}
     body.theme-dark .session-note-audio-time{color:#e5bb9c;}
+    .session-note-audio-copy{flex:1;min-width:118px;font-size:.78rem;line-height:1.42;color:var(--t2);}
+    .session-note-audio-copy strong{display:block;margin-bottom:2px;color:var(--t1);font-size:.84rem;}
+    .session-note-audio-copy.is-compact{flex:0 1 auto;min-width:0;white-space:nowrap;color:var(--t2);overflow:hidden;text-overflow:ellipsis;}
+    .session-note-audio-copy.is-compact strong{display:inline;margin:0;color:var(--t1);}
+    .session-note-audio-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:nowrap;justify-self:end;}
+    .session-note-audio-secondary,.session-note-ai-btn{border:1px solid rgba(232,217,205,.95);background:#fffdf9;color:#8e6a52;border-radius:12px;min-height:36px;padding:0 10px;font-size:.75rem;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;cursor:pointer;transition:transform 180ms var(--ease),background 180ms var(--ease),color 180ms var(--ease),border-color 180ms var(--ease);}
+    .session-note-audio-secondary{width:36px;padding:0;}
+    .session-note-ai-btn{background:linear-gradient(180deg,#ff8a4c,#ff5a1f);border-color:transparent;color:#fff;box-shadow:0 10px 18px rgba(255,90,31,.16);}
+    .session-note-audio-secondary:hover,.session-note-ai-btn:hover{transform:translateY(-1px);}
+    .session-note-audio-secondary svg,.session-note-ai-btn svg{width:14px;height:14px;}
+    .session-note-ai-btn.is-loading{position:relative;box-shadow:0 12px 22px rgba(255,90,31,.18);}
+    .session-note-ai-btn.is-loading svg{animation:sessionSpin 900ms linear infinite;}
+    .session-note-ai-btn.is-loading::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);animation:sessionButtonSweep 1.4s ease-in-out infinite;pointer-events:none;}
+    .session-note-audio-secondary[disabled],.session-note-ai-btn[disabled]{opacity:.75;cursor:not-allowed;transform:none;}
+    body.theme-dark .session-note-audio-secondary{background:#1c1511;border-color:#3a2d25;color:#e1b99f;}
     .session-note-section{display:flex;flex-direction:column;gap:8px;}
     .session-note-section-title{font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#9d7558;}
     body.theme-dark .session-note-section-title{color:#d4a98b;}
@@ -256,23 +274,61 @@
     .session-note-insight,.session-note-insight-add{min-height:126px;border-radius:20px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid rgba(232,217,205,.95);background:#fffdf9;transition:transform 180ms var(--ease),box-shadow 180ms var(--ease),border-color 180ms var(--ease),background 180ms var(--ease);}
     .session-note-insight:hover,.session-note-insight-add:hover{transform:translateY(-2px);box-shadow:0 12px 20px rgba(53,31,13,.08);}
     body.theme-dark .session-note-insight,body.theme-dark .session-note-insight-add{background:#1d1511;border-color:#3a2d25;}
-    .session-note-insight-head{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+    .session-note-insight-head{display:flex;align-items:center;justify-content:center;gap:8px;position:relative;}
     .session-note-insight-icon{width:34px;height:34px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:#fff5eb;border:1px solid rgba(232,217,205,.95);color:#ff7a1f;}
     .session-note-insight-icon svg{width:16px;height:16px;}
     body.theme-dark .session-note-insight-icon{background:#261c17;border-color:#3a2d25;color:#ff9b64;}
-    .session-note-insight-remove{width:28px;height:28px;border:none;border-radius:10px;background:transparent;color:var(--t3);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+    .session-note-insight-remove{width:28px;height:28px;border:none;border-radius:10px;background:transparent;color:var(--t3);cursor:pointer;display:flex;align-items:center;justify-content:center;position:absolute;right:-6px;top:-6px;}
     .session-note-insight-remove:hover{background:#fff4eb;color:#b54a32;}
     body.theme-dark .session-note-insight-remove:hover{background:#2a1f1a;color:#ff9c78;}
     .session-note-insight-remove svg{width:14px;height:14px;}
-    .session-note-insight-text{margin-top:14px;font-size:.8rem;line-height:1.5;color:var(--t1);}
+    .session-note-insight-text{margin-top:14px;font-size:.8rem;line-height:1.5;color:var(--t1);text-align:center;}
     .session-note-insight-add{align-items:flex-start;justify-content:flex-end;cursor:pointer;background:linear-gradient(180deg,#fffdf9,#fff8f1);}
     .session-note-insight-add-icon{width:34px;height:34px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:#fff3e8;border:1px solid rgba(232,217,205,.95);color:#ff7a1f;margin-bottom:auto;}
-    .session-note-insight-add-label{font-size:.84rem;font-weight:700;color:var(--t1);}
-    .session-note-insight-add-copy{margin-top:6px;font-size:.76rem;line-height:1.45;color:var(--t2);}
+    .session-note-insight-add-label{width:100%;font-size:.84rem;font-weight:700;color:var(--t1);text-align:center;}
+    .session-note-insight-add-copy{width:100%;margin-top:6px;font-size:.76rem;line-height:1.45;color:var(--t2);text-align:center;}
     body.theme-dark .session-note-insight-add{background:linear-gradient(180deg,#211813,#1b1410);}
     body.theme-dark .session-note-insight-add-icon{background:#2a1f19;border-color:#3a2d25;color:#ff9b64;}
     .session-note-empty{display:flex;align-items:center;justify-content:center;min-height:126px;text-align:center;border-radius:20px;border:1px dashed rgba(232,217,205,.95);background:#fffdf9;color:var(--t2);padding:14px;font-size:.8rem;line-height:1.5;}
     body.theme-dark .session-note-empty{background:#1d1511;border-color:#3a2d25;}
+    .session-note-ai-result{display:grid;grid-template-columns:1fr;gap:8px;}
+    .session-note-ai-panel{position:relative;border:1px solid rgba(232,217,205,.95);background:#fffdf9;border-radius:16px;padding:12px 42px 12px 14px;color:var(--t2);font-size:.78rem;line-height:1.45;}
+    .session-note-ai-panel strong{display:block;margin-bottom:4px;color:var(--t1);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;}
+    .session-note-ai-panel p{margin:0;}
+    .session-note-ai-remove{position:absolute;right:8px;top:8px;width:28px;height:28px;border:none;border-radius:10px;background:transparent;color:var(--t3);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 180ms var(--ease),color 180ms var(--ease),transform 180ms var(--ease);}
+    .session-note-ai-remove:hover{background:#fff4eb;color:#b54a32;transform:translateY(-1px);}
+    .session-note-ai-remove svg{width:14px;height:14px;}
+    body.theme-dark .session-note-ai-panel{background:#1d1511;border-color:#3a2d25;}
+    body.theme-dark .session-note-ai-remove:hover{background:#2a1f1a;color:#ff9c78;}
+    .session-note-card[data-note-density="compact"]{gap:12px;}
+    .session-note-card[data-note-density="compact"] .session-note-subtitle{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
+    .session-note-card[data-note-density="compact"] .session-note-meta{gap:8px;padding:8px 10px;}
+    .session-note-card[data-note-density="compact"] .session-note-audio{grid-template-columns:auto minmax(0,92px) minmax(28px,1fr) auto auto;gap:7px;padding:7px 8px;border-radius:15px;}
+    .session-note-card[data-note-density="compact"] .session-note-audio-copy.is-compact{max-width:118px;}
+    .session-note-card[data-note-density="compact"] .session-note-wave{max-width:72px;min-width:28px;gap:2px;}
+    .session-note-card[data-note-density="compact"] .session-note-wave-bar:nth-child(n+11){display:none;}
+    .session-note-card[data-note-density="compact"] .session-note-audio-time{font-size:.72rem;min-width:34px;}
+    .session-note-card[data-note-density="compact"] .session-note-audio-secondary,.session-note-card[data-note-density="compact"] .session-note-ai-btn{min-height:32px;border-radius:10px;}
+    .session-note-card[data-note-density="tiny"] .session-note-badge{width:34px;height:34px;border-radius:12px;}
+    .session-note-card[data-note-density="tiny"] .session-note-title{font-size:.92rem;}
+    .session-note-card[data-note-density="tiny"] .session-note-subtitle{display:none;}
+    .session-note-card[data-note-density="tiny"] .session-note-meta{grid-template-columns:1fr;gap:6px;padding:8px 10px;border-radius:14px;}
+    .session-note-card[data-note-density="tiny"] .session-note-meta-item{gap:8px;}
+    .session-note-card[data-note-density="tiny"] .session-note-meta-icon{width:26px;height:26px;border-radius:10px;}
+    .session-note-card[data-note-density="tiny"] .session-note-audio{grid-template-columns:auto minmax(0,62px) minmax(22px,1fr) auto auto;gap:6px;padding:5px 6px;border-radius:13px;}
+    .session-note-card[data-note-density="tiny"] .session-note-audio-toggle{width:32px;height:32px;border-radius:10px;}
+    .session-note-card[data-note-density="tiny"] .session-note-audio-copy.is-compact{max-width:62px;}
+    .session-note-card[data-note-density="tiny"] .session-note-audio-copy strong{font-size:.72rem;}
+    .session-note-card[data-note-density="tiny"] .session-note-wave{max-width:42px;min-width:22px;gap:2px;padding:0;}
+    .session-note-card[data-note-density="tiny"] .session-note-wave-bar{width:2px;min-width:2px;}
+    .session-note-card[data-note-density="tiny"] .session-note-wave-bar:nth-child(n+8){display:none;}
+    .session-note-card[data-note-density="tiny"] .session-note-audio-time{font-size:.68rem;min-width:30px;}
+    .session-note-card[data-note-density="tiny"] .session-note-audio-actions{gap:5px;}
+    .session-note-card[data-note-density="tiny"] .session-note-audio-secondary{width:30px;min-height:30px;border-radius:10px;}
+    .session-note-card[data-note-density="tiny"] .session-note-ai-btn{width:34px;min-height:30px;padding:0;border-radius:10px;font-size:0;gap:0;}
+    .session-note-card[data-note-density="tiny"] .session-note-ai-btn svg{width:13px;height:13px;}
+    .session-note-card[data-note-density="compact"] .session-note-ai-btn.is-loading{width:36px;padding:0;font-size:0;gap:0;}
+    .session-note-card[data-note-density="compact"] .session-note-ai-btn.is-loading svg{width:14px;height:14px;}
     .session-note-modal-list{display:flex;flex-direction:column;gap:10px;max-height:220px;overflow:auto;padding-right:4px;}
     .session-note-modal-item{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:12px 14px;border-radius:16px;background:var(--glass);border:1px solid var(--glass-border);}
     .session-note-modal-item-icon{width:34px;height:34px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05);color:var(--amber-l);}
@@ -292,6 +348,8 @@
     .session-note-icon-option:hover,.session-note-icon-option.active{background:rgba(255,90,31,.12);border-color:rgba(255,90,31,.28);color:var(--amber);}
     .session-note-icon-option svg{width:15px;height:15px;}
     @keyframes sessionWave{0%,100%{transform:translateY(0);opacity:.52;}50%{transform:translateY(-1px);opacity:.95;}}
+    @keyframes sessionSpin{to{transform:rotate(360deg);}}
+    @keyframes sessionButtonSweep{0%{transform:translateX(-100%);opacity:0;}35%{opacity:1;}100%{transform:translateX(100%);opacity:0;}}
     .btn-notebook{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r2);padding:9px;font-size:0.75rem;font-weight:600;color:var(--t2);cursor:pointer;transition:background 150ms var(--ease),color 150ms var(--ease),border-color 150ms var(--ease),transform 150ms var(--ease),box-shadow 150ms var(--ease);text-decoration:none;}
     .btn-notebook:hover{background:rgba(0,87,255,0.12);border-color:rgba(0,87,255,0.25);color:var(--indigo-l);}
     .btn-notebook svg{width:14px;height:14px;}
@@ -1896,8 +1954,8 @@
             <div class="session-note-heading">
               <div class="session-note-badge"><i data-lucide="notebook-pen"></i></div>
               <div class="session-note-title-wrap">
-                <div class="session-note-title">Anota&ccedil;&atilde;o da sess&atilde;o</div>
-                <div class="session-note-subtitle">Registre o que aprendeu e suas reflex&otilde;es.</div>
+                <div class="session-note-title">Registro inteligente da sess&atilde;o</div>
+                <div class="session-note-subtitle">Grave com suas palavras o que voc&ecirc; aprendeu. O Coliseu transforma sua fala em resumo, insights e revis&atilde;o.</div>
               </div>
             </div>
             <div class="session-note-actions">
@@ -1920,25 +1978,24 @@
                 <div class="session-note-meta-value" id="note-meta-content">-</div>
               </div>
             </div>
-            <div class="session-note-meta-item">
-              <div class="session-note-meta-icon"><i data-lucide="clock-3"></i></div>
-              <div class="session-note-meta-copy">
-                <div class="session-note-meta-label">Sess&atilde;o</div>
-                <div class="session-note-meta-value" id="note-meta-session">-</div>
-              </div>
-            </div>
           </div>
-          <div class="session-note-audio" id="note-audio-bar">
-            <button class="session-note-audio-toggle" id="note-audio-toggle" type="button" aria-label="Reproduzir &aacute;udio da sess&atilde;o"><i data-lucide="play" id="note-audio-icon"></i></button>
+          <div class="session-note-audio" id="note-audio-bar" data-state="empty">
+            <button class="session-note-audio-toggle" id="note-audio-toggle" type="button" aria-label="Gravar &aacute;udio da sess&atilde;o"><i data-lucide="mic" id="note-audio-icon"></i></button>
+            <div class="session-note-audio-copy" id="note-audio-copy">
+              <strong>Grave com suas palavras</strong>
+              Explique em at&eacute; 90 segundos o que voc&ecirc; aprendeu nesta sess&atilde;o.
+            </div>
             <div class="session-note-wave" id="note-waveform" aria-hidden="true"></div>
             <span class="session-note-audio-time" id="note-audio-current">0:00</span>
-            <button class="session-note-audio-tts" id="note-tts-btn" type="button" aria-label="Ouvir resumo com TTS"><i data-lucide="captions"></i></button>
+            <div class="session-note-audio-actions" id="note-audio-actions">
+              <button class="session-note-audio-secondary" id="note-audio-delete" type="button" aria-label="Excluir &aacute;udio gravado"><i data-lucide="trash-2"></i></button>
+              <button class="session-note-ai-btn" id="note-ai-generate" type="button"><i data-lucide="sparkles"></i>Gerar resumo</button>
+            </div>
           </div>
           <div class="session-note-section">
-            <div class="session-note-section-title">Resumo da sess&atilde;o</div>
+            <div class="session-note-section-title">Resumo inteligente</div>
             <div class="session-note-summary-wrap">
-              <textarea class="session-note-summary" id="note-summary-input" placeholder="O que voc&ecirc; aprendeuQuais pontos foram mais importantes
-Ainda ficou com alguma d&uacute;vida"></textarea>
+              <textarea class="session-note-summary" id="note-summary-input" placeholder="O resumo gerado pela IA aparecer&aacute; aqui. Voc&ecirc; pode ajustar com suas palavras."></textarea>
               <div class="session-note-summary-affordance" aria-hidden="true"><i data-lucide="pen-line"></i></div>
             </div>
             <div class="session-note-autosave" id="note-autosave-status"></div>
@@ -1946,6 +2003,10 @@ Ainda ficou com alguma d&uacute;vida"></textarea>
           <div class="session-note-section">
             <div class="session-note-section-title">Insights chave</div>
             <div class="session-note-insights-grid" id="note-insights-grid"></div>
+          </div>
+          <div class="session-note-section" id="note-ai-result-section" hidden>
+            <div class="session-note-section-title">Revis&atilde;o sugerida</div>
+            <div class="session-note-ai-result" id="note-ai-result"></div>
           </div>
         </div>
       </div>
@@ -2660,6 +2721,7 @@ function sanitizeNote(input){
   const contentName = sanitizeText(safe.contentName || '', '');
   const sessionLabel = sanitizeText(safe.sessionLabel || '', '');
   const id = sanitizeText(safe.id || safe.sessionId || 'session-annotation', 'session-annotation');
+  const aiReview = safe.aiReview && typeof safe.aiReview === 'object' ?safe.aiReview : {};
   return {
     id,
     sessionId: sanitizeText(safe.sessionId || id, id),
@@ -2673,6 +2735,13 @@ function sanitizeNote(input){
     audioUrl: safe.audioUrl ?sanitizeText(safe.audioUrl, null) : null,
     summary,
     insights,
+    aiDoubts: Array.isArray(safe.aiDoubts) ?safe.aiDoubts.map(item=>sanitizeText(item, '')).filter(Boolean).slice(0,5) : [],
+    aiReview: {
+      title: sanitizeText(aiReview.title || aiReview.titulo || '', ''),
+      description: sanitizeText(aiReview.description || aiReview.descricao || '', ''),
+      priority: ['baixa','media','alta'].includes(aiReview.priority || aiReview.prioridade) ?(aiReview.priority || aiReview.prioridade) : '',
+    },
+    nextTask: sanitizeText(safe.nextTask || safe.proxima_tarefa || '', ''),
     updatedAt: safe.updatedAt ?sanitizeText(safe.updatedAt, null) : null,
     body: summary,
     checklist: insights.map(item=>({id:item.id,label:item.text,done:item.icon==='target'})),
@@ -2729,7 +2798,25 @@ const NoteUIState = {
   autosaveTimer: null,
   autosaveMessageTimer: null,
   formIcon: 'star',
-  audio: {isPlaying:false, elapsedSec:0, totalSec:0, timer:null, audioEl:null, source:'mock'},
+  audio: {
+    state:'empty',
+    isPlaying:false,
+    isRecording:false,
+    isProcessing:false,
+    elapsedSec:0,
+    totalSec:0,
+    timer:null,
+    recorder:null,
+    stream:null,
+    chunks:[],
+    blob:null,
+    objectUrl:null,
+    audioEl:null,
+    cloudNote:null,
+    loadedSessionId:null,
+    loadPromise:null,
+    mimeType:'audio/webm',
+  },
 };
 function getInsightIconName(icon){
   return ({star:'star',target:'target',lightbulb:'lightbulb',custom:'sparkles'})[icon] || 'star';
@@ -2850,6 +2937,313 @@ function stopNoteAudioPlayback(resetElapsed=false){
   NoteUIState.audio.isPlaying = false;
   if(resetElapsed) NoteUIState.audio.elapsedSec = 0;
 }
+function getSupportedNoteAudioMime(){
+  const choices = ['audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus','audio/mp4'];
+  if(!window.MediaRecorder) return '';
+  return choices.find(type=>MediaRecorder.isTypeSupported(type)) || '';
+}
+function normalizeNoteAudioMime(type=''){
+  const clean = String(type || '').toLowerCase();
+  if(clean.includes('audio/webm')) return 'audio/webm';
+  if(clean.includes('audio/ogg')) return 'audio/ogg';
+  if(clean.includes('audio/mp4')) return 'audio/mp4';
+  if(clean.includes('audio/mpeg')) return 'audio/mpeg';
+  if(clean.includes('audio/wav')) return 'audio/wav';
+  return 'audio/webm';
+}
+function releaseNoteAudioUrl(){
+  if(NoteUIState.audio.objectUrl){
+    URL.revokeObjectURL(NoteUIState.audio.objectUrl);
+    NoteUIState.audio.objectUrl = null;
+  }
+}
+function setNoteAudioSource(url, durationSeconds=0, cloudNote=null){
+  releaseNoteAudioUrl();
+  if(NoteUIState.audio.audioEl){
+    NoteUIState.audio.audioEl.pause();
+    NoteUIState.audio.audioEl = null;
+  }
+  NoteUIState.audio.objectUrl = url || null;
+  NoteUIState.audio.totalSec = Math.max(0, parseInt(durationSeconds, 10) || 0);
+  NoteUIState.audio.elapsedSec = 0;
+  NoteUIState.audio.cloudNote = cloudNote || null;
+  NoteUIState.audio.state = url ?(cloudNote?.status === 'completed' ?'completed' : 'recorded') : 'empty';
+}
+function resetNoteAudioState(){
+  clearNoteAudioTimer();
+  if(NoteUIState.audio.stream){
+    NoteUIState.audio.stream.getTracks().forEach(track=>track.stop());
+  }
+  if(NoteUIState.audio.audioEl){
+    NoteUIState.audio.audioEl.pause();
+  }
+  releaseNoteAudioUrl();
+  Object.assign(NoteUIState.audio, {
+    state:'empty',
+    isPlaying:false,
+    isRecording:false,
+    isProcessing:false,
+    elapsedSec:0,
+    totalSec:0,
+    timer:null,
+    recorder:null,
+    stream:null,
+    chunks:[],
+    blob:null,
+    audioEl:null,
+    cloudNote:null,
+    loadedSessionId:null,
+    loadPromise:null,
+  });
+}
+function renderNoteAiResult(note){
+  const section = document.getElementById('note-ai-result-section');
+  const wrap = document.getElementById('note-ai-result');
+  if(!section || !wrap) return;
+  const doubts = Array.isArray(note.aiDoubts) ?note.aiDoubts.filter(Boolean) : [];
+  const review = note.aiReview || {};
+  const nextTask = note.nextTask || '';
+  const hasContent = doubts.length || review.description || review.title || nextTask;
+  section.hidden = !hasContent;
+  if(!hasContent){
+    wrap.innerHTML = '';
+    return;
+  }
+  const panels = [];
+  if(review.title || review.description){
+    panels.push(`<div class="session-note-ai-panel" data-ai-result="review"><button class="session-note-ai-remove" type="button" data-action="remove-ai-result" data-ai-result="review" aria-label="Remover revisao sugerida"><i data-lucide="x"></i></button><strong>${esc(review.title || 'Revis\u00e3o recomendada')}</strong><p>${esc(review.description || 'Revise os pontos centrais desta sess\u00e3o.')}${review.priority ?` Prioridade: ${esc(review.priority)}.`:''}</p></div>`);
+  }
+  if(doubts.length){
+    panels.push(`<div class="session-note-ai-panel" data-ai-result="doubts"><button class="session-note-ai-remove" type="button" data-action="remove-ai-result" data-ai-result="doubts" aria-label="Remover duvidas detectadas"><i data-lucide="x"></i></button><strong>D\u00favidas detectadas</strong><p>${doubts.map(esc).join('<br>')}</p></div>`);
+  }
+  if(nextTask){
+    panels.push(`<div class="session-note-ai-panel" data-ai-result="nextTask"><button class="session-note-ai-remove" type="button" data-action="remove-ai-result" data-ai-result="nextTask" aria-label="Remover proxima tarefa"><i data-lucide="x"></i></button><strong>Pr\u00f3xima tarefa</strong><p>${esc(nextTask)}</p></div>`);
+  }
+  wrap.innerHTML = panels.join('');
+  lucide.createIcons({nodes:[wrap]});
+  wrap.querySelectorAll('[data-action="remove-ai-result"]').forEach(button=>{
+    button.addEventListener('click', event=>{
+      event.stopPropagation();
+      removeSessionAiResult(button.dataset.aiResult);
+    });
+  });
+}
+function applySessionAiResult(result){
+  if(!result) return;
+  const insights = Array.isArray(result.insights) ?result.insights.map(item=>sanitizeSessionInsight({
+    id:uid(),
+    icon:'lightbulb',
+    text:[item.titulo, item.descricao].filter(Boolean).join(' - '),
+  })) : [];
+  const note = getCurrentSessionAnnotation();
+  const next = saveCurrentSessionAnnotation({
+    ...note,
+    summary: result.resumo || note.summary,
+    insights: insights.length ?insights : note.insights,
+    aiDoubts: Array.isArray(result.duvidas_detectadas) ?result.duvidas_detectadas : [],
+    aiReview: result.revisao_sugerida || {},
+    nextTask: result.proxima_tarefa || '',
+    updatedAt:new Date().toISOString(),
+  });
+  renderNote();
+  refreshWorkspaceView();
+  setNoteAutosaveStatus('Resumo gerado com IA');
+  return next;
+}
+async function syncCurrentAudioNotePatch(payload){
+  const cloudNote = NoteUIState.audio.cloudNote;
+  if(!cloudNote?.id || !DataStoreSupabase.isReady()) return;
+  const updated = await DataStoreSupabase.audioNotes.update(cloudNote.id, payload);
+  if(updated.ok && updated.data) NoteUIState.audio.cloudNote = updated.data;
+}
+async function removeSessionAiResult(type){
+  const note = getCurrentSessionAnnotation();
+  const patch = {};
+  const cloudPatch = {};
+  if(type === 'review'){
+    patch.aiReview = {};
+    cloudPatch.suggested_review = {};
+  } else if(type === 'doubts'){
+    patch.aiDoubts = [];
+    cloudPatch.detected_doubts = [];
+  } else if(type === 'nextTask'){
+    patch.nextTask = '';
+    cloudPatch.next_task = '';
+  } else {
+    return;
+  }
+  saveCurrentSessionAnnotation({...note, ...patch, updatedAt:new Date().toISOString()});
+  renderNote();
+  refreshWorkspaceView();
+  await syncCurrentAudioNotePatch(cloudPatch);
+}
+async function ensureCurrentAudioSession(){
+  const ctx = getSessionAnnotationContext();
+  if(isUuid(ctx.sessionId)) return ctx.sessionId;
+  const session = sanitizeStudySession({
+    subjectId: ctx.subjectId,
+    topicId: ctx.topicId,
+    startedAt: ctx.startedAt || new Date().toISOString(),
+    endedAt: null,
+    durationMinutes: 0,
+    type: 'focus',
+  });
+  AppDB.saveSessions([...AppDB.getSessions(), session]);
+  saveCurrentSessionAnnotation({...getCurrentSessionAnnotation(), id:session.id, sessionId:session.id, updatedAt:new Date().toISOString()});
+  return session.id;
+}
+async function loadSessionAudioNote(sessionId){
+  if(!DataStoreSupabase.isReady() || !isUuid(sessionId)) return;
+  if(NoteUIState.audio.loadedSessionId === sessionId || NoteUIState.audio.loadPromise) return;
+  NoteUIState.audio.loadPromise = DataStoreSupabase.audioNotes.latestForSession(sessionId)
+    .then(async result=>{
+      if(!result.ok || !result.data || NoteUIState.audio.blob) return;
+      NoteUIState.audio.cloudNote = result.data;
+      NoteUIState.audio.loadedSessionId = sessionId;
+      if(result.data.audioPath){
+        const signed = await DataStoreSupabase.audioNotes.signedUrl(result.data.audioPath);
+        if(signed.ok) setNoteAudioSource(signed.data, result.data.durationSeconds, result.data);
+      }
+      if(result.data.status === 'completed'){
+        applySessionAiResult({
+          resumo: result.data.aiSummary,
+          insights: result.data.insights,
+          duvidas_detectadas: result.data.detectedDoubts,
+          revisao_sugerida: result.data.suggestedReview,
+          proxima_tarefa: result.data.nextTask,
+        });
+      } else {
+        renderNote();
+      }
+    })
+    .finally(()=>{ NoteUIState.audio.loadPromise = null; });
+}
+function updateNoteAudioTimerLabel(){
+  const timeEl = document.getElementById('note-audio-current');
+  if(timeEl) timeEl.textContent = fmtSec(NoteUIState.audio.elapsedSec || 0);
+}
+async function startSessionAudioRecording(){
+  if(!window.MediaRecorder || !navigator.mediaDevices?.getUserMedia){
+    toast('Seu navegador não suporta gravação de áudio.');
+    return;
+  }
+  stopNoteAudioPlayback(true);
+  const mimeType = getSupportedNoteAudioMime();
+  const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+  const recorder = new MediaRecorder(stream, mimeType ?{mimeType} : undefined);
+  NoteUIState.audio.stream = stream;
+  NoteUIState.audio.recorder = recorder;
+  NoteUIState.audio.chunks = [];
+  NoteUIState.audio.mimeType = mimeType || recorder.mimeType || 'audio/webm';
+  NoteUIState.audio.isRecording = true;
+  NoteUIState.audio.state = 'recording';
+  NoteUIState.audio.elapsedSec = 0;
+  NoteUIState.audio.totalSec = 90;
+  recorder.ondataavailable = event=>{ if(event.data?.size) NoteUIState.audio.chunks.push(event.data); };
+  recorder.onstop = ()=>{
+    const blob = new Blob(NoteUIState.audio.chunks, {type:normalizeNoteAudioMime(NoteUIState.audio.mimeType)});
+    NoteUIState.audio.stream?.getTracks().forEach(track=>track.stop());
+    NoteUIState.audio.stream = null;
+    NoteUIState.audio.blob = blob;
+    setNoteAudioSource(URL.createObjectURL(blob), NoteUIState.audio.elapsedSec || 1, null);
+    NoteUIState.audio.state = 'recorded';
+    NoteUIState.audio.isRecording = false;
+    renderNote();
+  };
+  recorder.start();
+  clearNoteAudioTimer();
+  NoteUIState.audio.timer = setInterval(()=>{
+    NoteUIState.audio.elapsedSec += 1;
+    if(NoteUIState.audio.elapsedSec >= 90) stopSessionAudioRecording();
+    renderNote();
+  }, 1000);
+  renderNote();
+}
+function stopSessionAudioRecording(){
+  if(NoteUIState.audio.recorder && NoteUIState.audio.recorder.state !== 'inactive'){
+    NoteUIState.audio.recorder.stop();
+  }
+  clearNoteAudioTimer();
+}
+function toggleSessionAudioPlayback(){
+  const src = NoteUIState.audio.objectUrl;
+  if(!src){
+    toast('Grave um áudio da sessão primeiro.');
+    return;
+  }
+  if(NoteUIState.audio.isPlaying){
+    stopNoteAudioPlayback(false);
+    renderNote();
+    return;
+  }
+  const audio = NoteUIState.audio.audioEl || new Audio(src);
+  NoteUIState.audio.audioEl = audio;
+  audio.onended = ()=>{ stopNoteAudioPlayback(true); renderNote(); };
+  audio.ontimeupdate = ()=>{
+    NoteUIState.audio.elapsedSec = Math.round(audio.currentTime || 0);
+    updateNoteAudioTimerLabel();
+  };
+  audio.play().then(()=>{
+    NoteUIState.audio.isPlaying = true;
+    renderNote();
+  }).catch(()=>toast('Não foi possível reproduzir este áudio.'));
+}
+async function deleteSessionAudioRecording(){
+  const cloudNote = NoteUIState.audio.cloudNote;
+  if(cloudNote?.id && DataStoreSupabase.isReady()){
+    const hasAiContent = cloudNote.status === 'completed' || cloudNote.aiSummary || cloudNote.insights?.length || cloudNote.suggestedReview?.description || cloudNote.nextTask;
+    if(hasAiContent){
+      await DataStoreSupabase.audioNotes.clearAudioFile(cloudNote);
+    } else {
+      await DataStoreSupabase.audioNotes.remove(cloudNote);
+    }
+  }
+  resetNoteAudioState();
+  renderNote();
+}
+async function generateSessionAiSummary(){
+  if(!NoteUIState.audio.blob && !NoteUIState.audio.cloudNote?.id){
+    toast('Grave um áudio antes de gerar o resumo.');
+    return;
+  }
+  if(!DataStoreSupabase.isReady()){
+    toast('Entre na conta para enviar o áudio com segurança ao Supabase.');
+    return;
+  }
+  NoteUIState.audio.isProcessing = true;
+  NoteUIState.audio.state = 'processing';
+  renderNote();
+  try{
+    const sessionId = await ensureCurrentAudioSession();
+    let cloudNote = NoteUIState.audio.cloudNote;
+    if(NoteUIState.audio.blob && (!cloudNote?.id || !cloudNote.audioPath)){
+      if(!cloudNote?.id){
+        const created = await DataStoreSupabase.audioNotes.createDraft(sessionId, NoteUIState.audio.totalSec || NoteUIState.audio.elapsedSec, getCurrentSessionAnnotation().summary || '');
+        if(!created.ok) throw new Error(shortErrorDetail(created) || 'Falha ao criar registro de áudio.');
+        cloudNote = created.data;
+      }
+      const uploaded = await DataStoreSupabase.audioNotes.upload(cloudNote, NoteUIState.audio.blob);
+      if(!uploaded.ok) throw new Error(shortErrorDetail(uploaded) || 'Falha ao enviar áudio.');
+      cloudNote = uploaded.data;
+      NoteUIState.audio.cloudNote = cloudNote;
+    }
+    if(!cloudNote?.audioPath) throw new Error('Áudio ainda não foi enviado ao Storage.');
+    const analyzed = await DataStoreSupabase.audioNotes.analyze(cloudNote.id);
+    if(!analyzed.ok) throw new Error(shortErrorDetail(analyzed) || 'Falha na análise com IA.');
+    applySessionAiResult(analyzed.data);
+    const refreshed = await DataStoreSupabase.audioNotes.latestForSession(sessionId);
+    if(refreshed.ok && refreshed.data) NoteUIState.audio.cloudNote = refreshed.data;
+    NoteUIState.audio.state = 'completed';
+    toast('Resumo inteligente gerado.');
+  } catch(error){
+    console.warn('[StudyFlow] Falha ao gerar resumo inteligente:', error);
+    toast(`Não foi possível analisar o áudio agora. ${sanitizeText(error?.message || '', '')}`);
+    NoteUIState.audio.state = NoteUIState.audio.objectUrl ?'recorded' : 'empty';
+  } finally {
+    NoteUIState.audio.isProcessing = false;
+    renderNote();
+  }
+}
 function setNoteAutosaveStatus(message=''){
   const el = document.getElementById('note-autosave-status');
   if(!el) return;
@@ -2953,7 +3347,7 @@ const STORAGE_KEYS = {
   userProfile: 'sf_user_profile',
 };
 
-const DEFAULT_NOTE = {id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],updatedAt:null};
+const DEFAULT_NOTE = {id:'session-annotation',subjectName:'',contentName:'',sessionLabel:'',audioUrl:null,summary:'',insights:[],aiDoubts:[],aiReview:{},nextTask:'',updatedAt:null};
 
 const DataStoreLocal = {
   _cache: {},
@@ -3216,6 +3610,40 @@ const DataStoreSupabase = {
     }
     const text = await response.text();
     return {ok:true,data:text ?JSON.parse(text) : null};
+  },
+  async requestRaw(url, options={}, retry=true){
+    const config = this.getConfig();
+    const session = await this.ensureSession();
+    if(!session.ok) return session;
+    const accessToken = this.getAccessToken();
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        apikey: config.publishableKey,
+        Authorization: `Bearer ${accessToken}`,
+        ...(options.headers || {}),
+      },
+    });
+    if(!response.ok){
+      const text = await response.text();
+      let reason = text;
+      try{ reason = text ?JSON.parse(text) : null; } catch{}
+      if(response.status === 401 && retry){
+        const refreshed = await this.refreshSession();
+        if(refreshed.ok) return this.requestRaw(url, options, false);
+        return refreshed;
+      }
+      return {ok:false,status:response.status,reason};
+    }
+    return {ok:true,response};
+  },
+  async callFunction(name, payload){
+    const config = this.getConfig();
+    return this.requestRaw(`${config.url}/functions/v1/${name}`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload || {}),
+    });
   },
   catalog: {
     mapSubject(row){
@@ -3589,6 +4017,136 @@ const DataStoreSupabase = {
         body:JSON.stringify(safe.map(note=>this.toRow(note))),
       });
       return result.ok ?{ok:true,data:safe} : result;
+    },
+  },
+  audioNotes: {
+    map(row){
+      const review = row?.suggested_review && typeof row.suggested_review === 'object' ?row.suggested_review : {};
+      return {
+        id: sanitizeText(row?.id || '', ''),
+        sessionId: sanitizeText(row?.session_id || '', ''),
+        audioPath: sanitizeText(row?.audio_path || '', ''),
+        audioUrl: sanitizeText(row?.audio_url || '', ''),
+        durationSeconds: Math.max(0, parseInt(row?.duration_seconds, 10) || 0),
+        transcription: sanitizeText(row?.transcription || '', ''),
+        aiSummary: sanitizeText(row?.ai_summary || '', ''),
+        manualSummary: sanitizeText(row?.manual_summary || '', ''),
+        insights: Array.isArray(row?.insights) ?row.insights : [],
+        detectedDoubts: Array.isArray(row?.detected_doubts) ?row.detected_doubts : [],
+        suggestedReview: {
+          title: sanitizeText(review.titulo || review.title || '', ''),
+          description: sanitizeText(review.descricao || review.description || '', ''),
+          priority: sanitizeText(review.prioridade || review.priority || '', ''),
+        },
+        nextTask: sanitizeText(row?.next_task || '', ''),
+        status: sanitizeText(row?.status || 'draft', 'draft'),
+        errorMessage: sanitizeText(row?.error_message || '', ''),
+        createdAt: sanitizeText(row?.created_at || '', ''),
+        updatedAt: sanitizeText(row?.updated_at || '', ''),
+      };
+    },
+    async latestForSession(sessionId){
+      if(!DataStoreSupabase.isReady() || !isUuid(sessionId)) return DataStoreSupabase.fail();
+      const result = await DataStoreSupabase.request(`session_audio_notes?session_id=eq.${encodeURIComponent(sessionId)}&select=*&order=created_at.desc&limit=12`);
+      if(!result.ok) return result;
+      const rows = Array.isArray(result.data) ?result.data : [];
+      const hasAiPayload = row => !!(
+        row?.ai_summary
+        || (Array.isArray(row?.insights) && row.insights.length)
+        || (Array.isArray(row?.detected_doubts) && row.detected_doubts.length)
+        || row?.suggested_review?.description
+        || row?.suggested_review?.descricao
+        || row?.next_task
+      );
+      const row = rows.find(item=>item.status === 'completed' && hasAiPayload(item))
+        || rows.find(item=>hasAiPayload(item))
+        || rows.find(item=>item.audio_path)
+        || rows[0]
+        || null;
+      return {ok:true,data:row ?this.map(row) : null};
+    },
+    async createDraft(sessionId, durationSeconds, manualSummary=''){
+      if(!DataStoreSupabase.isReady() || !isUuid(sessionId)) return DataStoreSupabase.fail();
+      const userId = DataStoreSupabase.getUserId();
+      const result = await DataStoreSupabase.request('session_audio_notes?select=*', {
+        method:'POST',
+        headers:{Prefer:'return=representation'},
+        body:JSON.stringify({
+          user_id:userId,
+          session_id:sessionId,
+          duration_seconds:Math.min(90, Math.max(0, parseInt(durationSeconds, 10) || 0)),
+          manual_summary:manualSummary || '',
+          status:'draft',
+          source:'audio_ai',
+        }),
+      });
+      if(!result.ok) return result;
+      const row = Array.isArray(result.data) ?result.data[0] : null;
+      return row ?{ok:true,data:this.map(row)} : {ok:false,reason:'empty-audio-note'};
+    },
+    async update(id, payload){
+      if(!DataStoreSupabase.isReady() || !isUuid(id)) return DataStoreSupabase.fail();
+      const result = await DataStoreSupabase.request(`session_audio_notes?id=eq.${encodeURIComponent(id)}&select=*`, {
+        method:'PATCH',
+        headers:{Prefer:'return=representation'},
+        body:JSON.stringify(payload || {}),
+      });
+      if(!result.ok) return result;
+      const row = Array.isArray(result.data) ?result.data[0] : null;
+      return row ?{ok:true,data:this.map(row)} : {ok:false,reason:'empty-audio-note'};
+    },
+    async upload(note, blob){
+      if(!DataStoreSupabase.isReady() || !note?.id || !blob) return DataStoreSupabase.fail();
+      const config = DataStoreSupabase.getConfig();
+      const userId = DataStoreSupabase.getUserId();
+      const mimeType = normalizeNoteAudioMime(blob.type);
+      const ext = mimeType.includes('ogg') ?'ogg' : (mimeType.includes('mp4') ?'m4a' : 'webm');
+      const audioPath = `${userId}/${note.sessionId}/${note.id}.${ext}`;
+      const upload = await DataStoreSupabase.requestRaw(`${config.url}/storage/v1/object/session-audios/${audioPath}`, {
+        method:'PUT',
+        headers:{
+          'Content-Type':mimeType,
+          'x-upsert':'true',
+        },
+        body:blob,
+      });
+      if(!upload.ok) return upload;
+      return this.update(note.id, {audio_path:audioPath, audio_url:mimeType, status:'uploaded'});
+    },
+    async signedUrl(audioPath){
+      if(!DataStoreSupabase.isReady() || !audioPath) return DataStoreSupabase.fail();
+      const config = DataStoreSupabase.getConfig();
+      const result = await DataStoreSupabase.requestRaw(`${config.url}/storage/v1/object/sign/session-audios/${audioPath}`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({expiresIn:3600}),
+      });
+      if(!result.ok) return result;
+      const data = await result.response.json().catch(()=>null);
+      const signedURL = data?.signedURL || data?.signedUrl || '';
+      return signedURL ?{ok:true,data:signedURL.startsWith('http') ?signedURL : `${config.url}/storage/v1${signedURL}`} : {ok:false,reason:'missing-signed-url'};
+    },
+    async remove(note){
+      if(!DataStoreSupabase.isReady() || !note?.id) return DataStoreSupabase.fail();
+      const config = DataStoreSupabase.getConfig();
+      if(note.audioPath){
+        await DataStoreSupabase.requestRaw(`${config.url}/storage/v1/object/session-audios/${note.audioPath}`, {method:'DELETE'});
+      }
+      return DataStoreSupabase.request(`session_audio_notes?id=eq.${encodeURIComponent(note.id)}`, {method:'DELETE'});
+    },
+    async clearAudioFile(note){
+      if(!DataStoreSupabase.isReady() || !note?.id) return DataStoreSupabase.fail();
+      const config = DataStoreSupabase.getConfig();
+      if(note.audioPath){
+        await DataStoreSupabase.requestRaw(`${config.url}/storage/v1/object/session-audios/${note.audioPath}`, {method:'DELETE'});
+      }
+      return this.update(note.id, {audio_path:null, audio_url:null});
+    },
+    async analyze(id){
+      const result = await DataStoreSupabase.callFunction('analyze-session-audio', {audio_note_id:id});
+      if(!result.ok) return result;
+      const data = await result.response.json().catch(()=>null);
+      return {ok:true,data};
     },
   },
   moods: {
@@ -5190,7 +5748,7 @@ function renderNoteInsights(note){
   wrap.querySelectorAll('[data-action="remove-insight"]').forEach(button=>{
     button.addEventListener('click', event=>{
       event.stopPropagation();
-      removeSessionInsight(button.dataset.insightId);
+      removeSessionInsight(button.dataset.insightId).catch(error=>console.warn('[StudyFlow] Falha ao remover insight:', error));
     });
   });
   wrap.querySelectorAll('.session-note-insight').forEach(card=>{
@@ -5222,18 +5780,70 @@ function renderNote(){
   }
   renderNoteWaveform();
   renderNoteInsights(note);
-  NoteUIState.audio.totalSec = getSessionAnnotationAudioTotalSec(note);
-  if(NoteUIState.audio.elapsedSec > NoteUIState.audio.totalSec){
-    NoteUIState.audio.elapsedSec = NoteUIState.audio.totalSec;
-  }
+  renderNoteAiResult(note);
+  if(DataStoreSupabase.isReady() && isUuid(note.sessionId)) loadSessionAudioNote(note.sessionId);
   const timeEl = document.getElementById('note-audio-current');
   if(timeEl) timeEl.textContent = fmtSec(NoteUIState.audio.elapsedSec || 0);
   const audioBar = document.getElementById('note-audio-bar');
-  if(audioBar) audioBar.classList.toggle('is-playing', NoteUIState.audio.isPlaying);
+  const state = NoteUIState.audio.state || 'empty';
+  if(audioBar){
+    audioBar.dataset.state = state;
+    audioBar.classList.toggle('is-playing', NoteUIState.audio.isPlaying);
+    audioBar.classList.toggle('is-recording', NoteUIState.audio.isRecording);
+  }
+  const copy = document.getElementById('note-audio-copy');
+  if(copy){
+    const copyMap = {
+      empty:['Grave com suas palavras','Explique em at\u00e9 90 segundos o que voc\u00ea aprendeu nesta sess\u00e3o.'],
+      recording:['Gravando agora','Fale naturalmente. Pare quando terminar ou aguarde o limite.'],
+      recorded:['\u00c1udio pronto',''],
+      processing:['Analisando sua fala...','O Coliseu est\u00e1 transformando o \u00e1udio em resumo, insights e revis\u00e3o.'],
+      completed:['Resumo pronto',''],
+    };
+    const [title, body] = copyMap[state] || copyMap.empty;
+    copy.classList.toggle('is-compact', ['recorded','completed'].includes(state));
+    copy.innerHTML = `<strong>${title}</strong>${body}`;
+  }
+  const actions = document.getElementById('note-audio-actions');
+  if(actions) actions.style.display = ['recorded','processing','completed'].includes(state) ?'flex' : 'none';
+  const waveform = document.getElementById('note-waveform');
+  if(waveform) waveform.style.display = state === 'empty' ?'none' : 'flex';
+  const del = document.getElementById('note-audio-delete');
+  if(del) del.disabled = state === 'processing';
+  const aiBtn = document.getElementById('note-ai-generate');
+  if(aiBtn){
+    aiBtn.disabled = state === 'processing';
+    aiBtn.classList.toggle('is-loading', state === 'processing');
+    aiBtn.innerHTML = state === 'processing'
+      ?'<i data-lucide="loader-circle"></i>Gerando'
+      :'<i data-lucide="sparkles"></i>Gerar resumo';
+  }
   const icon = document.getElementById('note-audio-icon');
   if(icon){
-    icon.setAttribute('data-lucide', NoteUIState.audio.isPlaying ?'pause' : 'play');
+    const iconName = state === 'recording' ?'square' : (state === 'empty' ?'mic' : (NoteUIState.audio.isPlaying ?'pause' : 'play'));
+    icon.setAttribute('data-lucide', iconName);
     lucide.createIcons({nodes:[icon]});
+  }
+  if(audioBar) lucide.createIcons({nodes:[audioBar]});
+  updateSessionNoteDensity();
+}
+function updateSessionNoteDensity(){
+  const card = document.querySelector('#note .session-note-card');
+  if(!card) return;
+  const width = card.getBoundingClientRect().width || 0;
+  const density = width < 360 ?'tiny' : (width < 460 ?'compact' : 'default');
+  card.dataset.noteDensity = density;
+}
+function initSessionNoteDensityObserver(){
+  const card = document.querySelector('#note .session-note-card');
+  if(!card) return;
+  updateSessionNoteDensity();
+  if(window.ResizeObserver){
+    const observer = new ResizeObserver(()=>updateSessionNoteDensity());
+    observer.observe(card);
+    window._sessionNoteDensityObserver = observer;
+  } else {
+    window.addEventListener('resize', updateSessionNoteDensity);
   }
 }
 
@@ -6129,14 +6739,50 @@ function saveNote(payload, legacyChecklist){
   renderNote();
   refreshWorkspaceView();
 }
-function removeSessionInsight(insightId){
+function getSessionInsightComparableText(input){
+  const safe = input && typeof input === 'object' ?input : {};
+  const text = typeof input === 'string'
+    ?input
+    : [
+      safe.text || safe.label,
+      safe.titulo || safe.title,
+      safe.descricao || safe.description,
+    ].filter(Boolean).join(' - ');
+  return sanitizeText(text, '').replace(/\s+/g, ' ').toLowerCase();
+}
+async function syncRemovedSessionInsight(removedInsight){
+  if(!removedInsight || !DataStoreSupabase.isReady()) return;
+  const removedText = getSessionInsightComparableText(removedInsight);
+  if(!removedText) return;
+  let cloudNote = NoteUIState.audio.cloudNote;
+  if(!cloudNote?.id && NoteUIState.audio.loadPromise){
+    await NoteUIState.audio.loadPromise.catch(()=>null);
+    cloudNote = NoteUIState.audio.cloudNote;
+  }
+  if(!cloudNote?.id){
+    const note = getCurrentSessionAnnotation();
+    if(isUuid(note.sessionId)){
+      const latest = await DataStoreSupabase.audioNotes.latestForSession(note.sessionId);
+      if(latest.ok && latest.data) cloudNote = latest.data;
+    }
+  }
+  if(!cloudNote?.id || !Array.isArray(cloudNote.insights)) return;
+  const nextInsights = cloudNote.insights.filter(item=>getSessionInsightComparableText(item) !== removedText);
+  if(nextInsights.length === cloudNote.insights.length) return;
+  NoteUIState.audio.cloudNote = {...cloudNote, insights:nextInsights};
+  const updated = await DataStoreSupabase.audioNotes.update(cloudNote.id, {insights:nextInsights});
+  if(updated.ok && updated.data) NoteUIState.audio.cloudNote = updated.data;
+}
+async function removeSessionInsight(insightId){
   if(!insightId) return;
   const note = getCurrentSessionAnnotation();
+  const removedInsight = (note.insights || []).find(item=>item.id===insightId);
   note.insights = (note.insights || []).filter(item=>item.id!==insightId);
   note.updatedAt = new Date().toISOString();
   saveCurrentSessionAnnotation(note);
   renderNote();
   refreshWorkspaceView();
+  await syncRemovedSessionInsight(removedInsight);
 }
 function upsertSessionInsight(text, icon='star', insightId=null){
   const clean = sanitizeText(text, '');
@@ -7126,7 +7772,7 @@ function initEventBindings(){
   on('note-form-insights','click',event=>{
     const button = event.target.closest('[data-action="remove-note-form-insight"]');
     if(!button) return;
-    removeSessionInsight(button.dataset.id);
+    removeSessionInsight(button.dataset.id).catch(error=>console.warn('[StudyFlow] Falha ao remover insight:', error));
     renderNoteFormInsights(getCurrentSessionAnnotation());
   });
 
@@ -7205,47 +7851,18 @@ function initEventBindings(){
 
   // Session annotation audio / TTS
   on('note-audio-toggle','click',()=>{
-    const note = getCurrentSessionAnnotation();
-    const totalSec = getSessionAnnotationAudioTotalSec(note);
-    NoteUIState.audio.totalSec = totalSec;
-    if(NoteUIState.audio.isPlaying){
-      stopNoteAudioPlayback(false);
+    if(NoteUIState.audio.isProcessing) return;
+    if(NoteUIState.audio.isRecording) stopSessionAudioRecording();
+    else if(NoteUIState.audio.objectUrl) toggleSessionAudioPlayback();
+    else startSessionAudioRecording().catch(error=>{
+      console.warn('[StudyFlow] Falha ao iniciar grava\u00e7\u00e3o:', error);
+      toast('N\u00e3o foi poss\u00edvel acessar o microfone.');
+      resetNoteAudioState();
       renderNote();
-      return;
-    }
-    if(totalSec <= 0){
-      toast('Adicione um resumo para ativar a reprodu\u00e7\u00e3o da sess\u00e3o.');
-      return;
-    }
-    NoteUIState.audio.isPlaying = true;
-    clearNoteAudioTimer();
-    NoteUIState.audio.timer = setInterval(()=>{
-      NoteUIState.audio.elapsedSec += 1;
-      if(NoteUIState.audio.elapsedSec >= NoteUIState.audio.totalSec){
-        stopNoteAudioPlayback(true);
-      }
-      renderNote();
-    }, 1000);
-    renderNote();
+    });
   });
-  on('note-tts-btn','click',()=>{
-    if(!('speechSynthesis' in window)){
-      toast('Seu navegador n\u00e3o suporta leitura por voz.');
-      return;
-    }
-    const speech = buildSessionAnnotationSpeech(getCurrentSessionAnnotation());
-    if(!speech){
-      toast('Escreva um resumo antes de usar o TTS.');
-      return;
-    }
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(speech);
-    utterance.lang = 'pt-BR';
-    utterance.rate = 1;
-    utterance.onstart = ()=>toast('Leitura da sess\u00e3o iniciada.');
-    utterance.onend = ()=>toast('Leitura conclu\u00edda.');
-    window.speechSynthesis.speak(utterance);
-  });
+  on('note-audio-delete','click',()=>deleteSessionAudioRecording());
+  on('note-ai-generate','click',()=>generateSessionAiSummary());
 
   // Chart resize
   window.addEventListener('resize',()=>safeCall(()=>renderWeeklyAnalysis(),'event:resize'));
@@ -7452,6 +8069,7 @@ safeCall(()=>AuthController.init(), 'startup:AuthController.init');
 safeCall(()=>lucide.createIcons(), 'startup:lucide.createIcons');
 safeCall(()=>initEventBindings(), 'startup:initEventBindings');
 safeCall(()=>renderAll(), 'startup:renderAll');
+safeCall(()=>initSessionNoteDensityObserver(), 'startup:initSessionNoteDensityObserver');
 safeCall(()=>initGrid(), 'startup:initGrid');
 safeCall(()=>setActiveView(getActiveView(), {track:false,focus:false}), 'startup:setActiveView');
 // Re-draw chart after layout settles
